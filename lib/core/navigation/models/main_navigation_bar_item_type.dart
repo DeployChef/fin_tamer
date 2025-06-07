@@ -1,27 +1,27 @@
 enum MainNavigationBarItemType {
   outcome(
     'Расходы',
-    'OUTCOME',
+    'assets/icons/outcome.svg',
   ),
   income(
     'Доходы',
-    'INCOME',
+    'assets/icons/income.svg',
   ),
   account(
     'Счет',
-    'ACCOUNT',
+    'assets/icons/account.svg',
   ),
   categories(
     'Статьи',
-    'CATEGORIES',
+    'assets/icons/categories.svg',
   ),
   settings(
     'Настройки',
-    'SETTINGS',
+    'assets/icons/settings.svg',
   );
 
   final String label;
-  final String iconArtboard;
+  final String iconAssetPath;
 
   static MainNavigationBarItemType? tryParse(String? value) {
     for (final type in values) {
@@ -32,6 +32,6 @@ enum MainNavigationBarItemType {
 
   const MainNavigationBarItemType(
     this.label,
-    this.iconArtboard,
+    this.iconAssetPath,
   );
 }

@@ -1,5 +1,6 @@
 import 'package:fin_tamer/core/navigation/models/main_navigation_bar_item_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -17,13 +18,14 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   int selectedIndex = 0;
 
-  final List<BottomNavigationBarItem> _destinations = MainNavigationBarItemType.values
-      .map((c) => BottomNavigationBarItem(
+  final List<NavigationDestination> _destinations = MainNavigationBarItemType.values
+      .map((c) => NavigationDestination(
             label: c.label,
-            icon: const Icon(
-              Icons.ac_unit,
-              color: Colors.black,
+            icon: SvgPicture.asset(
+              c.iconAssetPath,
+              colorFilter: const ColorFilter.mode(Color(0xff49454F), BlendMode.srcIn),
             ),
+            selectedIcon: SvgPicture.asset(c.iconAssetPath),
           ))
       .toList();
 
@@ -42,10 +44,10 @@ class _MainWrapperState extends State<MainWrapper> {
         width: double.infinity,
         child: widget.navigationShell,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: _destinations,
-        currentIndex: selectedIndex,
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        destinations: _destinations,
+        selectedIndex: selectedIndex,
+        onDestinationSelected: (index) {
           setState(() {
             selectedIndex = index;
           });
