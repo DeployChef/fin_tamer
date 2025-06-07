@@ -7,7 +7,7 @@ class CategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Categories"),
+        title: const Text("Мои статьи"),
       ),
     );
   }

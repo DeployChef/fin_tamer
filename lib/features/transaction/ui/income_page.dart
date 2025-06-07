@@ -8,7 +8,7 @@ class IncomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Income"),
+        title: const Text("Доходы сегодня"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

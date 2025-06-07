@@ -1,11 +1,11 @@
 import 'package:fin_tamer/core/navigation/ui/main_wrapper.dart';
 import 'package:fin_tamer/features/account/ui/account_page.dart';
-import 'package:fin_tamer/features/category/presentation/ui/categories_page.dart';
+import 'package:fin_tamer/features/category/ui/categories_page.dart';
 import 'package:fin_tamer/features/settings/ui/settings_page.dart';
-import 'package:fin_tamer/features/transaction/presentation/ui/income_details_page.dart';
-import 'package:fin_tamer/features/transaction/presentation/ui/income_page.dart';
-import 'package:fin_tamer/features/transaction/presentation/ui/outcome_details_page.dart';
-import 'package:fin_tamer/features/transaction/presentation/ui/outcome_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income_details_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome_details_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

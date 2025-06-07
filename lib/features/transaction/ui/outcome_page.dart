@@ -8,7 +8,7 @@ class OutcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Outcome"),
+        title: const Text("Расходы сегодня"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
