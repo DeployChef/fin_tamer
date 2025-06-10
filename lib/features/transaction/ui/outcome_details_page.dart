@@ -7,7 +7,7 @@ class OutcomeDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("OUTCOME DETAILS"),
+        title: const Text("OUTCOME DETAILS"),
       ),
     );
   }

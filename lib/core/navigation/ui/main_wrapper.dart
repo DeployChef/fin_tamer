@@ -1,6 +1,6 @@
-import 'package:fin_tamer/core/navigation/models/main_navigation_bar_item_type.dart';
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
+import 'package:fin_tamer/core/navigation/ui/navigation_svg_destination.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -18,17 +18,6 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   int selectedIndex = 0;
 
-  final List<NavigationDestination> _destinations = MainNavigationBarItemType.values
-      .map((c) => NavigationDestination(
-            label: c.label,
-            icon: SvgPicture.asset(
-              c.iconAssetPath,
-              colorFilter: const ColorFilter.mode(Color(0xff49454F), BlendMode.srcIn),
-            ),
-            selectedIcon: SvgPicture.asset(c.iconAssetPath),
-          ))
-      .toList();
-
   void _goToBranch(int index) {
     widget.navigationShell.goBranch(
       index,
@@ -38,6 +27,8 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: SizedBox(
         height: double.infinity,
@@ -45,7 +36,28 @@ class _MainWrapperState extends State<MainWrapper> {
         child: widget.navigationShell,
       ),
       bottomNavigationBar: NavigationBar(
-        destinations: _destinations,
+        destinations: [
+          NavigationSvgDestination(
+            label: loc.outcomes,
+            svgPath: 'assets/icons/outcome.svg',
+          ),
+          NavigationSvgDestination(
+            label: loc.incomes,
+            svgPath: 'assets/icons/income.svg',
+          ),
+          NavigationSvgDestination(
+            label: loc.account,
+            svgPath: 'assets/icons/account.svg',
+          ),
+          NavigationSvgDestination(
+            label: loc.categories,
+            svgPath: 'assets/icons/categories.svg',
+          ),
+          NavigationSvgDestination(
+            label: loc.settings,
+            svgPath: 'assets/icons/settings.svg',
+          ),
+        ],
         selectedIndex: selectedIndex,
         onDestinationSelected: (index) {
           setState(() {

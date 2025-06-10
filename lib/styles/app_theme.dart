@@ -7,6 +7,7 @@ class AppTheme {
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.primaryLight,
+        elevation: 0,
         shape: CircleBorder(),
       ),
       appBarTheme: const AppBarTheme(
@@ -24,6 +25,7 @@ class AppTheme {
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.primaryLight,
+        elevation: 0,
         shape: CircleBorder(),
       ),
       appBarTheme: const AppBarTheme(
