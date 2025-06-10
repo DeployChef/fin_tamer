@@ -13,8 +13,8 @@ abstract class Account with _$Account {
     required String name,
     required String balance,
     required String currency,
-    required String createdAt,
-    required String updatedAt,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
