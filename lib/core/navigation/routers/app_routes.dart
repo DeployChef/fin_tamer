@@ -7,7 +7,10 @@ enum AppRoutes {
     'INCOME',
     "/income",
   ),
-  account('ACCOUNT', '/account'),
+  account(
+    'ACCOUNT',
+    '/account',
+  ),
   categories(
     'CATEGORIES',
     '/categories',
@@ -23,6 +26,14 @@ enum AppRoutes {
   incomeDetails(
     'INCOME_DETAILS',
     '/details',
+  ),
+  incomeHistory(
+    'INCOME_HISTORY',
+    '/history',
+  ),
+  outcomeHistory(
+    'OUTCOME_HISTORY',
+    '/history',
   );
 
   final String name;

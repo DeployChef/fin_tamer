@@ -4,9 +4,11 @@ import 'package:fin_tamer/features/account/ui/account_page.dart';
 import 'package:fin_tamer/features/category/ui/categories_page.dart';
 import 'package:fin_tamer/features/settings/ui/settings_page.dart';
 import 'package:fin_tamer/features/transaction/ui/income_details_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income_history_page.dart';
 import 'package:fin_tamer/features/transaction/ui/income_page.dart';
 import 'package:fin_tamer/features/transaction/ui/outcome_details_page.dart';
 import 'package:fin_tamer/features/transaction/ui/outcome_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,6 +50,13 @@ class AppRouter {
                     builder: (context, state) => OutcomeDetailsPage(
                       key: state.pageKey,
                     ),
+                  ),
+                  GoRoute(
+                    path: AppRoutes.outcomeHistory.path,
+                    name: AppRoutes.outcomeHistory.name,
+                    builder: (context, state) => OutcomeHistoryPage(
+                      key: state.pageKey,
+                    ),
                   )
                 ],
               ),
@@ -67,6 +76,13 @@ class AppRouter {
                     path: AppRoutes.incomeDetails.path,
                     name: AppRoutes.incomeDetails.name,
                     builder: (context, state) => IncomeDetailsPage(
+                      key: state.pageKey,
+                    ),
+                  ),
+                  GoRoute(
+                    path: AppRoutes.incomeHistory.path,
+                    name: AppRoutes.incomeHistory.name,
+                    builder: (context, state) => IncomeHistoryPage(
                       key: state.pageKey,
                     ),
                   )
