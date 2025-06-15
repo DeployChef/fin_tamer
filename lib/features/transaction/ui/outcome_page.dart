@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ class OutcomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.goNamed("OUTCOME_DETAILS");
+          context.goNamed(AppRoutes.outcomeDetails.name);
         },
         child: const Icon(Icons.add),
       ),
