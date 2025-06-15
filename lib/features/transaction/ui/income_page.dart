@@ -20,7 +20,7 @@ class IncomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const TransactionsList(),
+      body: TransactionsList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.goNamed(AppRoutes.incomeDetails.name);
