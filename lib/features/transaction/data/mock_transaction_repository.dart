@@ -39,7 +39,7 @@ class MockTransactionRepository implements ITransactionRepository {
       "categoryId": 4,
       "amount": "125000.00",
       "transactionDate": DateTime.now().toString(),
-      "comment": "ПЕС",
+      "comment": null,
       "createdAt": DateTime.now().toString(),
       "updatedAt": DateTime.now().toString(),
     }),
