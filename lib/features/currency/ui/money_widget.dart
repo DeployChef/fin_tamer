@@ -17,7 +17,7 @@ class MoneyWidget extends ConsumerWidget {
     var currency = ref.watch(currencyServiceProvider);
 
     return Text(
-      "${NumberFormat("# ##0").format(amount)}${currency.when<String>(
+      "${NumberFormat("# ##0").format(amount)}${currency.when(
         data: (data) => data.symbol,
         error: (_, __) => Currency.ruble.symbol,
         loading: () => Currency.ruble.symbol,

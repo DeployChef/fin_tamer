@@ -1,6 +1,3 @@
-import 'package:fin_tamer/features/account/data/mock_account_repository.dart';
-import 'package:fin_tamer/features/category/data/mock_category_repository.dart';
-import 'package:fin_tamer/features/transaction/data/mock_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/services/transaction_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/amount_widget.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/transaction_item.dart';
@@ -8,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransactionsList extends ConsumerWidget {
-  TransactionsList.income({super.key}) : isIncome = true;
-  TransactionsList.outcome({super.key}) : isIncome = false;
+  const TransactionsList.income({super.key}) : isIncome = true;
+  const TransactionsList.outcome({super.key}) : isIncome = false;
 
   final bool isIncome;
-  final MockTransactionRepository repo = MockTransactionRepository(MockAccountRepository(), MockCategoryRepository());
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +21,7 @@ class TransactionsList extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
-        return Text("Error");
+        return const Text("Error");
       },
       data: (transactions) {
         var amount = transactions.map((c) => double.parse(c.amount)).reduce((a, b) => a + b);

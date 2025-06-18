@@ -1,3 +1,4 @@
+import 'package:fin_tamer/features/transaction/ui/widgets/transactions_history_list.dart';
 import 'package:flutter/material.dart';
 
 class IncomeHistoryPage extends StatelessWidget {
@@ -8,7 +9,14 @@ class IncomeHistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Моя история"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.pending_actions),
+          ),
+        ],
       ),
+      body: TransactionsHistoryList.income(),
     );
   }
 }

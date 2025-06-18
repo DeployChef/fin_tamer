@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({super.key, required this.item, this.showTime = true});
+  const TransactionItem({super.key, required this.item, this.showTime = false});
 
   final TransactionResponse item;
   final bool showTime;
@@ -41,7 +41,7 @@ class TransactionItem extends StatelessWidget {
         const Icon(Icons.chevron_right, color: Color(0xff3c3c434d)),
       ]),
       onTap: () {
-        context.goNamed(AppRoutes.incomeDetails.name);
+        context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
       },
     );
   }
