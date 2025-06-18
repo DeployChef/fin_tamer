@@ -20,7 +20,9 @@ class OutcomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: TransactionsList.outcome(),
+      body: const TransactionsList(
+        isIncome: false,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.goNamed(AppRoutes.outcomeDetails.name);

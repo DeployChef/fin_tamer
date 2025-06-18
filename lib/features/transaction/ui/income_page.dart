@@ -21,7 +21,9 @@ class IncomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: TransactionsList.income(),
+      body: const TransactionsList(
+        isIncome: true,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.goNamed(AppRoutes.incomeDetails.name);

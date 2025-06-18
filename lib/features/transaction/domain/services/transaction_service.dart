@@ -26,4 +26,11 @@ class TransactionService extends _$TransactionService {
 
     return transactions.where((c) => c.category.isIncome == isIncome).toList();
   }
+
+  void sortByAmount() {
+    final currState = state.value;
+    if (currState == null) return;
+    final newState = currState.toList()..sort((a, b) => a.amount.compareTo(b.amount));
+    state = AsyncData(newState);
+  }
 }

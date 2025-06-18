@@ -1,4 +1,5 @@
-import 'package:fin_tamer/features/transaction/ui/widgets/transactions_history_list.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/history_filter.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class OutcomeHistoryPage extends StatelessWidget {
@@ -6,6 +7,10 @@ class OutcomeHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now().toUtc();
+    final startDate = DateTime(now.year, now.month, now.day).add(const Duration(days: -10));
+    final endDate = DateTime(now.year, now.month, now.day).add(const Duration(days: 1)).add(const Duration(minutes: -1));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Моя история"),
@@ -16,7 +21,19 @@ class OutcomeHistoryPage extends StatelessWidget {
           ),
         ],
       ),
-      body: TransactionsHistoryList.outcome(),
+      body: Column(
+        children: [
+          const HistoryFilter(),
+          Expanded(
+            child: TransactionsList(
+              isIncome: false,
+              isHistory: true,
+              startDate: startDate,
+              endDate: endDate,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
