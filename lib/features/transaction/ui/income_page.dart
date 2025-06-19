@@ -1,5 +1,5 @@
 import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
-import 'package:fin_tamer/features/transaction/ui/widgets/transactions_list.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/today_transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,9 +21,7 @@ class IncomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: const TransactionsList(
-        isIncome: true,
-      ),
+      body: const TodayTransactionsList.income(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.goNamed(AppRoutes.incomeDetails.name);

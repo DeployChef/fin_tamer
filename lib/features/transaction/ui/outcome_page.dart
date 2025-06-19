@@ -1,5 +1,5 @@
 import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
-import 'package:fin_tamer/features/transaction/ui/widgets/transactions_list.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/today_transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,9 +20,7 @@ class OutcomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const TransactionsList(
-        isIncome: false,
-      ),
+      body: const TodayTransactionsList.outcome(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.goNamed(AppRoutes.outcomeDetails.name);

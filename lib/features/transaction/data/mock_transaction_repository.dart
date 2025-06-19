@@ -105,7 +105,7 @@ class MockTransactionRepository implements ITransactionRepository {
 
   @override
   Future<List<TransactionResponse>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(milliseconds: 150));
 
     final transactions = _db.where((c) => c.accountId == accountId && c.transactionDate.isAfter(startDate) && c.transactionDate.isBefore(endDate));
 

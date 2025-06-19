@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction_service.dart';
+part of 'today_transaction_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$transactionServiceHash() =>
-    r'93408531e3420d72e67d3f1fd16baf4025ad2dd2';
+String _$todayTransactionServiceHash() =>
+    r'0ab5a8c2ce02f6f678447bf2831ed261ff85d5d2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,50 +30,40 @@ class _SystemHash {
   }
 }
 
-abstract class _$TransactionService
+abstract class _$TodayTransactionService
     extends BuildlessAutoDisposeAsyncNotifier<List<TransactionResponse>> {
   late final bool isIncome;
-  late final DateTime? startDate;
-  late final DateTime? endDate;
 
   FutureOr<List<TransactionResponse>> build({
     required bool isIncome,
-    DateTime? startDate,
-    DateTime? endDate,
   });
 }
 
-/// See also [TransactionService].
-@ProviderFor(TransactionService)
-const transactionServiceProvider = TransactionServiceFamily();
+/// See also [TodayTransactionService].
+@ProviderFor(TodayTransactionService)
+const todayTransactionServiceProvider = TodayTransactionServiceFamily();
 
-/// See also [TransactionService].
-class TransactionServiceFamily
+/// See also [TodayTransactionService].
+class TodayTransactionServiceFamily
     extends Family<AsyncValue<List<TransactionResponse>>> {
-  /// See also [TransactionService].
-  const TransactionServiceFamily();
+  /// See also [TodayTransactionService].
+  const TodayTransactionServiceFamily();
 
-  /// See also [TransactionService].
-  TransactionServiceProvider call({
+  /// See also [TodayTransactionService].
+  TodayTransactionServiceProvider call({
     required bool isIncome,
-    DateTime? startDate,
-    DateTime? endDate,
   }) {
-    return TransactionServiceProvider(
+    return TodayTransactionServiceProvider(
       isIncome: isIncome,
-      startDate: startDate,
-      endDate: endDate,
     );
   }
 
   @override
-  TransactionServiceProvider getProviderOverride(
-    covariant TransactionServiceProvider provider,
+  TodayTransactionServiceProvider getProviderOverride(
+    covariant TodayTransactionServiceProvider provider,
   ) {
     return call(
       isIncome: provider.isIncome,
-      startDate: provider.startDate,
-      endDate: provider.endDate,
     );
   }
 
@@ -95,37 +85,31 @@ class TransactionServiceFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'transactionServiceProvider';
+  String? get name => r'todayTransactionServiceProvider';
 }
 
-/// See also [TransactionService].
-class TransactionServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    TransactionService, List<TransactionResponse>> {
-  /// See also [TransactionService].
-  TransactionServiceProvider({
+/// See also [TodayTransactionService].
+class TodayTransactionServiceProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<TodayTransactionService,
+        List<TransactionResponse>> {
+  /// See also [TodayTransactionService].
+  TodayTransactionServiceProvider({
     required bool isIncome,
-    DateTime? startDate,
-    DateTime? endDate,
   }) : this._internal(
-          () => TransactionService()
-            ..isIncome = isIncome
-            ..startDate = startDate
-            ..endDate = endDate,
-          from: transactionServiceProvider,
-          name: r'transactionServiceProvider',
+          () => TodayTransactionService()..isIncome = isIncome,
+          from: todayTransactionServiceProvider,
+          name: r'todayTransactionServiceProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$transactionServiceHash,
-          dependencies: TransactionServiceFamily._dependencies,
+                  : _$todayTransactionServiceHash,
+          dependencies: TodayTransactionServiceFamily._dependencies,
           allTransitiveDependencies:
-              TransactionServiceFamily._allTransitiveDependencies,
+              TodayTransactionServiceFamily._allTransitiveDependencies,
           isIncome: isIncome,
-          startDate: startDate,
-          endDate: endDate,
         );
 
-  TransactionServiceProvider._internal(
+  TodayTransactionServiceProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -133,66 +117,51 @@ class TransactionServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.isIncome,
-    required this.startDate,
-    required this.endDate,
   }) : super.internal();
 
   final bool isIncome;
-  final DateTime? startDate;
-  final DateTime? endDate;
 
   @override
   FutureOr<List<TransactionResponse>> runNotifierBuild(
-    covariant TransactionService notifier,
+    covariant TodayTransactionService notifier,
   ) {
     return notifier.build(
       isIncome: isIncome,
-      startDate: startDate,
-      endDate: endDate,
     );
   }
 
   @override
-  Override overrideWith(TransactionService Function() create) {
+  Override overrideWith(TodayTransactionService Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TransactionServiceProvider._internal(
-        () => create()
-          ..isIncome = isIncome
-          ..startDate = startDate
-          ..endDate = endDate,
+      override: TodayTransactionServiceProvider._internal(
+        () => create()..isIncome = isIncome,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         isIncome: isIncome,
-        startDate: startDate,
-        endDate: endDate,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<TransactionService,
+  AutoDisposeAsyncNotifierProviderElement<TodayTransactionService,
       List<TransactionResponse>> createElement() {
-    return _TransactionServiceProviderElement(this);
+    return _TodayTransactionServiceProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TransactionServiceProvider &&
-        other.isIncome == isIncome &&
-        other.startDate == startDate &&
-        other.endDate == endDate;
+    return other is TodayTransactionServiceProvider &&
+        other.isIncome == isIncome;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, isIncome.hashCode);
-    hash = _SystemHash.combine(hash, startDate.hashCode);
-    hash = _SystemHash.combine(hash, endDate.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -200,29 +169,19 @@ class TransactionServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TransactionServiceRef
+mixin TodayTransactionServiceRef
     on AutoDisposeAsyncNotifierProviderRef<List<TransactionResponse>> {
   /// The parameter `isIncome` of this provider.
   bool get isIncome;
-
-  /// The parameter `startDate` of this provider.
-  DateTime? get startDate;
-
-  /// The parameter `endDate` of this provider.
-  DateTime? get endDate;
 }
 
-class _TransactionServiceProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<TransactionService,
-        List<TransactionResponse>> with TransactionServiceRef {
-  _TransactionServiceProviderElement(super.provider);
+class _TodayTransactionServiceProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<TodayTransactionService,
+        List<TransactionResponse>> with TodayTransactionServiceRef {
+  _TodayTransactionServiceProviderElement(super.provider);
 
   @override
-  bool get isIncome => (origin as TransactionServiceProvider).isIncome;
-  @override
-  DateTime? get startDate => (origin as TransactionServiceProvider).startDate;
-  @override
-  DateTime? get endDate => (origin as TransactionServiceProvider).endDate;
+  bool get isIncome => (origin as TodayTransactionServiceProvider).isIncome;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

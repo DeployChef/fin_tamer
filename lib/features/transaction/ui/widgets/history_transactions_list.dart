@@ -1,29 +1,25 @@
-import 'package:fin_tamer/features/transaction/domain/services/transaction_service.dart';
+import 'package:fin_tamer/features/transaction/domain/services/filtered_transaction_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/amount_widget.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransactionsList extends ConsumerWidget {
-  const TransactionsList({super.key, required this.isIncome, this.isHistory = false, this.startDate, this.endDate});
+class HistoryTransactionsList extends ConsumerWidget {
+  const HistoryTransactionsList.income({super.key}) : isIncome = true;
+  const HistoryTransactionsList.outcome({super.key}) : isIncome = false;
 
   final bool isIncome;
-  final bool isHistory;
-  final DateTime? startDate;
-  final DateTime? endDate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transactionService = ref.watch(transactionServiceProvider(
+    final transactionService = ref.watch(filteredTransactionServiceProvider(
       isIncome: isIncome,
-      startDate: startDate,
-      endDate: endDate,
     ));
 
     return Column(
       children: [
         AmountWidget(
-            title: isHistory ? "Сумма" : "Всего",
+            title: "Сумма",
             amount: transactionService.when(
               data: (transactions) => transactions.isNotEmpty ? transactions.map((c) => double.parse(c.amount)).reduce((a, b) => a + b) : 0.0,
               error: (_, __) => 0,
@@ -43,7 +39,7 @@ class TransactionsList extends ConsumerWidget {
                           children: [
                             TransactionItem(
                               item: item,
-                              showTime: isHistory,
+                              showTime: true,
                             ),
                             const Divider(
                               height: 1,
