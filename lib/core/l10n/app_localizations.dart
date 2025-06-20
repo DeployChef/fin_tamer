@@ -193,6 +193,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not found'**
   String get notFound;
+
+  /// No description provided for @byDate.
+  ///
+  /// In en, this message translates to:
+  /// **'date'**
+  String get byDate;
+
+  /// No description provided for @byAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'amount'**
+  String get byAmount;
 }
 
 class _AppLocalizationsDelegate

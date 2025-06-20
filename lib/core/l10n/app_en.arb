@@ -14,5 +14,8 @@
     "filterStartDate": "Start",
     "filterEndDate": "End",
     "filterSort": "Order by",
-    "notFound": "Not found"
+    "notFound": "Not found",
+    "byDate": "date",
+    "byAmount": "amount"
+
 }

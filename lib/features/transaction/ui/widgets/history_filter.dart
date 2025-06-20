@@ -2,6 +2,7 @@ import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history_filter_service.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/sort_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,20 +19,28 @@ class HistoryFilter extends ConsumerWidget {
     final endDate = ref.watch(provider).endDate;
     final sortType = ref.watch(provider).sortType;
 
+    final loc = AppLocalizations.of(context)!;
+
     final sortDescription = switch (sortType) {
-      SortType.amount => "По сумме",
-      SortType.date => "По дате",
+      SortType.amount => loc.byAmount,
+      SortType.date => loc.byDate,
     };
 
-    final loc = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Column(
       children: [
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text(loc.filterStartDate),
-          trailing: Text(startDate.toddMMyyyy()),
+          title: Text(
+            loc.filterStartDate,
+            style: theme.textTheme.bodyLarge,
+          ),
+          trailing: Text(
+            startDate.toddMMyyyy(),
+            style: theme.textTheme.bodyLarge,
+          ),
           onTap: () async {
             final dateTime = await showDatePicker(
               context: context,
@@ -40,15 +49,23 @@ class HistoryFilter extends ConsumerWidget {
               initialDate: startDate,
             );
 
-            ref.read(provider.notifier).setStart(startDate: dateTime!);
+            if (dateTime == null) return;
+
+            ref.read(provider.notifier).setStart(startDate: dateTime);
           },
         ),
         const Divider(height: 1),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text(loc.filterEndDate),
-          trailing: Text(endDate.toddMMyyyy()),
+          title: Text(
+            loc.filterEndDate,
+            style: theme.textTheme.bodyLarge,
+          ),
+          trailing: Text(
+            endDate.toddMMyyyy(),
+            style: theme.textTheme.bodyLarge,
+          ),
           onTap: () async {
             final dateTime = await showDatePicker(
               context: context,
@@ -57,26 +74,61 @@ class HistoryFilter extends ConsumerWidget {
               initialDate: DateTime(endDate.year, endDate.month, endDate.day),
             );
 
-            ref.read(provider.notifier).setEnd(endDate: dateTime!);
+            if (dateTime == null) return;
+
+            ref.read(provider.notifier).setEnd(endDate: dateTime);
           },
         ),
         const Divider(height: 1),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text(loc.filterSort),
-          trailing: Text(sortDescription),
+          title: Text(
+            loc.filterSort,
+            style: theme.textTheme.bodyLarge,
+          ),
+          trailing: Text(
+            sortDescription,
+            style: theme.textTheme.bodyLarge,
+          ),
           onTap: () async {
-            final newSort = switch (sortType) {
-              SortType.amount => SortType.date,
-              SortType.date => SortType.amount,
-            };
-
-            ref.read(provider.notifier).setSortType(sortType: newSort);
+            await showOrderBottomSheet(context);
           },
         ),
         const Divider(height: 1),
       ],
+    );
+  }
+
+  Future<void> showOrderBottomSheet(BuildContext context) async {
+    final loc = AppLocalizations.of(context)!;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            loc.filterSort,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SortItem(
+            sortType: SortType.date,
+            isIncome: isIncome,
+          ),
+          SortItem(
+            sortType: SortType.amount,
+            isIncome: isIncome,
+          ),
+        ],
+      ),
     );
   }
 }

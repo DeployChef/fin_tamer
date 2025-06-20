@@ -14,5 +14,7 @@
     "filterStartDate": "Начало",
     "filterEndDate": "Конец",
     "filterSort": "Сортировка",
-    "notFound": "Записи не найдены"
+    "notFound": "Записи не найдены",
+    "byDate": "по дате",
+    "byAmount": "по сумме"
 }

@@ -55,4 +55,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notFound => 'Not found';
+
+  @override
+  String get byDate => 'date';
+
+  @override
+  String get byAmount => 'amount';
 }

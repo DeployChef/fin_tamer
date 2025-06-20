@@ -14,7 +14,8 @@ class MoneyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var currency = ref.watch(currencyServiceProvider);
+    final currency = ref.watch(currencyServiceProvider);
+    final theme = Theme.of(context);
 
     return Text(
       "${NumberFormat("# ##0").format(amount)}${currency.when(
@@ -22,10 +23,7 @@ class MoneyWidget extends ConsumerWidget {
         error: (_, __) => Currency.ruble.symbol,
         loading: () => Currency.ruble.symbol,
       )}",
-      style: const TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w400,
-      ),
+      style: theme.textTheme.bodyLarge,
     );
   }
 }

@@ -13,6 +13,8 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.symmetric(
@@ -27,15 +29,28 @@ class TransactionItem extends StatelessWidget {
           style: const TextStyle(fontSize: 18),
         ),
       ),
-      title: Text(item.category.name),
-      subtitle: item.comment != null ? Text(item.comment!) : null,
+      title: Text(
+        item.category.name,
+        style: theme.textTheme.bodyLarge,
+      ),
+      subtitle: item.comment != null
+          ? Text(
+              item.comment!,
+              style: theme.textTheme.bodyMedium,
+            )
+          : null,
       trailing: Row(spacing: 16, mainAxisSize: MainAxisSize.min, children: [
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             MoneyWidget(amount: double.parse(item.amount)),
-            showTime ? Text(item.transactionDate.toHHmm()) : const SizedBox.shrink(),
+            showTime
+                ? Text(
+                    item.transactionDate.toHHmm(),
+                    style: theme.textTheme.bodyLarge,
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
         const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),

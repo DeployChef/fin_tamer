@@ -55,4 +55,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get notFound => 'Записи не найдены';
+
+  @override
+  String get byDate => 'по дате';
+
+  @override
+  String get byAmount => 'по сумме';
 }
