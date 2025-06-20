@@ -1,5 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/core/navigation/ui/navigation_svg_destination.dart';
+import 'package:fin_tamer/styles/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,23 +40,23 @@ class _MainWrapperState extends State<MainWrapper> {
         destinations: [
           NavigationSvgDestination(
             label: loc.outcomes,
-            svgPath: 'assets/icons/outcome.svg',
+            svgPath: AppAssets.outcomeIcon,
           ),
           NavigationSvgDestination(
             label: loc.incomes,
-            svgPath: 'assets/icons/income.svg',
+            svgPath: AppAssets.incomeIcon,
           ),
           NavigationSvgDestination(
             label: loc.account,
-            svgPath: 'assets/icons/account.svg',
+            svgPath: AppAssets.accountIcon,
           ),
           NavigationSvgDestination(
             label: loc.categories,
-            svgPath: 'assets/icons/categories.svg',
+            svgPath: AppAssets.categoriesIcon,
           ),
           NavigationSvgDestination(
             label: loc.settings,
-            svgPath: 'assets/icons/settings.svg',
+            svgPath: AppAssets.settingsIcon,
           ),
         ],
         selectedIndex: selectedIndex,

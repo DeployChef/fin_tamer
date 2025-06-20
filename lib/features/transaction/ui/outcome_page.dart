@@ -1,3 +1,6 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
+import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/today_transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,13 +9,24 @@ class OutcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Расходы сегодня"),
+        title: Text(loc.outcomeTitle),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.goNamed(AppRoutes.outcomeHistory.name);
+            },
+            icon: const Icon(Icons.history),
+          ),
+        ],
       ),
+      body: const TodayTransactionsList.outcome(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.goNamed("OUTCOME_DETAILS");
+          context.goNamed(AppRoutes.outcomeDetails.name);
         },
         child: const Icon(Icons.add),
       ),

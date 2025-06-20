@@ -28,4 +28,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoriesTitle => 'My Categories';
+
+  @override
+  String get incomeTitle => 'My incomes';
+
+  @override
+  String get outcomeTitle => 'My outcomes';
+
+  @override
+  String get historyTitle => 'My history';
+
+  @override
+  String get amountDayTitle => 'Amount';
+
+  @override
+  String get amountHistoryTitle => 'Amount';
+
+  @override
+  String get filterStartDate => 'Start';
+
+  @override
+  String get filterEndDate => 'End';
+
+  @override
+  String get filterSort => 'Order by';
+
+  @override
+  String get notFound => 'Not found';
+
+  @override
+  String get byDate => 'date';
+
+  @override
+  String get byAmount => 'amount';
 }

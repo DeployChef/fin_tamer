@@ -5,5 +5,16 @@
     "categories": "Категории",
     "settings": "Настройки",
     "accountTitle": "Мой счет",
-    "categoriesTitle": "Мои статьи"
+    "categoriesTitle": "Мои статьи",
+    "incomeTitle": "Мои доходы",
+    "outcomeTitle": "Мои расходы",
+    "historyTitle": "Моя история",
+    "amountDayTitle": "Всего",
+    "amountHistoryTitle": "Сумма",
+    "filterStartDate": "Начало",
+    "filterEndDate": "Конец",
+    "filterSort": "Сортировка",
+    "notFound": "Записи не найдены",
+    "byDate": "по дате",
+    "byAmount": "по сумме"
 }

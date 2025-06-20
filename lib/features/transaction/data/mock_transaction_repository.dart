@@ -18,10 +18,30 @@ class MockTransactionRepository implements ITransactionRepository {
       "accountId": 1,
       "categoryId": 1,
       "amount": "500.00",
-      "transactionDate": "2025-06-10T15:42:43.487Z",
+      "transactionDate": DateTime.now().toString(),
       "comment": "Зарплата за месяц",
-      "createdAt": "2025-06-10T15:42:43.487Z",
-      "updatedAt": "2025-06-10T15:42:43.487Z"
+      "createdAt": DateTime.now().toString(),
+      "updatedAt": DateTime.now().toString(),
+    }),
+    Transaction.fromJson({
+      "id": 2,
+      "accountId": 1,
+      "categoryId": 3,
+      "amount": "5000.00",
+      "transactionDate": DateTime.now().toString(),
+      "comment": "Одежда",
+      "createdAt": DateTime.now().toString(),
+      "updatedAt": DateTime.now().toString(),
+    }),
+    Transaction.fromJson({
+      "id": 2,
+      "accountId": 1,
+      "categoryId": 4,
+      "amount": "125000.00",
+      "transactionDate": DateTime.now().toString(),
+      "comment": null,
+      "createdAt": DateTime.now().toString(),
+      "updatedAt": DateTime.now().toString(),
     }),
   ];
 
@@ -85,6 +105,8 @@ class MockTransactionRepository implements ITransactionRepository {
 
   @override
   Future<List<TransactionResponse>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
+    await Future.delayed(const Duration(milliseconds: 150));
+
     final transactions = _db.where((c) => c.accountId == accountId && c.transactionDate.isAfter(startDate) && c.transactionDate.isBefore(endDate));
 
     List<TransactionResponse> result = [];

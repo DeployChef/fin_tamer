@@ -21,11 +21,44 @@ class AppLocalizationsRu extends AppLocalizations {
   String get categories => 'Категории';
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Настройки';
 
   @override
   String get accountTitle => 'Мой счет';
 
   @override
   String get categoriesTitle => 'Мои статьи';
+
+  @override
+  String get incomeTitle => 'Мои доходы';
+
+  @override
+  String get outcomeTitle => 'Мои расходы';
+
+  @override
+  String get historyTitle => 'Моя история';
+
+  @override
+  String get amountDayTitle => 'Всего';
+
+  @override
+  String get amountHistoryTitle => 'Сумма';
+
+  @override
+  String get filterStartDate => 'Начало';
+
+  @override
+  String get filterEndDate => 'Конец';
+
+  @override
+  String get filterSort => 'Сортировка';
+
+  @override
+  String get notFound => 'Записи не найдены';
+
+  @override
+  String get byDate => 'по дате';
+
+  @override
+  String get byAmount => 'по сумме';
 }
