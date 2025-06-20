@@ -139,6 +139,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Categories'**
   String get categoriesTitle;
+
+  /// No description provided for @incomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My incomes'**
+  String get incomeTitle;
+
+  /// No description provided for @outcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My outcomes'**
+  String get outcomeTitle;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My history'**
+  String get historyTitle;
+
+  /// No description provided for @amountDayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amountDayTitle;
+
+  /// No description provided for @amountHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amountHistoryTitle;
+
+  /// No description provided for @filterStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get filterStartDate;
+
+  /// No description provided for @filterEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get filterEndDate;
+
+  /// No description provided for @filterSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Order by'**
+  String get filterSort;
+
+  /// No description provided for @notFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Not found'**
+  String get notFound;
 }
 
 class _AppLocalizationsDelegate

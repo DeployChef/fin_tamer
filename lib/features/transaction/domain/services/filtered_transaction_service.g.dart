@@ -7,7 +7,7 @@ part of 'filtered_transaction_service.dart';
 // **************************************************************************
 
 String _$filteredTransactionServiceHash() =>
-    r'6e619f55b8ea1b0f3a7b6dd5c77f504adeaf88d4';
+    r'5bae07d765ef764b89c05a649f33b7784089d847';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -38,7 +38,7 @@ class TransactionItem extends StatelessWidget {
             showTime ? Text(item.transactionDate.toHHmm()) : const SizedBox.shrink(),
           ],
         ),
-        const Icon(Icons.chevron_right, color: Color(0xff3c3c434d)),
+        const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
       ]),
       onTap: () {
         context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);

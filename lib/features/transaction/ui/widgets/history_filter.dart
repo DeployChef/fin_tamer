@@ -1,4 +1,5 @@
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history_filter_service.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,14 @@ class HistoryFilter extends ConsumerWidget {
       SortType.date => "По дате",
     };
 
+    final loc = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text("Начало"),
+          title: Text(loc.filterStartDate),
           trailing: Text(startDate.toddMMyyyy()),
           onTap: () async {
             final dateTime = await showDatePicker(
@@ -44,7 +47,7 @@ class HistoryFilter extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text("Конец"),
+          title: Text(loc.filterEndDate),
           trailing: Text(endDate.toddMMyyyy()),
           onTap: () async {
             final dateTime = await showDatePicker(
@@ -61,7 +64,7 @@ class HistoryFilter extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
-          title: Text("Сортировка"),
+          title: Text(loc.filterSort),
           trailing: Text(sortDescription),
           onTap: () async {
             final newSort = switch (sortType) {

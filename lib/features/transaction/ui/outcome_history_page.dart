@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/history_filter.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/history_transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,12 @@ class OutcomeHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return ProviderScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Моя история"),
+          title: Text(loc.historyTitle),
           actions: [
             IconButton(
               onPressed: () {},

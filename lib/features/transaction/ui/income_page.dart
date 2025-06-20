@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/today_transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,11 @@ class IncomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loc = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Доходы сегодня"),
+        title: Text(loc.incomeTitle),
         actions: [
           IconButton(
             onPressed: () {

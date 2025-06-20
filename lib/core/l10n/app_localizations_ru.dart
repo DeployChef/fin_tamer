@@ -28,4 +28,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get categoriesTitle => 'Мои статьи';
+
+  @override
+  String get incomeTitle => 'Мои статьи';
+
+  @override
+  String get outcomeTitle => 'Мои статьи';
+
+  @override
+  String get historyTitle => 'Мои статьи';
+
+  @override
+  String get amountDayTitle => 'Всего';
+
+  @override
+  String get amountHistoryTitle => 'Сумма';
+
+  @override
+  String get filterStartDate => 'Начало';
+
+  @override
+  String get filterEndDate => 'Конец';
+
+  @override
+  String get filterSort => 'Сортировка';
+
+  @override
+  String get notFound => 'Записи не найдены';
 }

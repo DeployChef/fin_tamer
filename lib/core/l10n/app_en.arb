@@ -5,5 +5,14 @@
     "categories": "Categories",
     "settings": "Settings",
     "accountTitle": "My Account",
-    "categoriesTitle": "My Categories"
+    "categoriesTitle": "My Categories",
+    "incomeTitle": "My incomes",
+    "outcomeTitle": "My outcomes",
+    "historyTitle": "My history",
+    "amountDayTitle": "Amount",
+    "amountHistoryTitle": "Amount",
+    "filterStartDate": "Start",
+    "filterEndDate": "End",
+    "filterSort": "Order by",
+    "notFound": "Not found"
 }

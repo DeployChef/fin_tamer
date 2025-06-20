@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/services/today_transaction_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/amount_widget.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/transaction_item.dart';
@@ -16,10 +17,12 @@ class TodayTransactionsList extends ConsumerWidget {
       isIncome: isIncome,
     ));
 
+    final loc = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         AmountWidget(
-            title: "Всего",
+            title: loc.amountDayTitle,
             amount: transactionService.when(
               data: (transactions) => transactions.isNotEmpty ? transactions.map((c) => double.parse(c.amount)).reduce((a, b) => a + b) : 0.0,
               error: (_, __) => 0,
@@ -30,7 +33,7 @@ class TodayTransactionsList extends ConsumerWidget {
           child: transactionService.when(
             data: (transactions) {
               return transactions.isEmpty
-                  ? const Center(child: Text("Записи не найдены"))
+                  ? Center(child: Text(loc.notFound))
                   : ListView.builder(
                       itemCount: transactions.length,
                       itemBuilder: (context, index) {
