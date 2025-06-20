@@ -30,13 +30,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get categoriesTitle => 'Мои статьи';
 
   @override
-  String get incomeTitle => 'Мои статьи';
+  String get incomeTitle => 'Мои доходы';
 
   @override
-  String get outcomeTitle => 'Мои статьи';
+  String get outcomeTitle => 'Мои расходы';
 
   @override
-  String get historyTitle => 'Мои статьи';
+  String get historyTitle => 'Моя история';
 
   @override
   String get amountDayTitle => 'Всего';
