@@ -21,7 +21,7 @@ class OutcomeHistoryPage extends StatelessWidget {
         ),
         body: const Column(
           children: [
-            HistoryFilter(),
+            HistoryFilter.outcome(),
             Expanded(child: HistoryTransactionsList.outcome()),
           ],
         ),

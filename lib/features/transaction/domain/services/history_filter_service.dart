@@ -8,7 +8,7 @@ part 'history_filter_service.freezed.dart';
 @riverpod
 class HistoryFilterService extends _$HistoryFilterService {
   @override
-  HistoryFilterStateModel build() {
+  HistoryFilterStateModel build({required bool isIncome}) {
     final now = DateTime.now().toUtc();
     final today = DateTime(now.year, now.month, now.day);
     final startDate = today.add(const Duration(days: -30));

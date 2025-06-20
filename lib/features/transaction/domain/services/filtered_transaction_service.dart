@@ -22,7 +22,7 @@ class FilteredTransactionService extends _$FilteredTransactionService {
 
     if (account == null) return [];
 
-    final filter = ref.watch(historyFilterServiceProvider);
+    final filter = ref.watch(historyFilterServiceProvider(isIncome: isIncome));
     final transactions = await transactionRepo.getByPeriod(account.id, filter.startDate, filter.endDate);
 
     final filtered = transactions.where((c) => c.category.isIncome == isIncome).toList();

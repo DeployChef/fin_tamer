@@ -5,13 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HistoryFilter extends ConsumerWidget {
-  const HistoryFilter({super.key});
+  const HistoryFilter.income({super.key}) : isIncome = true;
+  const HistoryFilter.outcome({super.key}) : isIncome = false;
+
+  final bool isIncome;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final startDate = ref.watch(historyFilterServiceProvider).startDate;
-    final endDate = ref.watch(historyFilterServiceProvider).endDate;
-    final sortType = ref.watch(historyFilterServiceProvider).sortType;
+    final provider = historyFilterServiceProvider(isIncome: isIncome);
+    final startDate = ref.watch(provider).startDate;
+    final endDate = ref.watch(provider).endDate;
+    final sortType = ref.watch(provider).sortType;
 
     final sortDescription = switch (sortType) {
       SortType.amount => "По сумме",
@@ -33,7 +37,7 @@ class HistoryFilter extends ConsumerWidget {
               initialDate: startDate,
             );
 
-            ref.read(historyFilterServiceProvider.notifier).setStart(startDate: dateTime!);
+            ref.read(provider.notifier).setStart(startDate: dateTime!);
           },
         ),
         const Divider(height: 1),
@@ -50,7 +54,7 @@ class HistoryFilter extends ConsumerWidget {
               initialDate: DateTime(endDate.year, endDate.month, endDate.day),
             );
 
-            ref.read(historyFilterServiceProvider.notifier).setEnd(endDate: dateTime!);
+            ref.read(provider.notifier).setEnd(endDate: dateTime!);
           },
         ),
         const Divider(height: 1),
@@ -65,7 +69,7 @@ class HistoryFilter extends ConsumerWidget {
               SortType.date => SortType.amount,
             };
 
-            ref.read(historyFilterServiceProvider.notifier).setSortType(sortType: newSort);
+            ref.read(provider.notifier).setSortType(sortType: newSort);
           },
         ),
         const Divider(height: 1),
