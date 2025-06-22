@@ -1,5 +1,5 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
-import 'package:fin_tamer/features/currency/domain/currency_service.dart';
+import 'package:fin_tamer/features/currency/ui/currency_picker_bottom_sheet.dart';
 import 'package:fin_tamer/features/currency/ui/currency_widget.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class AccountPage extends ConsumerWidget {
             ]),
             onTap: () {},
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
             tileColor: const Color(0xffD4FAE6),
@@ -61,7 +61,16 @@ class AccountPage extends ConsumerWidget {
                 Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
               ],
             ),
-            onTap: () {},
+            onTap: () async {
+              await showModalBottomSheet<void>(
+                context: context,
+                useRootNavigator: true,
+                showDragHandle: true,
+                useSafeArea: true,
+                isScrollControlled: true,
+                builder: (context) => const CurrencyPickerBottomSheet(),
+              );
+            },
           ),
         ],
       ),
