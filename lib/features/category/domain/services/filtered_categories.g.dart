@@ -7,7 +7,7 @@ part of 'filtered_categories.dart';
 // **************************************************************************
 
 String _$filteredCategoriesHash() =>
-    r'0c24c58685409856c0f363b20556e521a82a819c';
+    r'78a8cd4b275f8cd6083343d32fdb19d94958e4fb';
 
 /// See also [FilteredCategories].
 @ProviderFor(FilteredCategories)
