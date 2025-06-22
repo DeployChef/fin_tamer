@@ -54,7 +54,7 @@ class HistoryFilter extends ConsumerWidget {
             ref.read(provider.notifier).setStart(startDate: dateTime);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
@@ -79,7 +79,7 @@ class HistoryFilter extends ConsumerWidget {
             ref.read(provider.notifier).setEnd(endDate: dateTime);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
@@ -95,7 +95,7 @@ class HistoryFilter extends ConsumerWidget {
             await showOrderBottomSheet(context);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
       ],
     );
   }

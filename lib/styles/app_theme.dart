@@ -17,6 +17,9 @@ class AppTheme {
       navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: AppColors.navigationLight,
       ),
+      dividerTheme: const DividerThemeData(
+        space: 1,
+      ),
       textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 22,
@@ -63,6 +66,9 @@ class AppTheme {
       ),
       navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: AppColors.navigationLight,
+      ),
+      dividerTheme: const DividerThemeData(
+        space: 1,
       ),
       textTheme: const TextTheme(
         titleLarge: TextStyle(
