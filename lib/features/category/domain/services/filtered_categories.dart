@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/extensions/list_extensions.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
 import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,7 +15,10 @@ class FilteredCategories extends _$FilteredCategories {
 
   Future<void> setFilter(String text) async {
     final categories = await ref.watch(categoriesServiceProvider.future);
-    final filtered = categories.where((c) => c.name.toLowerCase().contains(text.toLowerCase())).toList();
+
+    //final filtered = categories.where((c) => c.name.toLowerCase().contains(text.toLowerCase())).toList();
+    final filtered = categories.fuzzySearch(text, (category) => category.name);
+
     state = AsyncData(filtered);
   }
 }
