@@ -5,13 +5,13 @@ import 'package:fin_tamer/features/transaction/data/mock_transaction_repository.
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
-import 'package:fin_tamer/features/transaction/domain/services/history_filter_service.dart';
+import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'filtered_transaction_service.g.dart';
+part 'history_filtered_transaction_service.g.dart';
 
 @Riverpod(dependencies: [AccountService, HistoryFilterService])
-class FilteredTransactionService extends _$FilteredTransactionService {
+class HistoryFilteredTransactionService extends _$HistoryFilteredTransactionService {
   static final ITransactionRepository transactionRepo = MockTransactionRepository(MockAccountRepository(), MockCategoryRepository());
 
   @override

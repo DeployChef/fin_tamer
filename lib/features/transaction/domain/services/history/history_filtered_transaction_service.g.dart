@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'filtered_transaction_service.dart';
+part of 'history_filtered_transaction_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredTransactionServiceHash() =>
-    r'5bae07d765ef764b89c05a649f33b7784089d847';
+String _$historyFilteredTransactionServiceHash() =>
+    r'8e6def25f03d831defa4b4febf8a60a111b54ed4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,7 +30,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$FilteredTransactionService
+abstract class _$HistoryFilteredTransactionService
     extends BuildlessAutoDisposeAsyncNotifier<List<TransactionResponse>> {
   late final bool isIncome;
 
@@ -39,28 +39,29 @@ abstract class _$FilteredTransactionService
   });
 }
 
-/// See also [FilteredTransactionService].
-@ProviderFor(FilteredTransactionService)
-const filteredTransactionServiceProvider = FilteredTransactionServiceFamily();
+/// See also [HistoryFilteredTransactionService].
+@ProviderFor(HistoryFilteredTransactionService)
+const historyFilteredTransactionServiceProvider =
+    HistoryFilteredTransactionServiceFamily();
 
-/// See also [FilteredTransactionService].
-class FilteredTransactionServiceFamily
+/// See also [HistoryFilteredTransactionService].
+class HistoryFilteredTransactionServiceFamily
     extends Family<AsyncValue<List<TransactionResponse>>> {
-  /// See also [FilteredTransactionService].
-  const FilteredTransactionServiceFamily();
+  /// See also [HistoryFilteredTransactionService].
+  const HistoryFilteredTransactionServiceFamily();
 
-  /// See also [FilteredTransactionService].
-  FilteredTransactionServiceProvider call({
+  /// See also [HistoryFilteredTransactionService].
+  HistoryFilteredTransactionServiceProvider call({
     required bool isIncome,
   }) {
-    return FilteredTransactionServiceProvider(
+    return HistoryFilteredTransactionServiceProvider(
       isIncome: isIncome,
     );
   }
 
   @override
-  FilteredTransactionServiceProvider getProviderOverride(
-    covariant FilteredTransactionServiceProvider provider,
+  HistoryFilteredTransactionServiceProvider getProviderOverride(
+    covariant HistoryFilteredTransactionServiceProvider provider,
   ) {
     return call(
       isIncome: provider.isIncome,
@@ -88,31 +89,31 @@ class FilteredTransactionServiceFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'filteredTransactionServiceProvider';
+  String? get name => r'historyFilteredTransactionServiceProvider';
 }
 
-/// See also [FilteredTransactionService].
-class FilteredTransactionServiceProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<FilteredTransactionService,
-        List<TransactionResponse>> {
-  /// See also [FilteredTransactionService].
-  FilteredTransactionServiceProvider({
+/// See also [HistoryFilteredTransactionService].
+class HistoryFilteredTransactionServiceProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<
+        HistoryFilteredTransactionService, List<TransactionResponse>> {
+  /// See also [HistoryFilteredTransactionService].
+  HistoryFilteredTransactionServiceProvider({
     required bool isIncome,
   }) : this._internal(
-          () => FilteredTransactionService()..isIncome = isIncome,
-          from: filteredTransactionServiceProvider,
-          name: r'filteredTransactionServiceProvider',
+          () => HistoryFilteredTransactionService()..isIncome = isIncome,
+          from: historyFilteredTransactionServiceProvider,
+          name: r'historyFilteredTransactionServiceProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$filteredTransactionServiceHash,
-          dependencies: FilteredTransactionServiceFamily._dependencies,
-          allTransitiveDependencies:
-              FilteredTransactionServiceFamily._allTransitiveDependencies,
+                  : _$historyFilteredTransactionServiceHash,
+          dependencies: HistoryFilteredTransactionServiceFamily._dependencies,
+          allTransitiveDependencies: HistoryFilteredTransactionServiceFamily
+              ._allTransitiveDependencies,
           isIncome: isIncome,
         );
 
-  FilteredTransactionServiceProvider._internal(
+  HistoryFilteredTransactionServiceProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -126,7 +127,7 @@ class FilteredTransactionServiceProvider
 
   @override
   FutureOr<List<TransactionResponse>> runNotifierBuild(
-    covariant FilteredTransactionService notifier,
+    covariant HistoryFilteredTransactionService notifier,
   ) {
     return notifier.build(
       isIncome: isIncome,
@@ -134,10 +135,10 @@ class FilteredTransactionServiceProvider
   }
 
   @override
-  Override overrideWith(FilteredTransactionService Function() create) {
+  Override overrideWith(HistoryFilteredTransactionService Function() create) {
     return ProviderOverride(
       origin: this,
-      override: FilteredTransactionServiceProvider._internal(
+      override: HistoryFilteredTransactionServiceProvider._internal(
         () => create()..isIncome = isIncome,
         from: from,
         name: null,
@@ -150,14 +151,14 @@ class FilteredTransactionServiceProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<FilteredTransactionService,
+  AutoDisposeAsyncNotifierProviderElement<HistoryFilteredTransactionService,
       List<TransactionResponse>> createElement() {
-    return _FilteredTransactionServiceProviderElement(this);
+    return _HistoryFilteredTransactionServiceProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FilteredTransactionServiceProvider &&
+    return other is HistoryFilteredTransactionServiceProvider &&
         other.isIncome == isIncome;
   }
 
@@ -172,19 +173,21 @@ class FilteredTransactionServiceProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin FilteredTransactionServiceRef
+mixin HistoryFilteredTransactionServiceRef
     on AutoDisposeAsyncNotifierProviderRef<List<TransactionResponse>> {
   /// The parameter `isIncome` of this provider.
   bool get isIncome;
 }
 
-class _FilteredTransactionServiceProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<FilteredTransactionService,
-        List<TransactionResponse>> with FilteredTransactionServiceRef {
-  _FilteredTransactionServiceProviderElement(super.provider);
+class _HistoryFilteredTransactionServiceProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<
+        HistoryFilteredTransactionService,
+        List<TransactionResponse>> with HistoryFilteredTransactionServiceRef {
+  _HistoryFilteredTransactionServiceProviderElement(super.provider);
 
   @override
-  bool get isIncome => (origin as FilteredTransactionServiceProvider).isIncome;
+  bool get isIncome =>
+      (origin as HistoryFilteredTransactionServiceProvider).isIncome;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

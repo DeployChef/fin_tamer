@@ -1,8 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/account/ui/widgets/account_balance.dart';
 import 'package:fin_tamer/features/account/ui/widgets/account_currency.dart';
-import 'package:fin_tamer/features/currency/ui/currency_picker_bottom_sheet.dart';
-import 'package:fin_tamer/features/currency/ui/currency_widget.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/account/domain/services/hide_balance.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,11 @@ class _AccountBalanceState extends ConsumerState<AccountBalance> {
         ),
         trailing: Row(spacing: 16, mainAxisSize: MainAxisSize.min, children: [
           MoneyWidget(
-            amount: 123,
+            amount: ref.watch(accountServiceProvider).when(
+                  data: (data) => data == null ? 0 : double.parse(data.balance),
+                  error: (_, __) => 0,
+                  loading: () => 0,
+                ),
             isHide: ref.watch(hideBalanceProvider),
           ),
           const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),

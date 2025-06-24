@@ -6,7 +6,7 @@ part of 'hide_balance.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hideBalanceHash() => r'0f48e72a183310936d20cb3d2029b34c875ee8cc';
+String _$hideBalanceHash() => r'467bb4c46218e110867f83ba398f7df3dd0d75a3';
 
 /// See also [HideBalance].
 @ProviderFor(HideBalance)
