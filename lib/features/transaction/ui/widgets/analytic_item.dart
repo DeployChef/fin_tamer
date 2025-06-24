@@ -1,8 +1,7 @@
-import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_service.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/category_transaction_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class AnalyticItem extends StatelessWidget {
   const AnalyticItem({super.key, required this.item});
@@ -49,7 +48,9 @@ class AnalyticItem extends StatelessWidget {
         ),
         const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
       ]),
-      onTap: () {},
+      onTap: () async {
+        await CurrencyPickerBottomSheet.showCurrencyTransactionBottomSheet(context, item.transactions);
+      },
     );
   }
 }

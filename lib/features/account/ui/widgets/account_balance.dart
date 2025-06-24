@@ -76,9 +76,7 @@ class _AccountBalanceState extends ConsumerState<AccountBalance> {
           ),
           const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
         ]),
-        onTap: () {
-          ref.read(hideBalanceProvider.notifier).toggle();
-        },
+        onTap: () {},
       ),
     );
   }

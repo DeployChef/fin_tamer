@@ -39,7 +39,7 @@ class AnalyticsService extends _$AnalyticsService {
 
       return AnalyticsState(
         category: e.key,
-        lastTransactionTitle: "${last.category.name} ${last.comment}",
+        lastTransactionTitle: "${last.category.name}${last.comment != null ? " ${last.comment}" : ""}",
         transactions: e.value,
         amount: amount,
         percentage: percentage,

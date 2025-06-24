@@ -18,7 +18,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get account => 'Счет';
 
   @override
-  String get categories => 'Категории';
+  String get categories => 'Статьи';
 
   @override
   String get settings => 'Настройки';

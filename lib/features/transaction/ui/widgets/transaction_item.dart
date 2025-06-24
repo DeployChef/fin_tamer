@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({super.key, required this.item, this.showTime = false});
+  const TransactionItem({super.key, required this.item, this.showTime = false, this.enableDetails = true});
 
   final TransactionResponse item;
   final bool showTime;
+  final bool enableDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +54,18 @@ class TransactionItem extends StatelessWidget {
                 : const SizedBox.shrink(),
           ],
         ),
-        const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
+        enableDetails
+            ? const Icon(
+                Icons.chevron_right,
+                color: Color(0x4d3c3c43),
+              )
+            : const SizedBox.shrink(),
       ]),
-      onTap: () {
-        context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
-      },
+      onTap: enableDetails
+          ? () {
+              context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
+            }
+          : null,
     );
   }
 }
