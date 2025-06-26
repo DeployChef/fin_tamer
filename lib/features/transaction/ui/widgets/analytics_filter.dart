@@ -26,7 +26,7 @@ class AnalyticsFilter extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
-            "Период: начало",
+            loc.filterStartDatePeriod,
             style: theme.textTheme.bodyLarge,
           ),
           trailing: Container(
@@ -60,7 +60,7 @@ class AnalyticsFilter extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
-            "Период: конец",
+            loc.filterEndDatePeriod,
             style: theme.textTheme.bodyLarge,
           ),
           trailing: Container(

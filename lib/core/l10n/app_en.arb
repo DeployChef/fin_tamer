@@ -13,9 +13,12 @@
     "amountHistoryTitle": "Amount",
     "filterStartDate": "Start",
     "filterEndDate": "End",
+    "filterStartDatePeriod": "Period: start",
+    "filterEndDatePeriod": "Period: end",
     "filterSort": "Order by",
     "notFound": "Not found",
     "byDate": "date",
-    "byAmount": "amount"
+    "byAmount": "amount",
+    "analytics": "Analytics"
 
 }

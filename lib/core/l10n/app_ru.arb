@@ -13,8 +13,11 @@
     "amountHistoryTitle": "Сумма",
     "filterStartDate": "Начало",
     "filterEndDate": "Конец",
+    "filterStartDatePeriod": "Период: начало",
+    "filterEndDatePeriod": "Период: конец",
     "filterSort": "Сортировка",
     "notFound": "Записи не найдены",
     "byDate": "по дате",
-    "byAmount": "по сумме"
+    "byAmount": "по сумме",
+    "analytics": "Анализ"
 }

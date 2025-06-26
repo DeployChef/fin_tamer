@@ -15,7 +15,7 @@ class IncomeAnalyticsPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text("Анализ"),
+          title: Text(loc.analytics),
         ),
         body: const Column(
           children: [
