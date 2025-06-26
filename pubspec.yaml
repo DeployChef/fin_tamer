@@ -25,6 +25,10 @@ dependencies:
   collection: ^1.19.1
   fuzzywuzzy: ^1.2.0
 
+  objectbox: ^4.3.0
+  objectbox_flutter_libs: ^4.3.0
+  path_provider: ^2.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,6 +40,7 @@ dev_dependencies:
   riverpod_generator: ^2.6.5
   custom_lint: ^0.7.5
   riverpod_lint: ^2.6.5
+  objectbox_generator: ^4.3.0
 
 flutter:
   generate: true
