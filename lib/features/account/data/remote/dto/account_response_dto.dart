@@ -1,14 +1,14 @@
 import 'package:fin_tamer/features/account/domain/models/stat_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'account_response.freezed.dart';
-part 'account_response.g.dart';
+part 'account_response_dto.freezed.dart';
+part 'account_response_dto.g.dart';
 
 @freezed
-abstract class AccountResponse with _$AccountResponse {
-  const AccountResponse._();
+abstract class AccountResponseDto with _$AccountResponseDto {
+  const AccountResponseDto._();
 
-  const factory AccountResponse({
+  const factory AccountResponseDto({
     required int id,
     required String name,
     required String balance,
@@ -17,7 +17,7 @@ abstract class AccountResponse with _$AccountResponse {
     required List<StatItem> expenseStats,
     required DateTime createdAt,
     required DateTime updatedAt,
-  }) = _AccountResponse;
+  }) = _AccountResponseDto;
 
-  factory AccountResponse.fromJson(Map<String, dynamic> json) => _$AccountResponseFromJson(json);
+  factory AccountResponseDto.fromJson(Map<String, dynamic> json) => _$AccountResponseDtoFromJson(json);
 }
