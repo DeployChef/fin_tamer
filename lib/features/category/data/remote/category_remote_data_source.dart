@@ -20,4 +20,8 @@ class CategoryRemoteDataSource {
   Future<List<CategoryDto>> getByType(bool isIncome) async {
     return _db.where((c) => c.isIncome == isIncome).toList();
   }
+
+  Future<CategoryDto?> getById(int id) async {
+    return _db.where((c) => c.id == id).firstOrNull;
+  }
 }

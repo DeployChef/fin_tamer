@@ -1,15 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction.dart';
+part of 'transaction_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
+_TransactionResponseDto _$TransactionResponseDtoFromJson(
+        Map<String, dynamic> json) =>
+    _TransactionResponseDto(
       id: (json['id'] as num).toInt(),
-      account: AccountBrief.fromJson(json['account'] as Map<String, dynamic>),
-      category: Category.fromJson(json['category'] as Map<String, dynamic>),
+      account:
+          AccountBriefDto.fromJson(json['account'] as Map<String, dynamic>),
+      category: CategoryDto.fromJson(json['category'] as Map<String, dynamic>),
       amount: json['amount'] as String,
       transactionDate: DateTime.parse(json['transactionDate'] as String),
       comment: json['comment'] as String?,
@@ -17,7 +20,8 @@ _Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
+Map<String, dynamic> _$TransactionResponseDtoToJson(
+        _TransactionResponseDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'account': instance.account,

@@ -1,4 +1,4 @@
-import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class CurrencyPickerBottomSheet extends StatelessWidget {
     required this.transactions,
   });
 
-  final List<TransactionResponse> transactions;
+  final List<Transaction> transactions;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CurrencyPickerBottomSheet extends StatelessWidget {
     );
   }
 
-  static Future<void> showCurrencyTransactionBottomSheet(BuildContext context, List<TransactionResponse> transactions) async {
+  static Future<void> showCurrencyTransactionBottomSheet(BuildContext context, List<Transaction> transactions) async {
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,

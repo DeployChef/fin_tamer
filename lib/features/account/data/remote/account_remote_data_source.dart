@@ -35,7 +35,7 @@ class MockRemoteAccountDataSource {
     return newAcc;
   }
 
-  Future<AccountResponseDto?> getById(int id) async {
+  Future<AccountResponseDto?> getResponseById(int id) async {
     final acc = _db.where((c) => c.id == id).firstOrNull;
     if (acc == null) return null;
     return AccountResponseDto(
@@ -48,6 +48,10 @@ class MockRemoteAccountDataSource {
       createdAt: acc.createdAt,
       updatedAt: acc.updatedAt,
     );
+  }
+
+  Future<AccountDto?> getById(int id) async {
+    return _db.where((c) => c.id == id).firstOrNull;
   }
 
   Future<AccountDto?> update(int id, AccountUpdateRequestDto request) async {

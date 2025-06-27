@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$AnalyticsState {
   Category get category;
   String get lastTransactionTitle;
-  List<TransactionResponse> get transactions;
+  List<Transaction> get transactions;
   double get amount;
   double get percentage;
 
@@ -64,7 +64,7 @@ abstract mixin class $AnalyticsStateCopyWith<$Res> {
   $Res call(
       {Category category,
       String lastTransactionTitle,
-      List<TransactionResponse> transactions,
+      List<Transaction> transactions,
       double amount,
       double percentage});
 
@@ -102,7 +102,7 @@ class _$AnalyticsStateCopyWithImpl<$Res>
       transactions: null == transactions
           ? _self.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<TransactionResponse>,
+              as List<Transaction>,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -131,7 +131,7 @@ class _AnalyticsModel implements AnalyticsState {
   const _AnalyticsModel(
       {required this.category,
       required this.lastTransactionTitle,
-      required final List<TransactionResponse> transactions,
+      required final List<Transaction> transactions,
       required this.amount,
       required this.percentage})
       : _transactions = transactions;
@@ -140,9 +140,9 @@ class _AnalyticsModel implements AnalyticsState {
   final Category category;
   @override
   final String lastTransactionTitle;
-  final List<TransactionResponse> _transactions;
+  final List<Transaction> _transactions;
   @override
-  List<TransactionResponse> get transactions {
+  List<Transaction> get transactions {
     if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_transactions);
@@ -198,7 +198,7 @@ abstract mixin class _$AnalyticsModelCopyWith<$Res>
   $Res call(
       {Category category,
       String lastTransactionTitle,
-      List<TransactionResponse> transactions,
+      List<Transaction> transactions,
       double amount,
       double percentage});
 
@@ -237,7 +237,7 @@ class __$AnalyticsModelCopyWithImpl<$Res>
       transactions: null == transactions
           ? _self._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<TransactionResponse>,
+              as List<Transaction>,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable

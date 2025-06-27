@@ -4,9 +4,10 @@ import 'package:fin_tamer/features/account/domain/services/account_service.dart'
 import 'package:fin_tamer/features/category/data/category_repository.dart';
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
-import 'package:fin_tamer/features/transaction/data/mock_transaction_repository.dart';
+import 'package:fin_tamer/features/transaction/data/transaction_repository.dart';
+import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
-import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_filter_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,7 +18,12 @@ part 'analytics_service.freezed.dart';
 
 @Riverpod(dependencies: [AccountService, AnalyticsFilterService])
 class AnalyticsService extends _$AnalyticsService {
-  static final ITransactionRepository transactionRepo = MockTransactionRepository(AccountRepository(MockRemoteAccountDataSource()), CategoryRepository(CategoryRemoteDataSource()));
+  static final ITransactionRepository transactionRepo = TransactionRepository(
+    MockTransactionRemoteDataSource(
+      MockRemoteAccountDataSource(),
+      CategoryRemoteDataSource(),
+    ),
+  );
 
   @override
   FutureOr<List<AnalyticsState>> build({required bool isIncome}) async {
@@ -57,7 +63,7 @@ abstract class AnalyticsState with _$AnalyticsState {
   const factory AnalyticsState({
     required Category category,
     required String lastTransactionTitle,
-    required List<TransactionResponse> transactions,
+    required List<Transaction> transactions,
     required double amount,
     required double percentage,
   }) = _AnalyticsModel;

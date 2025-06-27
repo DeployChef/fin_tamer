@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'transaction_request.dart';
+part of 'transaction_create_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,29 +14,29 @@ part of 'transaction_request.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$TransactionRequest {
+mixin _$TransactionCreateData {
   int get accountId;
   int get categoryId;
   String get amount;
   DateTime get transactionDate;
   String? get comment;
 
-  /// Create a copy of TransactionRequest
+  /// Create a copy of TransactionCreateData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $TransactionRequestCopyWith<TransactionRequest> get copyWith =>
-      _$TransactionRequestCopyWithImpl<TransactionRequest>(
-          this as TransactionRequest, _$identity);
+  $TransactionCreateDataCopyWith<TransactionCreateData> get copyWith =>
+      _$TransactionCreateDataCopyWithImpl<TransactionCreateData>(
+          this as TransactionCreateData, _$identity);
 
-  /// Serializes this TransactionRequest to a JSON map.
+  /// Serializes this TransactionCreateData to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TransactionRequest &&
+            other is TransactionCreateData &&
             (identical(other.accountId, accountId) ||
                 other.accountId == accountId) &&
             (identical(other.categoryId, categoryId) ||
@@ -54,15 +54,15 @@ mixin _$TransactionRequest {
 
   @override
   String toString() {
-    return 'TransactionRequest(accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment)';
+    return 'TransactionCreateData(accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment)';
   }
 }
 
 /// @nodoc
-abstract mixin class $TransactionRequestCopyWith<$Res> {
-  factory $TransactionRequestCopyWith(
-          TransactionRequest value, $Res Function(TransactionRequest) _then) =
-      _$TransactionRequestCopyWithImpl;
+abstract mixin class $TransactionCreateDataCopyWith<$Res> {
+  factory $TransactionCreateDataCopyWith(TransactionCreateData value,
+          $Res Function(TransactionCreateData) _then) =
+      _$TransactionCreateDataCopyWithImpl;
   @useResult
   $Res call(
       {int accountId,
@@ -73,14 +73,14 @@ abstract mixin class $TransactionRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransactionRequestCopyWithImpl<$Res>
-    implements $TransactionRequestCopyWith<$Res> {
-  _$TransactionRequestCopyWithImpl(this._self, this._then);
+class _$TransactionCreateDataCopyWithImpl<$Res>
+    implements $TransactionCreateDataCopyWith<$Res> {
+  _$TransactionCreateDataCopyWithImpl(this._self, this._then);
 
-  final TransactionRequest _self;
-  final $Res Function(TransactionRequest) _then;
+  final TransactionCreateData _self;
+  final $Res Function(TransactionCreateData) _then;
 
-  /// Create a copy of TransactionRequest
+  /// Create a copy of TransactionCreateData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -118,16 +118,16 @@ class _$TransactionRequestCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _TransactionRequest extends TransactionRequest {
-  const _TransactionRequest(
+class _TransactionCreateData extends TransactionCreateData {
+  const _TransactionCreateData(
       {required this.accountId,
       required this.categoryId,
       required this.amount,
       required this.transactionDate,
       this.comment})
       : super._();
-  factory _TransactionRequest.fromJson(Map<String, dynamic> json) =>
-      _$TransactionRequestFromJson(json);
+  factory _TransactionCreateData.fromJson(Map<String, dynamic> json) =>
+      _$TransactionCreateDataFromJson(json);
 
   @override
   final int accountId;
@@ -140,17 +140,18 @@ class _TransactionRequest extends TransactionRequest {
   @override
   final String? comment;
 
-  /// Create a copy of TransactionRequest
+  /// Create a copy of TransactionCreateData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$TransactionRequestCopyWith<_TransactionRequest> get copyWith =>
-      __$TransactionRequestCopyWithImpl<_TransactionRequest>(this, _$identity);
+  _$TransactionCreateDataCopyWith<_TransactionCreateData> get copyWith =>
+      __$TransactionCreateDataCopyWithImpl<_TransactionCreateData>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$TransactionRequestToJson(
+    return _$TransactionCreateDataToJson(
       this,
     );
   }
@@ -159,7 +160,7 @@ class _TransactionRequest extends TransactionRequest {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TransactionRequest &&
+            other is _TransactionCreateData &&
             (identical(other.accountId, accountId) ||
                 other.accountId == accountId) &&
             (identical(other.categoryId, categoryId) ||
@@ -177,16 +178,16 @@ class _TransactionRequest extends TransactionRequest {
 
   @override
   String toString() {
-    return 'TransactionRequest(accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment)';
+    return 'TransactionCreateData(accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$TransactionRequestCopyWith<$Res>
-    implements $TransactionRequestCopyWith<$Res> {
-  factory _$TransactionRequestCopyWith(
-          _TransactionRequest value, $Res Function(_TransactionRequest) _then) =
-      __$TransactionRequestCopyWithImpl;
+abstract mixin class _$TransactionCreateDataCopyWith<$Res>
+    implements $TransactionCreateDataCopyWith<$Res> {
+  factory _$TransactionCreateDataCopyWith(_TransactionCreateData value,
+          $Res Function(_TransactionCreateData) _then) =
+      __$TransactionCreateDataCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -198,14 +199,14 @@ abstract mixin class _$TransactionRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TransactionRequestCopyWithImpl<$Res>
-    implements _$TransactionRequestCopyWith<$Res> {
-  __$TransactionRequestCopyWithImpl(this._self, this._then);
+class __$TransactionCreateDataCopyWithImpl<$Res>
+    implements _$TransactionCreateDataCopyWith<$Res> {
+  __$TransactionCreateDataCopyWithImpl(this._self, this._then);
 
-  final _TransactionRequest _self;
-  final $Res Function(_TransactionRequest) _then;
+  final _TransactionCreateData _self;
+  final $Res Function(_TransactionCreateData) _then;
 
-  /// Create a copy of TransactionRequest
+  /// Create a copy of TransactionCreateData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -216,7 +217,7 @@ class __$TransactionRequestCopyWithImpl<$Res>
     Object? transactionDate = null,
     Object? comment = freezed,
   }) {
-    return _then(_TransactionRequest(
+    return _then(_TransactionCreateData(
       accountId: null == accountId
           ? _self.accountId
           : accountId // ignore: cast_nullable_to_non_nullable

@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'transaction.dart';
+part of 'transaction_response_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,31 +14,32 @@ part of 'transaction.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$Transaction {
+mixin _$TransactionResponseDto {
   int get id;
-  AccountBrief get account;
-  Category get category;
+  AccountBriefDto get account;
+  CategoryDto get category;
   String get amount;
   DateTime get transactionDate;
   String? get comment;
   DateTime get createdAt;
   DateTime get updatedAt;
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $TransactionCopyWith<Transaction> get copyWith =>
-      _$TransactionCopyWithImpl<Transaction>(this as Transaction, _$identity);
+  $TransactionResponseDtoCopyWith<TransactionResponseDto> get copyWith =>
+      _$TransactionResponseDtoCopyWithImpl<TransactionResponseDto>(
+          this as TransactionResponseDto, _$identity);
 
-  /// Serializes this Transaction to a JSON map.
+  /// Serializes this TransactionResponseDto to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Transaction &&
+            other is TransactionResponseDto &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.category, category) ||
@@ -60,38 +61,39 @@ mixin _$Transaction {
 
   @override
   String toString() {
-    return 'Transaction(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TransactionResponseDto(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract mixin class $TransactionCopyWith<$Res> {
-  factory $TransactionCopyWith(
-          Transaction value, $Res Function(Transaction) _then) =
-      _$TransactionCopyWithImpl;
+abstract mixin class $TransactionResponseDtoCopyWith<$Res> {
+  factory $TransactionResponseDtoCopyWith(TransactionResponseDto value,
+          $Res Function(TransactionResponseDto) _then) =
+      _$TransactionResponseDtoCopyWithImpl;
   @useResult
   $Res call(
       {int id,
-      AccountBrief account,
-      Category category,
+      AccountBriefDto account,
+      CategoryDto category,
       String amount,
       DateTime transactionDate,
       String? comment,
       DateTime createdAt,
       DateTime updatedAt});
 
-  $AccountBriefCopyWith<$Res> get account;
-  $CategoryCopyWith<$Res> get category;
+  $AccountBriefDtoCopyWith<$Res> get account;
+  $CategoryDtoCopyWith<$Res> get category;
 }
 
 /// @nodoc
-class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
-  _$TransactionCopyWithImpl(this._self, this._then);
+class _$TransactionResponseDtoCopyWithImpl<$Res>
+    implements $TransactionResponseDtoCopyWith<$Res> {
+  _$TransactionResponseDtoCopyWithImpl(this._self, this._then);
 
-  final Transaction _self;
-  final $Res Function(Transaction) _then;
+  final TransactionResponseDto _self;
+  final $Res Function(TransactionResponseDto) _then;
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -113,11 +115,11 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
       account: null == account
           ? _self.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBrief,
+              as AccountBriefDto,
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
+              as CategoryDto,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -141,22 +143,22 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
     ));
   }
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccountBriefCopyWith<$Res> get account {
-    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+  $AccountBriefDtoCopyWith<$Res> get account {
+    return $AccountBriefDtoCopyWith<$Res>(_self.account, (value) {
       return _then(_self.copyWith(account: value));
     });
   }
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_self.category, (value) {
+  $CategoryDtoCopyWith<$Res> get category {
+    return $CategoryDtoCopyWith<$Res>(_self.category, (value) {
       return _then(_self.copyWith(category: value));
     });
   }
@@ -164,8 +166,8 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class _Transaction extends Transaction {
-  const _Transaction(
+class _TransactionResponseDto extends TransactionResponseDto {
+  const _TransactionResponseDto(
       {required this.id,
       required this.account,
       required this.category,
@@ -175,15 +177,15 @@ class _Transaction extends Transaction {
       required this.createdAt,
       required this.updatedAt})
       : super._();
-  factory _Transaction.fromJson(Map<String, dynamic> json) =>
-      _$TransactionFromJson(json);
+  factory _TransactionResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TransactionResponseDtoFromJson(json);
 
   @override
   final int id;
   @override
-  final AccountBrief account;
+  final AccountBriefDto account;
   @override
-  final Category category;
+  final CategoryDto category;
   @override
   final String amount;
   @override
@@ -195,17 +197,18 @@ class _Transaction extends Transaction {
   @override
   final DateTime updatedAt;
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$TransactionCopyWith<_Transaction> get copyWith =>
-      __$TransactionCopyWithImpl<_Transaction>(this, _$identity);
+  _$TransactionResponseDtoCopyWith<_TransactionResponseDto> get copyWith =>
+      __$TransactionResponseDtoCopyWithImpl<_TransactionResponseDto>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$TransactionToJson(
+    return _$TransactionResponseDtoToJson(
       this,
     );
   }
@@ -214,7 +217,7 @@ class _Transaction extends Transaction {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Transaction &&
+            other is _TransactionResponseDto &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.category, category) ||
@@ -236,22 +239,22 @@ class _Transaction extends Transaction {
 
   @override
   String toString() {
-    return 'Transaction(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TransactionResponseDto(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$TransactionCopyWith<$Res>
-    implements $TransactionCopyWith<$Res> {
-  factory _$TransactionCopyWith(
-          _Transaction value, $Res Function(_Transaction) _then) =
-      __$TransactionCopyWithImpl;
+abstract mixin class _$TransactionResponseDtoCopyWith<$Res>
+    implements $TransactionResponseDtoCopyWith<$Res> {
+  factory _$TransactionResponseDtoCopyWith(_TransactionResponseDto value,
+          $Res Function(_TransactionResponseDto) _then) =
+      __$TransactionResponseDtoCopyWithImpl;
   @override
   @useResult
   $Res call(
       {int id,
-      AccountBrief account,
-      Category category,
+      AccountBriefDto account,
+      CategoryDto category,
       String amount,
       DateTime transactionDate,
       String? comment,
@@ -259,19 +262,20 @@ abstract mixin class _$TransactionCopyWith<$Res>
       DateTime updatedAt});
 
   @override
-  $AccountBriefCopyWith<$Res> get account;
+  $AccountBriefDtoCopyWith<$Res> get account;
   @override
-  $CategoryCopyWith<$Res> get category;
+  $CategoryDtoCopyWith<$Res> get category;
 }
 
 /// @nodoc
-class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
-  __$TransactionCopyWithImpl(this._self, this._then);
+class __$TransactionResponseDtoCopyWithImpl<$Res>
+    implements _$TransactionResponseDtoCopyWith<$Res> {
+  __$TransactionResponseDtoCopyWithImpl(this._self, this._then);
 
-  final _Transaction _self;
-  final $Res Function(_Transaction) _then;
+  final _TransactionResponseDto _self;
+  final $Res Function(_TransactionResponseDto) _then;
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -285,7 +289,7 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_Transaction(
+    return _then(_TransactionResponseDto(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -293,11 +297,11 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
       account: null == account
           ? _self.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBrief,
+              as AccountBriefDto,
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
+              as CategoryDto,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -321,22 +325,22 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
     ));
   }
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccountBriefCopyWith<$Res> get account {
-    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+  $AccountBriefDtoCopyWith<$Res> get account {
+    return $AccountBriefDtoCopyWith<$Res>(_self.account, (value) {
       return _then(_self.copyWith(account: value));
     });
   }
 
-  /// Create a copy of Transaction
+  /// Create a copy of TransactionResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_self.category, (value) {
+  $CategoryDtoCopyWith<$Res> get category {
+    return $CategoryDtoCopyWith<$Res>(_self.category, (value) {
       return _then(_self.copyWith(category: value));
     });
   }

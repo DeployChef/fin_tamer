@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction_request.dart';
+part of 'transaction_request_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_TransactionRequest _$TransactionRequestFromJson(Map<String, dynamic> json) =>
-    _TransactionRequest(
+_TransactionRequestDto _$TransactionRequestDtoFromJson(
+        Map<String, dynamic> json) =>
+    _TransactionRequestDto(
       accountId: (json['accountId'] as num).toInt(),
       categoryId: (json['categoryId'] as num).toInt(),
       amount: json['amount'] as String,
@@ -15,7 +16,8 @@ _TransactionRequest _$TransactionRequestFromJson(Map<String, dynamic> json) =>
       comment: json['comment'] as String?,
     );
 
-Map<String, dynamic> _$TransactionRequestToJson(_TransactionRequest instance) =>
+Map<String, dynamic> _$TransactionRequestDtoToJson(
+        _TransactionRequestDto instance) =>
     <String, dynamic>{
       'accountId': instance.accountId,
       'categoryId': instance.categoryId,

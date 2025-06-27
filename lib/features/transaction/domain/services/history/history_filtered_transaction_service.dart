@@ -3,10 +3,11 @@ import 'package:fin_tamer/features/account/data/remote/account_remote_data_sourc
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/category/data/category_repository.dart';
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
-import 'package:fin_tamer/features/transaction/data/mock_transaction_repository.dart';
+import 'package:fin_tamer/features/transaction/data/transaction_repository.dart';
+import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
-import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,10 +15,15 @@ part 'history_filtered_transaction_service.g.dart';
 
 @Riverpod(dependencies: [AccountService, HistoryFilterService])
 class HistoryFilteredTransactionService extends _$HistoryFilteredTransactionService {
-  static final ITransactionRepository transactionRepo = MockTransactionRepository(AccountRepository(MockRemoteAccountDataSource()), CategoryRepository(CategoryRemoteDataSource()));
+  static final ITransactionRepository transactionRepo = TransactionRepository(
+    MockTransactionRemoteDataSource(
+      MockRemoteAccountDataSource(),
+      CategoryRemoteDataSource(),
+    ),
+  );
 
   @override
-  FutureOr<List<TransactionResponse>> build({required bool isIncome}) async {
+  FutureOr<List<Transaction>> build({required bool isIncome}) async {
     final account = await ref.watch(accountServiceProvider.future);
 
     if (account == null) return [];

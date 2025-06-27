@@ -7,7 +7,7 @@ part of 'history_filtered_transaction_service.dart';
 // **************************************************************************
 
 String _$historyFilteredTransactionServiceHash() =>
-    r'5561b7ddf8f3e5735928946ea2c2e8f92dac0fae';
+    r'f60827f0e7458b05ccfda2b2ca038960919b74eb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 }
 
 abstract class _$HistoryFilteredTransactionService
-    extends BuildlessAutoDisposeAsyncNotifier<List<TransactionResponse>> {
+    extends BuildlessAutoDisposeAsyncNotifier<List<Transaction>> {
   late final bool isIncome;
 
-  FutureOr<List<TransactionResponse>> build({
+  FutureOr<List<Transaction>> build({
     required bool isIncome,
   });
 }
@@ -46,7 +46,7 @@ const historyFilteredTransactionServiceProvider =
 
 /// See also [HistoryFilteredTransactionService].
 class HistoryFilteredTransactionServiceFamily
-    extends Family<AsyncValue<List<TransactionResponse>>> {
+    extends Family<AsyncValue<List<Transaction>>> {
   /// See also [HistoryFilteredTransactionService].
   const HistoryFilteredTransactionServiceFamily();
 
@@ -95,7 +95,7 @@ class HistoryFilteredTransactionServiceFamily
 /// See also [HistoryFilteredTransactionService].
 class HistoryFilteredTransactionServiceProvider
     extends AutoDisposeAsyncNotifierProviderImpl<
-        HistoryFilteredTransactionService, List<TransactionResponse>> {
+        HistoryFilteredTransactionService, List<Transaction>> {
   /// See also [HistoryFilteredTransactionService].
   HistoryFilteredTransactionServiceProvider({
     required bool isIncome,
@@ -126,7 +126,7 @@ class HistoryFilteredTransactionServiceProvider
   final bool isIncome;
 
   @override
-  FutureOr<List<TransactionResponse>> runNotifierBuild(
+  FutureOr<List<Transaction>> runNotifierBuild(
     covariant HistoryFilteredTransactionService notifier,
   ) {
     return notifier.build(
@@ -152,7 +152,7 @@ class HistoryFilteredTransactionServiceProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<HistoryFilteredTransactionService,
-      List<TransactionResponse>> createElement() {
+      List<Transaction>> createElement() {
     return _HistoryFilteredTransactionServiceProviderElement(this);
   }
 
@@ -174,7 +174,7 @@ class HistoryFilteredTransactionServiceProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin HistoryFilteredTransactionServiceRef
-    on AutoDisposeAsyncNotifierProviderRef<List<TransactionResponse>> {
+    on AutoDisposeAsyncNotifierProviderRef<List<Transaction>> {
   /// The parameter `isIncome` of this provider.
   bool get isIncome;
 }
@@ -182,7 +182,7 @@ mixin HistoryFilteredTransactionServiceRef
 class _HistoryFilteredTransactionServiceProviderElement
     extends AutoDisposeAsyncNotifierProviderElement<
         HistoryFilteredTransactionService,
-        List<TransactionResponse>> with HistoryFilteredTransactionServiceRef {
+        List<Transaction>> with HistoryFilteredTransactionServiceRef {
   _HistoryFilteredTransactionServiceProviderElement(super.provider);
 
   @override

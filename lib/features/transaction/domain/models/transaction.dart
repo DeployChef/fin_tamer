@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
+import 'package:fin_tamer/features/category/domain/models/category.dart';
 
 part 'transaction.freezed.dart';
 part 'transaction.g.dart';
@@ -9,8 +11,8 @@ abstract class Transaction with _$Transaction {
 
   const factory Transaction({
     required int id,
-    required int accountId,
-    required int categoryId,
+    required AccountBrief account,
+    required Category category,
     required String amount,
     required DateTime transactionDate,
     String? comment,
