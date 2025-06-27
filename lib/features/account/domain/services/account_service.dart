@@ -17,4 +17,11 @@ class AccountService extends _$AccountService {
 
     return accounts.first;
   }
+
+  Future<void> updateAccount({required String name}) async {
+    final account = state.value;
+    if (account != null) {
+      state = AsyncData(account.copyWith(name: name));
+    }
+  }
 }

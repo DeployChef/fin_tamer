@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData light() {
     return ThemeData.light().copyWith(
+      primaryColor: AppColors.primaryLight,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.primaryLight,
