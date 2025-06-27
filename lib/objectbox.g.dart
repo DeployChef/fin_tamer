@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'features/category/data/local/entities/category_entity.dart';
+import 'features/history/data/local/entities/history_entity.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -53,6 +54,64 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(5, 2164722955887051621),
         name: 'apiId',
         type: 6,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 7951609919812821731),
+    name: 'HistoryEntity',
+    lastPropertyId: const obx_int.IdUid(8, 27775157830502293),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 4023632695592437656),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3960312945438535773),
+        name: 'apiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 6929800089414226823),
+        name: 'accountId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 9043974459244823721),
+        name: 'changeType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 725969776815586734),
+        name: 'previousStateJson',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 6549160774005160476),
+        name: 'newStateJson',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 325875762559090582),
+        name: 'changeTimestamp',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 27775157830502293),
+        name: 'createdAt',
+        type: 10,
         flags: 0,
       ),
     ],
@@ -99,7 +158,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 7272498888885002791),
+    lastEntityId: const obx_int.IdUid(4, 7951609919812821731),
     lastIndexId: const obx_int.IdUid(1, 2005279266660496490),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -185,6 +244,82 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    HistoryEntity: obx_int.EntityDefinition<HistoryEntity>(
+      model: _entities[1],
+      toOneRelations: (HistoryEntity object) => [],
+      toManyRelations: (HistoryEntity object) => {},
+      getId: (HistoryEntity object) => object.id,
+      setId: (HistoryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (HistoryEntity object, fb.Builder fbb) {
+        final changeTypeOffset = fbb.writeString(object.changeType);
+        final previousStateJsonOffset = fbb.writeString(
+          object.previousStateJson,
+        );
+        final newStateJsonOffset = fbb.writeString(object.newStateJson);
+        fbb.startTable(9);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.apiId);
+        fbb.addInt64(2, object.accountId);
+        fbb.addOffset(3, changeTypeOffset);
+        fbb.addOffset(4, previousStateJsonOffset);
+        fbb.addOffset(5, newStateJsonOffset);
+        fbb.addInt64(6, object.changeTimestamp.millisecondsSinceEpoch);
+        fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final apiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final accountIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final changeTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final previousStateJsonParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final newStateJsonParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 14, '');
+        final changeTimestampParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0),
+        );
+        final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0),
+        );
+        final object = HistoryEntity(
+          id: idParam,
+          apiId: apiIdParam,
+          accountId: accountIdParam,
+          changeType: changeTypeParam,
+          previousStateJson: previousStateJsonParam,
+          newStateJson: newStateJsonParam,
+          changeTimestamp: changeTimestampParam,
+          createdAt: createdAtParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -215,5 +350,48 @@ class CategoryEntity_ {
   /// See [CategoryEntity.apiId].
   static final apiId = obx.QueryIntegerProperty<CategoryEntity>(
     _entities[0].properties[4],
+  );
+}
+
+/// [HistoryEntity] entity fields to define ObjectBox queries.
+class HistoryEntity_ {
+  /// See [HistoryEntity.id].
+  static final id = obx.QueryIntegerProperty<HistoryEntity>(
+    _entities[1].properties[0],
+  );
+
+  /// See [HistoryEntity.apiId].
+  static final apiId = obx.QueryIntegerProperty<HistoryEntity>(
+    _entities[1].properties[1],
+  );
+
+  /// See [HistoryEntity.accountId].
+  static final accountId = obx.QueryIntegerProperty<HistoryEntity>(
+    _entities[1].properties[2],
+  );
+
+  /// See [HistoryEntity.changeType].
+  static final changeType = obx.QueryStringProperty<HistoryEntity>(
+    _entities[1].properties[3],
+  );
+
+  /// See [HistoryEntity.previousStateJson].
+  static final previousStateJson = obx.QueryStringProperty<HistoryEntity>(
+    _entities[1].properties[4],
+  );
+
+  /// See [HistoryEntity.newStateJson].
+  static final newStateJson = obx.QueryStringProperty<HistoryEntity>(
+    _entities[1].properties[5],
+  );
+
+  /// See [HistoryEntity.changeTimestamp].
+  static final changeTimestamp = obx.QueryDateProperty<HistoryEntity>(
+    _entities[1].properties[6],
+  );
+
+  /// See [HistoryEntity.createdAt].
+  static final createdAt = obx.QueryDateProperty<HistoryEntity>(
+    _entities[1].properties[7],
   );
 }

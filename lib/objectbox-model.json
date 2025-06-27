@@ -36,9 +36,58 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:7951609919812821731",
+      "lastPropertyId": "8:27775157830502293",
+      "name": "HistoryEntity",
+      "properties": [
+        {
+          "id": "1:4023632695592437656",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3960312945438535773",
+          "name": "apiId",
+          "type": 6
+        },
+        {
+          "id": "3:6929800089414226823",
+          "name": "accountId",
+          "type": 6
+        },
+        {
+          "id": "4:9043974459244823721",
+          "name": "changeType",
+          "type": 9
+        },
+        {
+          "id": "5:725969776815586734",
+          "name": "previousStateJson",
+          "type": 9
+        },
+        {
+          "id": "6:6549160774005160476",
+          "name": "newStateJson",
+          "type": 9
+        },
+        {
+          "id": "7:325875762559090582",
+          "name": "changeTimestamp",
+          "type": 10
+        },
+        {
+          "id": "8:27775157830502293",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:7272498888885002791",
+  "lastEntityId": "4:7951609919812821731",
   "lastIndexId": "1:2005279266660496490",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -4,6 +4,10 @@ import 'package:fin_tamer/features/category/data/local/category_local_data_sourc
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/category_repository.dart';
 import 'package:fin_tamer/core/di/objectbox_providers.dart';
+import 'package:fin_tamer/features/history/data/local/history_local_data_source.dart';
+import 'package:fin_tamer/features/history/data/remote/history_remote_data_source.dart';
+import 'package:fin_tamer/features/history/data/history_repository.dart';
+import 'package:fin_tamer/features/history/data/local/entities/history_entity.dart';
 
 part 'repository_providers.g.dart';
 
@@ -23,6 +27,28 @@ Future<CategoryRepository> categoryRepository(Ref ref) async {
   final local = await ref.watch(categoryLocalDataSourceProvider.future);
   final remote = ref.watch(categoryRemoteDataSourceProvider);
   return CategoryRepository(
+    localDataSource: local,
+    remoteDataSource: remote,
+  );
+}
+
+@Riverpod(keepAlive: true)
+Future<HistoryLocalDataSource> historyLocalDataSource(Ref ref) async {
+  final store = await ref.watch(objectBoxStoreProvider.future);
+  final box = store.box<HistoryEntity>();
+  return HistoryLocalDataSource(box);
+}
+
+@Riverpod(keepAlive: true)
+HistoryRemoteDataSource historyRemoteDataSource(Ref ref) {
+  return HistoryRemoteDataSource();
+}
+
+@Riverpod(keepAlive: true)
+Future<HistoryRepository> historyRepository(Ref ref) async {
+  final local = await ref.watch(historyLocalDataSourceProvider.future);
+  final remote = ref.watch(historyRemoteDataSourceProvider);
+  return HistoryRepository(
     localDataSource: local,
     remoteDataSource: remote,
   );
