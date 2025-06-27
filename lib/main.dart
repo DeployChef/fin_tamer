@@ -1,6 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/core/navigation/routers/app_router.dart';
-import 'package:fin_tamer/features/account/data/entities/account_entity.dart';
+import 'package:fin_tamer/features/account/data/local/entities/account_entity.dart';
 import 'package:fin_tamer/core/local/objectbox_store.dart';
 import 'package:fin_tamer/styles/app_theme.dart';
 import 'package:flutter/material.dart';

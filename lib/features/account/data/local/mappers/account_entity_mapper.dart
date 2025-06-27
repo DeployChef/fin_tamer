@@ -1,4 +1,4 @@
-import 'package:fin_tamer/features/account/data/entities/account_entity.dart';
+import 'package:fin_tamer/features/account/data/local/entities/account_entity.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 
 extension AccountEntityMapper on AccountEntity {
