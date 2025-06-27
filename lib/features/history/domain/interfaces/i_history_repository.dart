@@ -1,5 +1,5 @@
-import 'package:fin_tamer/features/history/domain/models/account_history_response.dart';
+import 'package:fin_tamer/features/history/domain/models/account_history_feed.dart';
 
 abstract interface class IHistoryRepository {
-  Future<AccountHistoryResponse?> getAccountById(int id);
+  Future<AccountHistoryFeed?> getAccountById(int id);
 }

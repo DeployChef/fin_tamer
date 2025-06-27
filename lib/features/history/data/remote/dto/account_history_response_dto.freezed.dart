@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'account_history_response.dart';
+part of 'account_history_response_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,29 +14,29 @@ part of 'account_history_response.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AccountHistoryResponse {
+mixin _$AccountHistoryResponseDto {
   int get accountId;
   String get accountName;
   String get currency;
   String get currentBalance;
-  List<AccountHistory> get history;
+  List<AccountHistoryDto> get history;
 
-  /// Create a copy of AccountHistoryResponse
+  /// Create a copy of AccountHistoryResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $AccountHistoryResponseCopyWith<AccountHistoryResponse> get copyWith =>
-      _$AccountHistoryResponseCopyWithImpl<AccountHistoryResponse>(
-          this as AccountHistoryResponse, _$identity);
+  $AccountHistoryResponseDtoCopyWith<AccountHistoryResponseDto> get copyWith =>
+      _$AccountHistoryResponseDtoCopyWithImpl<AccountHistoryResponseDto>(
+          this as AccountHistoryResponseDto, _$identity);
 
-  /// Serializes this AccountHistoryResponse to a JSON map.
+  /// Serializes this AccountHistoryResponseDto to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AccountHistoryResponse &&
+            other is AccountHistoryResponseDto &&
             (identical(other.accountId, accountId) ||
                 other.accountId == accountId) &&
             (identical(other.accountName, accountName) ||
@@ -55,33 +55,33 @@ mixin _$AccountHistoryResponse {
 
   @override
   String toString() {
-    return 'AccountHistoryResponse(accountId: $accountId, accountName: $accountName, currency: $currency, currentBalance: $currentBalance, history: $history)';
+    return 'AccountHistoryResponseDto(accountId: $accountId, accountName: $accountName, currency: $currency, currentBalance: $currentBalance, history: $history)';
   }
 }
 
 /// @nodoc
-abstract mixin class $AccountHistoryResponseCopyWith<$Res> {
-  factory $AccountHistoryResponseCopyWith(AccountHistoryResponse value,
-          $Res Function(AccountHistoryResponse) _then) =
-      _$AccountHistoryResponseCopyWithImpl;
+abstract mixin class $AccountHistoryResponseDtoCopyWith<$Res> {
+  factory $AccountHistoryResponseDtoCopyWith(AccountHistoryResponseDto value,
+          $Res Function(AccountHistoryResponseDto) _then) =
+      _$AccountHistoryResponseDtoCopyWithImpl;
   @useResult
   $Res call(
       {int accountId,
       String accountName,
       String currency,
       String currentBalance,
-      List<AccountHistory> history});
+      List<AccountHistoryDto> history});
 }
 
 /// @nodoc
-class _$AccountHistoryResponseCopyWithImpl<$Res>
-    implements $AccountHistoryResponseCopyWith<$Res> {
-  _$AccountHistoryResponseCopyWithImpl(this._self, this._then);
+class _$AccountHistoryResponseDtoCopyWithImpl<$Res>
+    implements $AccountHistoryResponseDtoCopyWith<$Res> {
+  _$AccountHistoryResponseDtoCopyWithImpl(this._self, this._then);
 
-  final AccountHistoryResponse _self;
-  final $Res Function(AccountHistoryResponse) _then;
+  final AccountHistoryResponseDto _self;
+  final $Res Function(AccountHistoryResponseDto) _then;
 
-  /// Create a copy of AccountHistoryResponse
+  /// Create a copy of AccountHistoryResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -112,24 +112,24 @@ class _$AccountHistoryResponseCopyWithImpl<$Res>
       history: null == history
           ? _self.history
           : history // ignore: cast_nullable_to_non_nullable
-              as List<AccountHistory>,
+              as List<AccountHistoryDto>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _AccountHistoryResponse extends AccountHistoryResponse {
-  const _AccountHistoryResponse(
+class _AccountHistoryResponseDto extends AccountHistoryResponseDto {
+  const _AccountHistoryResponseDto(
       {required this.accountId,
       required this.accountName,
       required this.currency,
       required this.currentBalance,
-      required final List<AccountHistory> history})
+      required final List<AccountHistoryDto> history})
       : _history = history,
         super._();
-  factory _AccountHistoryResponse.fromJson(Map<String, dynamic> json) =>
-      _$AccountHistoryResponseFromJson(json);
+  factory _AccountHistoryResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$AccountHistoryResponseDtoFromJson(json);
 
   @override
   final int accountId;
@@ -139,26 +139,27 @@ class _AccountHistoryResponse extends AccountHistoryResponse {
   final String currency;
   @override
   final String currentBalance;
-  final List<AccountHistory> _history;
+  final List<AccountHistoryDto> _history;
   @override
-  List<AccountHistory> get history {
+  List<AccountHistoryDto> get history {
     if (_history is EqualUnmodifiableListView) return _history;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_history);
   }
 
-  /// Create a copy of AccountHistoryResponse
+  /// Create a copy of AccountHistoryResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AccountHistoryResponseCopyWith<_AccountHistoryResponse> get copyWith =>
-      __$AccountHistoryResponseCopyWithImpl<_AccountHistoryResponse>(
-          this, _$identity);
+  _$AccountHistoryResponseDtoCopyWith<_AccountHistoryResponseDto>
+      get copyWith =>
+          __$AccountHistoryResponseDtoCopyWithImpl<_AccountHistoryResponseDto>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$AccountHistoryResponseToJson(
+    return _$AccountHistoryResponseDtoToJson(
       this,
     );
   }
@@ -167,7 +168,7 @@ class _AccountHistoryResponse extends AccountHistoryResponse {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AccountHistoryResponse &&
+            other is _AccountHistoryResponseDto &&
             (identical(other.accountId, accountId) ||
                 other.accountId == accountId) &&
             (identical(other.accountName, accountName) ||
@@ -186,16 +187,16 @@ class _AccountHistoryResponse extends AccountHistoryResponse {
 
   @override
   String toString() {
-    return 'AccountHistoryResponse(accountId: $accountId, accountName: $accountName, currency: $currency, currentBalance: $currentBalance, history: $history)';
+    return 'AccountHistoryResponseDto(accountId: $accountId, accountName: $accountName, currency: $currency, currentBalance: $currentBalance, history: $history)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$AccountHistoryResponseCopyWith<$Res>
-    implements $AccountHistoryResponseCopyWith<$Res> {
-  factory _$AccountHistoryResponseCopyWith(_AccountHistoryResponse value,
-          $Res Function(_AccountHistoryResponse) _then) =
-      __$AccountHistoryResponseCopyWithImpl;
+abstract mixin class _$AccountHistoryResponseDtoCopyWith<$Res>
+    implements $AccountHistoryResponseDtoCopyWith<$Res> {
+  factory _$AccountHistoryResponseDtoCopyWith(_AccountHistoryResponseDto value,
+          $Res Function(_AccountHistoryResponseDto) _then) =
+      __$AccountHistoryResponseDtoCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -203,18 +204,18 @@ abstract mixin class _$AccountHistoryResponseCopyWith<$Res>
       String accountName,
       String currency,
       String currentBalance,
-      List<AccountHistory> history});
+      List<AccountHistoryDto> history});
 }
 
 /// @nodoc
-class __$AccountHistoryResponseCopyWithImpl<$Res>
-    implements _$AccountHistoryResponseCopyWith<$Res> {
-  __$AccountHistoryResponseCopyWithImpl(this._self, this._then);
+class __$AccountHistoryResponseDtoCopyWithImpl<$Res>
+    implements _$AccountHistoryResponseDtoCopyWith<$Res> {
+  __$AccountHistoryResponseDtoCopyWithImpl(this._self, this._then);
 
-  final _AccountHistoryResponse _self;
-  final $Res Function(_AccountHistoryResponse) _then;
+  final _AccountHistoryResponseDto _self;
+  final $Res Function(_AccountHistoryResponseDto) _then;
 
-  /// Create a copy of AccountHistoryResponse
+  /// Create a copy of AccountHistoryResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -225,7 +226,7 @@ class __$AccountHistoryResponseCopyWithImpl<$Res>
     Object? currentBalance = null,
     Object? history = null,
   }) {
-    return _then(_AccountHistoryResponse(
+    return _then(_AccountHistoryResponseDto(
       accountId: null == accountId
           ? _self.accountId
           : accountId // ignore: cast_nullable_to_non_nullable
@@ -245,7 +246,7 @@ class __$AccountHistoryResponseCopyWithImpl<$Res>
       history: null == history
           ? _self._history
           : history // ignore: cast_nullable_to_non_nullable
-              as List<AccountHistory>,
+              as List<AccountHistoryDto>,
     ));
   }
 }

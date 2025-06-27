@@ -1,9 +1,8 @@
-import 'package:fin_tamer/features/history/domain/interfaces/i_history_repository.dart';
-import 'package:fin_tamer/features/history/domain/models/account_history_response.dart';
+import 'dto/account_history_response_dto.dart';
 
-class MockHistoryRepository implements IHistoryRepository {
+class HistoryRemoteDataSource {
   final _db = [
-    AccountHistoryResponse.fromJson({
+    AccountHistoryResponseDto.fromJson({
       "accountId": 1,
       "accountName": "Основной счет",
       "currency": "USD",
@@ -22,8 +21,7 @@ class MockHistoryRepository implements IHistoryRepository {
     }),
   ];
 
-  @override
-  Future<AccountHistoryResponse?> getAccountById(int id) async {
+  Future<AccountHistoryResponseDto?> getAccountById(int id) async {
     return _db.where((c) => c.accountId == id).firstOrNull;
   }
 }

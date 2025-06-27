@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'account_history_response.dart';
+part of 'account_history_feed.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_AccountHistoryResponse _$AccountHistoryResponseFromJson(
-        Map<String, dynamic> json) =>
-    _AccountHistoryResponse(
+_AccountHistoryFeed _$AccountHistoryFeedFromJson(Map<String, dynamic> json) =>
+    _AccountHistoryFeed(
       accountId: (json['accountId'] as num).toInt(),
       accountName: json['accountName'] as String,
       currency: json['currency'] as String,
@@ -18,8 +17,7 @@ _AccountHistoryResponse _$AccountHistoryResponseFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$AccountHistoryResponseToJson(
-        _AccountHistoryResponse instance) =>
+Map<String, dynamic> _$AccountHistoryFeedToJson(_AccountHistoryFeed instance) =>
     <String, dynamic>{
       'accountId': instance.accountId,
       'accountName': instance.accountName,
