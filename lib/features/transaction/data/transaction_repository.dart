@@ -12,6 +12,7 @@ import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapp
 import 'package:fin_tamer/features/category/data/local/mappers/category_local_mapper.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
 
 class TransactionRepository implements ITransactionRepository {
   final MockTransactionRemoteDataSource remoteDataSource;
@@ -43,12 +44,20 @@ class TransactionRepository implements ITransactionRepository {
     await localDataSource.save(tempEntity);
 
     final dto = await remoteDataSource.create(data.toDto());
-    final entity = dto.toDomain().toEntity();
+    final entity = dto.toEntity();
 
     await localDataSource.delete(tempEntity.id);
     await localDataSource.save(entity);
 
-    return dto.toDomain();
+    final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+    if (accountEntity == null || categoryEntity == null) {
+      //TODO обработка ошибок
+      throw Exception('Account or Category not found for transaction');
+    }
+    final account = accountEntity.toBrief();
+    final category = categoryEntity.toDomain();
+    return entity.toDomain(account: account, category: category);
   }
 
   @override
@@ -130,9 +139,17 @@ class TransactionRepository implements ITransactionRepository {
 
     final dto = await remoteDataSource.getById(apiId);
     if (dto == null) return null;
-    final domain = dto.toDomain();
-    await localDataSource.save(domain.toEntity());
-    return domain;
+    final entityFromDto = dto.toEntity();
+    await localDataSource.save(entityFromDto);
+    final accountEntity = await accountLocalDataSource.getById(entityFromDto.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getById(entityFromDto.categoryApiId);
+    if (accountEntity == null || categoryEntity == null) {
+      //TODO обработка ошибок
+      return null;
+    }
+    final account = accountEntity.toBrief();
+    final category = categoryEntity.toDomain();
+    return entityFromDto.toDomain(account: account, category: category);
   }
 
   @override
@@ -156,8 +173,18 @@ class TransactionRepository implements ITransactionRepository {
       }));
     }
     final dtos = await remoteDataSource.getByPeriod(accountId, startDate, endDate);
-    final entities = dtos.map((dto) => dto.toDomain().toEntity()).toList();
+    final entities = dtos.map((dto) => dto.toEntity()).toList();
     await localDataSource.saveAll(entities);
-    return dtos.map((dto) => dto.toDomain()).toList();
+    return Future.wait(entities.map((entity) async {
+      final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
+      final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+      if (accountEntity == null || categoryEntity == null) {
+        //TODO обработка ошибок
+        throw Exception('Account or Category not found for transaction');
+      }
+      final category = categoryEntity.toDomain();
+      final account = accountEntity.toDomain().toBrief();
+      return entity.toDomain(account: account, category: category);
+    }));
   }
 }
