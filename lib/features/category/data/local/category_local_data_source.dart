@@ -22,11 +22,7 @@ class CategoryLocalDataSource {
   }
 
   Future<void> saveAll(List<CategoryEntity> categories) async {
-    try {
-      box.putMany(categories);
-    } catch (e) {
-      var a = e;
-    }
+    box.putMany(categories);
   }
 
   Future<void> save(CategoryEntity category) async {

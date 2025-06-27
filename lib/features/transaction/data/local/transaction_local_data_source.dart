@@ -32,4 +32,20 @@ class TransactionLocalDataSource {
   Future<void> delete(int id) async {
     box.remove(id);
   }
+
+  Future<void> deleteByApiId(int apiId) async {
+    final query = box.query(TransactionEntity_.apiId.equals(apiId)).build();
+    final results = query.find();
+    for (final entity in results) {
+      box.remove(entity.id);
+    }
+    query.close();
+  }
+
+  Future<TransactionEntity?> getByApiId(int apiId) async {
+    final query = box.query(TransactionEntity_.apiId.equals(apiId)).build();
+    final result = query.findFirst();
+    query.close();
+    return result;
+  }
 }

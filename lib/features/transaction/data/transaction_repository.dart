@@ -11,6 +11,7 @@ import 'package:fin_tamer/features/category/data/local/category_local_data_sourc
 import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapper.dart';
 import 'package:fin_tamer/features/category/data/local/mappers/category_local_mapper.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
+import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
 
 class TransactionRepository implements ITransactionRepository {
   final MockTransactionRemoteDataSource remoteDataSource;
@@ -27,48 +28,107 @@ class TransactionRepository implements ITransactionRepository {
 
   @override
   Future<Transaction> create(TransactionCreateData data) async {
+    final tempApiId = DateTime.now().millisecondsSinceEpoch * -1;
+    final tempEntity = TransactionEntity(
+      id: 0,
+      apiId: tempApiId,
+      accountApiId: data.accountId,
+      categoryApiId: data.categoryId,
+      amount: data.amount,
+      transactionDate: data.transactionDate.toUtc(),
+      comment: data.comment,
+      createdAt: DateTime.now().toUtc(),
+      updatedAt: DateTime.now().toUtc(),
+    );
+    await localDataSource.save(tempEntity);
+
     final dto = await remoteDataSource.create(data.toDto());
     final entity = dto.toDomain().toEntity();
+
+    await localDataSource.delete(tempEntity.id);
     await localDataSource.save(entity);
+
     return dto.toDomain();
   }
 
   @override
   Future<Transaction?> update(TransactionUpdateData data) async {
-    final dto = await remoteDataSource.update(data.id, data.toDto());
-    if (dto != null) {
-      final entity = dto.toDomain().toEntity();
-      await localDataSource.save(entity);
+    final localEntity = await localDataSource.getById(data.id);
+
+    if (localEntity == null) {
+      //TODO обработка ошибок
+      return null;
     }
-    return dto?.toDomain();
+
+    final accountEntity = await accountLocalDataSource.getById(data.accountId);
+    final categoryEntity = await categoryLocalDataSource.getById(data.categoryId);
+    if (accountEntity == null || categoryEntity == null) {
+      //TODO обработка ошибок
+      return null;
+    }
+
+    localEntity.accountApiId = accountEntity.apiId;
+    localEntity.categoryApiId = categoryEntity.apiId;
+    localEntity.amount = data.amount;
+    localEntity.transactionDate = data.transactionDate.toUtc();
+    localEntity.comment = data.comment;
+    localEntity.updatedAt = DateTime.now().toUtc();
+    await localDataSource.save(localEntity);
+
+    final account = accountEntity.toBrief();
+    final category = categoryEntity.toDomain();
+    return localEntity.toDomain(account: account, category: category);
   }
 
   @override
   Future<void> delete(int id) async {
-    await remoteDataSource.delete(id);
-    // Можно также удалить из локального хранилища
-    // await localDataSource.delete(id);
+    final localEntity = await localDataSource.getById(id);
+    if (localEntity == null) {
+      //TODO обработка ошибок
+      return;
+    }
+    final apiId = localEntity.apiId;
+    await localDataSource.delete(id);
+    if (apiId > 0) {
+      await remoteDataSource.delete(apiId);
+    }
   }
 
   @override
   Future<Transaction?> getById(int id) async {
     final entity = await localDataSource.getById(id);
+    if (entity == null) return null;
+
+    final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+
+    if (accountEntity == null || categoryEntity == null) {
+      //TODO обработка ошибок
+      return null;
+    }
+
+    final account = accountEntity.toBrief();
+    final category = categoryEntity.toDomain();
+
+    return entity.toDomain(account: account, category: category);
+  }
+
+  Future<Transaction?> getByApiId(int apiId) async {
+    final entity = await localDataSource.getByApiId(apiId);
+
     if (entity != null) {
       final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
       final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
-
       if (accountEntity == null || categoryEntity == null) {
         //TODO обработка ошибок
         return null;
       }
-
+      final account = accountEntity.toBrief();
       final category = categoryEntity.toDomain();
-      final account = accountEntity.toDomain().toBrief();
-
       return entity.toDomain(account: account, category: category);
     }
 
-    final dto = await remoteDataSource.getById(id);
+    final dto = await remoteDataSource.getById(apiId);
     if (dto == null) return null;
     final domain = dto.toDomain();
     await localDataSource.save(domain.toEntity());
