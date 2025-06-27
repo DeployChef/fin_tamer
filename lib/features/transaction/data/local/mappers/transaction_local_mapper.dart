@@ -14,9 +14,9 @@ extension TransactionEntityMapper on TransactionEntity {
         category: category,
         amount: amount,
         comment: comment,
-        transactionDate: transactionDate,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
+        transactionDate: transactionDate.toLocal(),
+        createdAt: createdAt.toLocal(),
+        updatedAt: updatedAt.toLocal(),
       );
 }
 
@@ -27,9 +27,9 @@ extension TransactionDomainMapper on Transaction {
         accountApiId: account.id,
         categoryApiId: category.id,
         amount: amount,
-        transactionDate: transactionDate,
+        transactionDate: transactionDate.toLocal(),
         comment: comment,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
+        createdAt: createdAt.toLocal(),
+        updatedAt: updatedAt.toLocal(),
       );
 }

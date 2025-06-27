@@ -22,8 +22,8 @@ abstract class AccountDto with _$AccountDto {
 }
 
 extension AccountDtoToEntity on AccountDto {
-  AccountEntity toEntity() => AccountEntity(
-        id: 0,
+  AccountEntity toEntity({int localId = 0}) => AccountEntity(
+        id: localId,
         apiId: id,
         name: name,
         balance: balance,

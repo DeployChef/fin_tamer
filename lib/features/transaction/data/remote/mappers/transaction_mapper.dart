@@ -1,9 +1,6 @@
 import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
-import 'package:fin_tamer/features/category/data/remote/mappers/category_mapper.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/account_brief_dto.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
-import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
-import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
 
@@ -30,7 +27,7 @@ extension TransactionCreateDataMapper on TransactionCreateData {
         accountId: accountId,
         categoryId: categoryId,
         amount: amount,
-        transactionDate: transactionDate,
+        transactionDate: transactionDate.toUtc(),
         comment: comment,
       );
 }
@@ -40,7 +37,7 @@ extension TransactionUpdateDataMapper on TransactionUpdateData {
         accountId: accountId,
         categoryId: categoryId,
         amount: amount,
-        transactionDate: transactionDate,
+        transactionDate: transactionDate.toUtc(),
         comment: comment,
       );
 }

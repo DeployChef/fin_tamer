@@ -83,10 +83,24 @@ class AccountRepository implements IAccountRepository {
 
   @override
   Future<Account?> update(AccountUpdateData data) async {
-    final dto = await remoteDataSource.update(data.id, data.toDto());
-    if (dto == null) return null;
-    final entity = dto.toEntity();
+    var entity = await localDataSource.getById(data.id);
+
+    if (entity == null) return null;
+
+    entity.name = data.name;
+    entity.balance = data.balance;
+    entity.currency = data.currency;
+    entity.updatedAt = DateTime.now().toUtc();
+
     await localDataSource.save(entity);
+
+    final dto = await remoteDataSource.update(entity.apiId, data.toDto());
+
+    if (dto != null) {
+      entity = dto.toEntity(localId: entity.id);
+      await localDataSource.save(entity);
+    }
+
     final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
     final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
@@ -97,11 +111,12 @@ class AccountRepository implements IAccountRepository {
 
   Future<void> updateAccountName(int id, String newName) async {
     var entity = await localDataSource.getById(id);
-    if (entity != null) {
-      entity.name = newName;
-      entity.updatedAt = DateTime.now().toUtc();
-      await localDataSource.save(entity);
-      await remoteDataSource.updateAccountName(entity.apiId, newName);
-    }
+    if (entity == null) return;
+
+    entity.name = newName;
+    entity.updatedAt = DateTime.now().toUtc();
+
+    await localDataSource.save(entity);
+    await remoteDataSource.updateAccountName(entity.apiId, newName);
   }
 }

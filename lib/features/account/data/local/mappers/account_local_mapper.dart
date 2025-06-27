@@ -16,8 +16,8 @@ extension AccountEntityMapper on AccountEntity {
         currency: currency,
         incomeStats: incomeStats.map((e) => e.toDomain()).toList(),
         expenseStats: expenseStats.map((e) => e.toDomain()).toList(),
-        createdAt: createdAt,
-        updatedAt: updatedAt,
+        createdAt: createdAt.toLocal(),
+        updatedAt: updatedAt.toLocal(),
       );
 }
 
@@ -28,8 +28,8 @@ extension AccountDomainMapper on Account {
         name: name,
         balance: balance,
         currency: currency,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
+        createdAt: createdAt.toLocal(),
+        updatedAt: updatedAt.toLocal(),
       );
 }
 
