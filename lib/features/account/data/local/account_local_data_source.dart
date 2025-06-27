@@ -1,5 +1,5 @@
-import 'package:objectbox/objectbox.dart';
 import 'entities/account_entity.dart';
+import 'package:fin_tamer/objectbox.g.dart';
 
 class AccountLocalDataSource {
   final Box<AccountEntity> box;
@@ -24,5 +24,12 @@ class AccountLocalDataSource {
 
   Future<void> delete(int id) async {
     box.remove(id);
+  }
+
+  Future<AccountEntity?> getByApiId(int apiId) async {
+    final query = box.query(AccountEntity_.apiId.equals(apiId)).build();
+    final result = query.findFirst();
+    query.close();
+    return result;
   }
 }

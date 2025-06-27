@@ -32,4 +32,11 @@ class CategoryLocalDataSource {
   Future<void> delete(int id) async {
     box.remove(id);
   }
+
+  Future<CategoryEntity?> getByApiId(int apiId) async {
+    final query = box.query(CategoryEntity_.apiId.equals(apiId)).build();
+    final result = query.findFirst();
+    query.close();
+    return result;
+  }
 }

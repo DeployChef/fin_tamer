@@ -49,8 +49,8 @@ class TransactionRepository implements ITransactionRepository {
     await localDataSource.delete(tempEntity.id);
     await localDataSource.save(entity);
 
-    final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+    final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
     if (accountEntity == null || categoryEntity == null) {
       //TODO обработка ошибок
       throw Exception('Account or Category not found for transaction');
@@ -69,8 +69,8 @@ class TransactionRepository implements ITransactionRepository {
       return null;
     }
 
-    final accountEntity = await accountLocalDataSource.getById(data.accountId);
-    final categoryEntity = await categoryLocalDataSource.getById(data.categoryId);
+    final accountEntity = await accountLocalDataSource.getByApiId(data.accountId);
+    final categoryEntity = await categoryLocalDataSource.getByApiId(data.categoryId);
     if (accountEntity == null || categoryEntity == null) {
       //TODO обработка ошибок
       return null;
@@ -108,8 +108,8 @@ class TransactionRepository implements ITransactionRepository {
     final entity = await localDataSource.getById(id);
     if (entity == null) return null;
 
-    final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+    final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
 
     if (accountEntity == null || categoryEntity == null) {
       //TODO обработка ошибок
@@ -126,8 +126,8 @@ class TransactionRepository implements ITransactionRepository {
     final entity = await localDataSource.getByApiId(apiId);
 
     if (entity != null) {
-      final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
-      final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+      final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+      final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
       if (accountEntity == null || categoryEntity == null) {
         //TODO обработка ошибок
         return null;
@@ -141,8 +141,8 @@ class TransactionRepository implements ITransactionRepository {
     if (dto == null) return null;
     final entityFromDto = dto.toEntity();
     await localDataSource.save(entityFromDto);
-    final accountEntity = await accountLocalDataSource.getById(entityFromDto.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getById(entityFromDto.categoryApiId);
+    final accountEntity = await accountLocalDataSource.getByApiId(entityFromDto.accountApiId);
+    final categoryEntity = await categoryLocalDataSource.getByApiId(entityFromDto.categoryApiId);
     if (accountEntity == null || categoryEntity == null) {
       //TODO обработка ошибок
       return null;
@@ -154,30 +154,40 @@ class TransactionRepository implements ITransactionRepository {
 
   @override
   Future<List<Transaction>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
-    final localEntities = await localDataSource.getByAccount(accountId);
+    final accountEntity = await accountLocalDataSource.getByApiId(accountId);
+    if (accountEntity == null) {
+      //TODO обработка ошибок
+      throw Exception('Account not found');
+    }
+
+    final localEntities = await localDataSource.getByAccount(accountEntity.apiId);
     final filtered = localEntities.where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
     if (filtered.isNotEmpty) {
       return Future.wait(filtered.map((entity) async {
-        final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
-        final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
-
+        final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+        final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
         if (accountEntity == null || categoryEntity == null) {
           //TODO обработка ошибок
           throw Exception('Account or Category not found for transaction');
         }
-
         final category = categoryEntity.toDomain();
         final account = accountEntity.toDomain().toBrief();
-
         return entity.toDomain(account: account, category: category);
       }));
     }
-    final dtos = await remoteDataSource.getByPeriod(accountId, startDate, endDate);
-    final entities = dtos.map((dto) => dto.toEntity()).toList();
-    await localDataSource.saveAll(entities);
-    return Future.wait(entities.map((entity) async {
-      final accountEntity = await accountLocalDataSource.getById(entity.accountApiId);
-      final categoryEntity = await categoryLocalDataSource.getById(entity.categoryApiId);
+
+    final dtos = await remoteDataSource.getByPeriod(accountEntity.apiId, startDate, endDate);
+    final existing = await localDataSource.getByAccount(accountEntity.apiId);
+
+    final existingApiIds = existing.map((e) => e.apiId).toSet();
+    final newEntities = dtos.where((dto) => !existingApiIds.contains(dto.id)).map((dto) => dto.toEntity()).toList();
+
+    await localDataSource.saveAll(newEntities);
+
+    final allEntities = [...existing, ...newEntities].where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+    return Future.wait(allEntities.map((entity) async {
+      final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+      final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
       if (accountEntity == null || categoryEntity == null) {
         //TODO обработка ошибок
         throw Exception('Account or Category not found for transaction');
