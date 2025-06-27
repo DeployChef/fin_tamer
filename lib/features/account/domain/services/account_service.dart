@@ -1,5 +1,5 @@
 import 'package:fin_tamer/features/account/data/account_repository.dart';
-import 'package:fin_tamer/features/account/data/remote/remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

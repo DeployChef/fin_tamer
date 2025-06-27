@@ -1,7 +1,8 @@
 import 'package:fin_tamer/features/account/data/account_repository.dart';
-import 'package:fin_tamer/features/account/data/remote/remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
-import 'package:fin_tamer/features/category/data/mock_category_repository.dart';
+import 'package:fin_tamer/features/category/data/category_repository.dart';
+import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/mock_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
@@ -13,7 +14,7 @@ part 'history_filtered_transaction_service.g.dart';
 
 @Riverpod(dependencies: [AccountService, HistoryFilterService])
 class HistoryFilteredTransactionService extends _$HistoryFilteredTransactionService {
-  static final ITransactionRepository transactionRepo = MockTransactionRepository(AccountRepository(MockRemoteAccountDataSource()), MockCategoryRepository());
+  static final ITransactionRepository transactionRepo = MockTransactionRepository(AccountRepository(MockRemoteAccountDataSource()), CategoryRepository(CategoryRemoteDataSource()));
 
   @override
   FutureOr<List<TransactionResponse>> build({required bool isIncome}) async {

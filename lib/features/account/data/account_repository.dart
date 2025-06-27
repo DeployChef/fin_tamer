@@ -1,6 +1,6 @@
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
-import 'package:fin_tamer/features/account/data/remote/remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/remote/mappers/account_mapper.dart';
 import 'package:fin_tamer/features/account/domain/models/account_create_data.dart';
 import 'package:fin_tamer/features/account/domain/models/account_update_data.dart';
