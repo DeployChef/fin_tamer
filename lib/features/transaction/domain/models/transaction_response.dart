@@ -1,5 +1,5 @@
 import 'package:fin_tamer/features/category/domain/models/category.dart';
-import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
+import 'package:fin_tamer/features/transaction/domain/models/account_brief_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transaction_response.freezed.dart';
@@ -11,7 +11,7 @@ abstract class TransactionResponse with _$TransactionResponse {
 
   const factory TransactionResponse({
     required int id,
-    required AccountBrief account,
+    required AccountBriefDto account,
     required Category category,
     required String amount,
     required DateTime transactionDate,

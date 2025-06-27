@@ -1,10 +1,9 @@
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
-import 'package:fin_tamer/features/account/domain/models/account_create_request.dart';
-import 'package:fin_tamer/features/account/domain/models/account_response.dart';
-import 'package:fin_tamer/features/account/domain/models/account_update_request.dart';
 import 'package:fin_tamer/features/account/data/remote/remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/remote/mappers/account_mapper.dart';
+import 'package:fin_tamer/features/account/domain/models/account_create_data.dart';
+import 'package:fin_tamer/features/account/domain/models/account_update_data.dart';
 
 class AccountRepository implements IAccountRepository {
   final MockRemoteAccountDataSource remoteDataSource;
@@ -18,20 +17,20 @@ class AccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<AccountResponse?> getById(int id) async {
+  Future<Account?> getById(int id) async {
     final dto = await remoteDataSource.getById(id);
     return dto?.toDomain();
   }
 
   @override
-  Future<Account> create(AccountCreateRequest request) async {
-    final dto = await remoteDataSource.create(request.toDto());
+  Future<Account> create(AccountCreateData data) async {
+    final dto = await remoteDataSource.create(data.toDto());
     return dto.toDomain();
   }
 
   @override
-  Future<Account?> update(int id, AccountUpdateRequest request) async {
-    final dto = await remoteDataSource.update(id, request.toDto());
+  Future<Account?> update(AccountUpdateData data) async {
+    final dto = await remoteDataSource.update(data.id, data.toDto());
     return dto?.toDomain();
   }
 }

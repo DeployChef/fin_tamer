@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionResponse {
   int get id;
-  AccountBrief get account;
+  AccountBriefDto get account;
   Category get category;
   String get amount;
   DateTime get transactionDate;
@@ -73,7 +73,7 @@ abstract mixin class $TransactionResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      AccountBrief account,
+      AccountBriefDto account,
       Category category,
       String amount,
       DateTime transactionDate,
@@ -81,7 +81,7 @@ abstract mixin class $TransactionResponseCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt});
 
-  $AccountBriefCopyWith<$Res> get account;
+  $AccountBriefDtoCopyWith<$Res> get account;
   $CategoryCopyWith<$Res> get category;
 }
 
@@ -115,7 +115,7 @@ class _$TransactionResponseCopyWithImpl<$Res>
       account: null == account
           ? _self.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBrief,
+              as AccountBriefDto,
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -147,8 +147,8 @@ class _$TransactionResponseCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccountBriefCopyWith<$Res> get account {
-    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+  $AccountBriefDtoCopyWith<$Res> get account {
+    return $AccountBriefDtoCopyWith<$Res>(_self.account, (value) {
       return _then(_self.copyWith(account: value));
     });
   }
@@ -183,7 +183,7 @@ class _TransactionResponse extends TransactionResponse {
   @override
   final int id;
   @override
-  final AccountBrief account;
+  final AccountBriefDto account;
   @override
   final Category category;
   @override
@@ -253,7 +253,7 @@ abstract mixin class _$TransactionResponseCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      AccountBrief account,
+      AccountBriefDto account,
       Category category,
       String amount,
       DateTime transactionDate,
@@ -262,7 +262,7 @@ abstract mixin class _$TransactionResponseCopyWith<$Res>
       DateTime updatedAt});
 
   @override
-  $AccountBriefCopyWith<$Res> get account;
+  $AccountBriefDtoCopyWith<$Res> get account;
   @override
   $CategoryCopyWith<$Res> get category;
 }
@@ -297,7 +297,7 @@ class __$TransactionResponseCopyWithImpl<$Res>
       account: null == account
           ? _self.account
           : account // ignore: cast_nullable_to_non_nullable
-              as AccountBrief,
+              as AccountBriefDto,
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -329,8 +329,8 @@ class __$TransactionResponseCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccountBriefCopyWith<$Res> get account {
-    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+  $AccountBriefDtoCopyWith<$Res> get account {
+    return $AccountBriefDtoCopyWith<$Res>(_self.account, (value) {
       return _then(_self.copyWith(account: value));
     });
   }

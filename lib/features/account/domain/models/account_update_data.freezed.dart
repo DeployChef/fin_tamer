@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'account_create_request.dart';
+part of 'account_update_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,70 +14,73 @@ part of 'account_create_request.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AccountCreateRequest {
+mixin _$AccountUpdateData {
+  int get id;
   String get name;
   String get balance;
   String get currency;
 
-  /// Create a copy of AccountCreateRequest
+  /// Create a copy of AccountUpdateData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $AccountCreateRequestCopyWith<AccountCreateRequest> get copyWith =>
-      _$AccountCreateRequestCopyWithImpl<AccountCreateRequest>(
-          this as AccountCreateRequest, _$identity);
-
-  /// Serializes this AccountCreateRequest to a JSON map.
-  Map<String, dynamic> toJson();
+  $AccountUpdateDataCopyWith<AccountUpdateData> get copyWith =>
+      _$AccountUpdateDataCopyWithImpl<AccountUpdateData>(
+          this as AccountUpdateData, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AccountCreateRequest &&
+            other is AccountUpdateData &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
                 other.currency == currency));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, balance, currency);
+  int get hashCode => Object.hash(runtimeType, id, name, balance, currency);
 
   @override
   String toString() {
-    return 'AccountCreateRequest(name: $name, balance: $balance, currency: $currency)';
+    return 'AccountUpdateData(id: $id, name: $name, balance: $balance, currency: $currency)';
   }
 }
 
 /// @nodoc
-abstract mixin class $AccountCreateRequestCopyWith<$Res> {
-  factory $AccountCreateRequestCopyWith(AccountCreateRequest value,
-          $Res Function(AccountCreateRequest) _then) =
-      _$AccountCreateRequestCopyWithImpl;
+abstract mixin class $AccountUpdateDataCopyWith<$Res> {
+  factory $AccountUpdateDataCopyWith(
+          AccountUpdateData value, $Res Function(AccountUpdateData) _then) =
+      _$AccountUpdateDataCopyWithImpl;
   @useResult
-  $Res call({String name, String balance, String currency});
+  $Res call({int id, String name, String balance, String currency});
 }
 
 /// @nodoc
-class _$AccountCreateRequestCopyWithImpl<$Res>
-    implements $AccountCreateRequestCopyWith<$Res> {
-  _$AccountCreateRequestCopyWithImpl(this._self, this._then);
+class _$AccountUpdateDataCopyWithImpl<$Res>
+    implements $AccountUpdateDataCopyWith<$Res> {
+  _$AccountUpdateDataCopyWithImpl(this._self, this._then);
 
-  final AccountCreateRequest _self;
-  final $Res Function(AccountCreateRequest) _then;
+  final AccountUpdateData _self;
+  final $Res Function(AccountUpdateData) _then;
 
-  /// Create a copy of AccountCreateRequest
+  /// Create a copy of AccountUpdateData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
   }) {
     return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -95,14 +98,16 @@ class _$AccountCreateRequestCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _AccountCreateRequest extends AccountCreateRequest {
-  const _AccountCreateRequest(
-      {required this.name, required this.balance, required this.currency})
-      : super._();
-  factory _AccountCreateRequest.fromJson(Map<String, dynamic> json) =>
-      _$AccountCreateRequestFromJson(json);
 
+class _AccountUpdateData implements AccountUpdateData {
+  const _AccountUpdateData(
+      {required this.id,
+      required this.name,
+      required this.balance,
+      required this.currency});
+
+  @override
+  final int id;
   @override
   final String name;
   @override
@@ -110,72 +115,69 @@ class _AccountCreateRequest extends AccountCreateRequest {
   @override
   final String currency;
 
-  /// Create a copy of AccountCreateRequest
+  /// Create a copy of AccountUpdateData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AccountCreateRequestCopyWith<_AccountCreateRequest> get copyWith =>
-      __$AccountCreateRequestCopyWithImpl<_AccountCreateRequest>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$AccountCreateRequestToJson(
-      this,
-    );
-  }
+  _$AccountUpdateDataCopyWith<_AccountUpdateData> get copyWith =>
+      __$AccountUpdateDataCopyWithImpl<_AccountUpdateData>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AccountCreateRequest &&
+            other is _AccountUpdateData &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
                 other.currency == currency));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, balance, currency);
+  int get hashCode => Object.hash(runtimeType, id, name, balance, currency);
 
   @override
   String toString() {
-    return 'AccountCreateRequest(name: $name, balance: $balance, currency: $currency)';
+    return 'AccountUpdateData(id: $id, name: $name, balance: $balance, currency: $currency)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$AccountCreateRequestCopyWith<$Res>
-    implements $AccountCreateRequestCopyWith<$Res> {
-  factory _$AccountCreateRequestCopyWith(_AccountCreateRequest value,
-          $Res Function(_AccountCreateRequest) _then) =
-      __$AccountCreateRequestCopyWithImpl;
+abstract mixin class _$AccountUpdateDataCopyWith<$Res>
+    implements $AccountUpdateDataCopyWith<$Res> {
+  factory _$AccountUpdateDataCopyWith(
+          _AccountUpdateData value, $Res Function(_AccountUpdateData) _then) =
+      __$AccountUpdateDataCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, String balance, String currency});
+  $Res call({int id, String name, String balance, String currency});
 }
 
 /// @nodoc
-class __$AccountCreateRequestCopyWithImpl<$Res>
-    implements _$AccountCreateRequestCopyWith<$Res> {
-  __$AccountCreateRequestCopyWithImpl(this._self, this._then);
+class __$AccountUpdateDataCopyWithImpl<$Res>
+    implements _$AccountUpdateDataCopyWith<$Res> {
+  __$AccountUpdateDataCopyWithImpl(this._self, this._then);
 
-  final _AccountCreateRequest _self;
-  final $Res Function(_AccountCreateRequest) _then;
+  final _AccountUpdateData _self;
+  final $Res Function(_AccountUpdateData) _then;
 
-  /// Create a copy of AccountCreateRequest
+  /// Create a copy of AccountUpdateData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
   }) {
-    return _then(_AccountCreateRequest(
+    return _then(_AccountUpdateData(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable

@@ -19,8 +19,8 @@ mixin _$AccountResponseDto {
   String get name;
   String get balance;
   String get currency;
-  List<StatItem> get incomeStats;
-  List<StatItem> get expenseStats;
+  List<StatItemDto> get incomeStats;
+  List<StatItemDto> get expenseStats;
   DateTime get createdAt;
   DateTime get updatedAt;
 
@@ -85,8 +85,8 @@ abstract mixin class $AccountResponseDtoCopyWith<$Res> {
       String name,
       String balance,
       String currency,
-      List<StatItem> incomeStats,
-      List<StatItem> expenseStats,
+      List<StatItemDto> incomeStats,
+      List<StatItemDto> expenseStats,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -133,11 +133,11 @@ class _$AccountResponseDtoCopyWithImpl<$Res>
       incomeStats: null == incomeStats
           ? _self.incomeStats
           : incomeStats // ignore: cast_nullable_to_non_nullable
-              as List<StatItem>,
+              as List<StatItemDto>,
       expenseStats: null == expenseStats
           ? _self.expenseStats
           : expenseStats // ignore: cast_nullable_to_non_nullable
-              as List<StatItem>,
+              as List<StatItemDto>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class _AccountResponseDto extends AccountResponseDto {
       required this.name,
       required this.balance,
       required this.currency,
-      required final List<StatItem> incomeStats,
-      required final List<StatItem> expenseStats,
+      required final List<StatItemDto> incomeStats,
+      required final List<StatItemDto> expenseStats,
       required this.createdAt,
       required this.updatedAt})
       : _incomeStats = incomeStats,
@@ -176,17 +176,17 @@ class _AccountResponseDto extends AccountResponseDto {
   final String balance;
   @override
   final String currency;
-  final List<StatItem> _incomeStats;
+  final List<StatItemDto> _incomeStats;
   @override
-  List<StatItem> get incomeStats {
+  List<StatItemDto> get incomeStats {
     if (_incomeStats is EqualUnmodifiableListView) return _incomeStats;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_incomeStats);
   }
 
-  final List<StatItem> _expenseStats;
+  final List<StatItemDto> _expenseStats;
   @override
-  List<StatItem> get expenseStats {
+  List<StatItemDto> get expenseStats {
     if (_expenseStats is EqualUnmodifiableListView) return _expenseStats;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_expenseStats);
@@ -264,8 +264,8 @@ abstract mixin class _$AccountResponseDtoCopyWith<$Res>
       String name,
       String balance,
       String currency,
-      List<StatItem> incomeStats,
-      List<StatItem> expenseStats,
+      List<StatItemDto> incomeStats,
+      List<StatItemDto> expenseStats,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -312,11 +312,11 @@ class __$AccountResponseDtoCopyWithImpl<$Res>
       incomeStats: null == incomeStats
           ? _self._incomeStats
           : incomeStats // ignore: cast_nullable_to_non_nullable
-              as List<StatItem>,
+              as List<StatItemDto>,
       expenseStats: null == expenseStats
           ? _self._expenseStats
           : expenseStats // ignore: cast_nullable_to_non_nullable
-              as List<StatItem>,
+              as List<StatItemDto>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable

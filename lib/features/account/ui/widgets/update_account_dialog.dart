@@ -33,11 +33,11 @@ class UpdateAccountDialog extends ConsumerWidget {
           child: const Text('Отмена'),
         ),
         ElevatedButton(
-          onPressed: () async {
+          onPressed: () {
             final newName = nameEditingController.text.trim();
 
             if (newName.isNotEmpty) {
-              await ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
+              ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
               Navigator.of(context).pop();
             }
           },

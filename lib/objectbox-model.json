@@ -15,11 +15,6 @@
           "flags": 1
         },
         {
-          "id": "2:6067831564966800248",
-          "name": "userId",
-          "type": 6
-        },
-        {
           "id": "3:5931921984227595126",
           "name": "name",
           "type": 9
@@ -98,7 +93,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    6067831564966800248
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

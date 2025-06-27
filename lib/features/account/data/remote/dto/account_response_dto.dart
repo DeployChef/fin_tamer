@@ -1,5 +1,5 @@
-import 'package:fin_tamer/features/account/domain/models/stat_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'stat_item_dto.dart';
 
 part 'account_response_dto.freezed.dart';
 part 'account_response_dto.g.dart';
@@ -13,8 +13,8 @@ abstract class AccountResponseDto with _$AccountResponseDto {
     required String name,
     required String balance,
     required String currency,
-    required List<StatItem> incomeStats,
-    required List<StatItem> expenseStats,
+    required List<StatItemDto> incomeStats,
+    required List<StatItemDto> expenseStats,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _AccountResponseDto;

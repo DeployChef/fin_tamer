@@ -13,10 +13,10 @@ _AccountResponseDto _$AccountResponseDtoFromJson(Map<String, dynamic> json) =>
       balance: json['balance'] as String,
       currency: json['currency'] as String,
       incomeStats: (json['incomeStats'] as List<dynamic>)
-          .map((e) => StatItem.fromJson(e as Map<String, dynamic>))
+          .map((e) => StatItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       expenseStats: (json['expenseStats'] as List<dynamic>)
-          .map((e) => StatItem.fromJson(e as Map<String, dynamic>))
+          .map((e) => StatItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),

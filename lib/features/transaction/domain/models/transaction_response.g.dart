@@ -9,7 +9,8 @@ part of 'transaction_response.dart';
 _TransactionResponse _$TransactionResponseFromJson(Map<String, dynamic> json) =>
     _TransactionResponse(
       id: (json['id'] as num).toInt(),
-      account: AccountBrief.fromJson(json['account'] as Map<String, dynamic>),
+      account:
+          AccountBriefDto.fromJson(json['account'] as Map<String, dynamic>),
       category: Category.fromJson(json['category'] as Map<String, dynamic>),
       amount: json['amount'] as String,
       transactionDate: DateTime.parse(json['transactionDate'] as String),

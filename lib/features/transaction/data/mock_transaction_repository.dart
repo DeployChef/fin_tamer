@@ -1,7 +1,7 @@
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
-import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
 import 'package:fin_tamer/features/category/domain/interfaces/i_category_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
+import 'package:fin_tamer/features/transaction/domain/models/account_brief_dto.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_request.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
@@ -150,7 +150,7 @@ class MockTransactionRepository implements ITransactionRepository {
 
     return TransactionResponse(
       id: acc.id,
-      account: AccountBrief(
+      account: AccountBriefDto(
         id: acc.id,
         name: acc.name,
         balance: acc.balance,

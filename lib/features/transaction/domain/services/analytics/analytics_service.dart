@@ -1,4 +1,5 @@
-import 'package:fin_tamer/features/account/data/mock_account_repository.dart';
+import 'package:fin_tamer/features/account/data/account_repository.dart';
+import 'package:fin_tamer/features/account/data/remote/remote_data_source.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/category/data/mock_category_repository.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
@@ -15,7 +16,7 @@ part 'analytics_service.freezed.dart';
 
 @Riverpod(dependencies: [AccountService, AnalyticsFilterService])
 class AnalyticsService extends _$AnalyticsService {
-  static final ITransactionRepository transactionRepo = MockTransactionRepository(MockAccountRepository(), MockCategoryRepository());
+  static final ITransactionRepository transactionRepo = MockTransactionRepository(AccountRepository(MockRemoteAccountDataSource()), MockCategoryRepository());
 
   @override
   FutureOr<List<AnalyticsState>> build({required bool isIncome}) async {
