@@ -25,19 +25,6 @@ extension AccountBriefToDtoMapper on AccountBrief {
       );
 }
 
-extension TransactionResponseDtoMapper on TransactionResponseDto {
-  Transaction toDomain() => Transaction(
-        id: id,
-        account: account.toDomain(),
-        category: category.toDomain(),
-        amount: amount,
-        transactionDate: transactionDate,
-        comment: comment,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
-}
-
 extension TransactionCreateDataMapper on TransactionCreateData {
   TransactionRequestDto toDto() => TransactionRequestDto(
         accountId: accountId,

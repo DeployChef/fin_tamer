@@ -8,32 +8,6 @@ import 'package:fin_tamer/features/account/data/remote/dto/account_response_dto.
 import 'package:fin_tamer/features/account/data/remote/dto/stat_item_dto.dart';
 import 'package:fin_tamer/features/account/data/remote/dto/account_dto.dart';
 
-extension AccountDtoMapper on AccountResponseDto {
-  Account toDomain() => Account(
-        id: id,
-        name: name,
-        balance: balance,
-        currency: currency,
-        incomeStats: incomeStats.map((e) => e.toDomain()).toList(),
-        expenseStats: expenseStats.map((e) => e.toDomain()).toList(),
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
-}
-
-extension AccountDtoToDomain on AccountDto {
-  Account toDomain() => Account(
-        id: id,
-        name: name,
-        balance: balance,
-        currency: currency,
-        incomeStats: const [],
-        expenseStats: const [],
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
-}
-
 extension StatItemDtoMapper on StatItemDto {
   StatItem toDomain() => StatItem(
         id: id,

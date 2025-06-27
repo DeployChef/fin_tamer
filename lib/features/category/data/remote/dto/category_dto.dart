@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fin_tamer/features/category/data/local/entities/category_entity.dart';
 
 part 'category_dto.freezed.dart';
 part 'category_dto.g.dart';
@@ -15,4 +16,14 @@ abstract class CategoryDto with _$CategoryDto {
   }) = _CategoryDto;
 
   factory CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);
+}
+
+extension CategoryDtoToEntity on CategoryDto {
+  CategoryEntity toEntity() => CategoryEntity(
+        id: 0, // всегда новый, ObjectBox сам назначит
+        apiId: id, // id из DTO — это apiId
+        name: name,
+        emoji: emoji,
+        isIncome: isIncome,
+      );
 }

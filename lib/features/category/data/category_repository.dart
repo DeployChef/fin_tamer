@@ -1,7 +1,7 @@
+import 'package:fin_tamer/features/category/data/remote/dto/category_dto.dart';
 import 'package:fin_tamer/features/category/domain/interfaces/i_category_repository.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
-import 'package:fin_tamer/features/category/data/remote/mappers/category_mapper.dart';
 import 'package:fin_tamer/features/category/data/local/category_local_data_source.dart';
 import 'package:fin_tamer/features/category/data/local/mappers/category_local_mapper.dart';
 
@@ -21,8 +21,9 @@ class CategoryRepository implements ICategoryRepository {
       return localEntities.map((e) => e.toDomain()).toList();
     }
     final remoteDtos = await remoteDataSource.getAll();
-    await localDataSource.saveAll(remoteDtos.map((e) => e.toDomain().toEntity()).toList());
-    return remoteDtos.map((e) => e.toDomain()).toList();
+    final entities = remoteDtos.map((e) => e.toEntity()).toList();
+    await localDataSource.saveAll(entities);
+    return entities.map((e) => e.toDomain()).toList();
   }
 
   @override
@@ -32,7 +33,8 @@ class CategoryRepository implements ICategoryRepository {
       return localEntities.map((e) => e.toDomain()).toList();
     }
     final remoteDtos = await remoteDataSource.getByType(isIncome);
-    await localDataSource.saveAll(remoteDtos.map((e) => e.toDomain().toEntity()).toList());
-    return remoteDtos.map((e) => e.toDomain()).toList();
+    final entities = remoteDtos.map((e) => e.toEntity()).toList();
+    await localDataSource.saveAll(entities);
+    return entities.map((e) => e.toDomain()).toList();
   }
 }
