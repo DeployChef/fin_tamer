@@ -8,6 +8,7 @@ import 'package:fin_tamer/features/account/data/local/account_local_data_source.
 import 'package:fin_tamer/features/account/data/local/stat_item_local_data_source.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/stat_item_local_mapper.dart';
+import 'package:fin_tamer/features/account/data/local/entities/account_entity.dart';
 
 class AccountRepository implements IAccountRepository {
   final MockRemoteAccountDataSource remoteDataSource;
@@ -74,5 +75,22 @@ class AccountRepository implements IAccountRepository {
   Future<Account?> update(AccountUpdateData data) async {
     final dto = await remoteDataSource.update(data.id, data.toDto());
     return dto?.toDomain();
+  }
+
+  Future<void> updateAccountName(int apiId, String newName) async {
+    final entity = await localDataSource.getById(apiId);
+    if (entity != null) {
+      final updated = AccountEntity(
+        id: entity.id,
+        apiId: entity.apiId,
+        name: newName,
+        balance: entity.balance,
+        currency: entity.currency,
+        createdAt: entity.createdAt,
+        updatedAt: DateTime.now(),
+      );
+      await localDataSource.save(updated);
+    }
+    await remoteDataSource.updateAccountName(apiId, newName);
   }
 }

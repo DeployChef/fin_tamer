@@ -19,6 +19,8 @@ class AccountService extends _$AccountService {
   Future<void> updateAccount({required String name}) async {
     final account = state.value;
     if (account != null) {
+      final repo = await ref.read(accountRepositoryProvider.future);
+      await repo.updateAccountName(account.id, name);
       state = AsyncData(account.copyWith(name: name));
     }
   }

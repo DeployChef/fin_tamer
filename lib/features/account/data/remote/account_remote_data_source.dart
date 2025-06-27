@@ -69,4 +69,8 @@ class MockRemoteAccountDataSource {
     }
     return null;
   }
+
+  Future<void> updateAccountName(int apiId, String newName) async {
+    return;
+  }
 }
