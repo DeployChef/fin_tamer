@@ -1,4 +1,4 @@
-import '../entities/stat_item_entity.dart';
+import 'package:fin_tamer/features/account/data/local/entities/stat_item_entity.dart';
 import 'package:fin_tamer/features/account/domain/models/stat_item.dart';
 
 extension StatItemEntityMapper on StatItemEntity {

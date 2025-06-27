@@ -168,9 +168,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "7:7913135380541029049",
+      "lastPropertyId": "9:2795732724551334393",
+      "name": "TransactionEntity",
+      "properties": [
+        {
+          "id": "1:8710773663591771476",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7748649751561391004",
+          "name": "apiId",
+          "type": 6
+        },
+        {
+          "id": "3:6883603647684010312",
+          "name": "accountApiId",
+          "type": 6
+        },
+        {
+          "id": "4:1263007903486449490",
+          "name": "categoryApiId",
+          "type": 6
+        },
+        {
+          "id": "5:6850583749076550394",
+          "name": "amount",
+          "type": 9
+        },
+        {
+          "id": "6:8187690267295782108",
+          "name": "transactionDate",
+          "type": 10
+        },
+        {
+          "id": "7:8086552041661888079",
+          "name": "comment",
+          "type": 9
+        },
+        {
+          "id": "8:2173491501105075079",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "9:2795732724551334393",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "6:7419752769170049923",
+  "lastEntityId": "7:7913135380541029049",
   "lastIndexId": "1:2005279266660496490",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

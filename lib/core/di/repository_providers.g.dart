@@ -191,5 +191,64 @@ final accountRepositoryProvider = FutureProvider<AccountRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AccountRepositoryRef = FutureProviderRef<AccountRepository>;
+String _$transactionLocalDataSourceHash() =>
+    r'26a36b01e7e82dc163b837eb4da57f9e42806b84';
+
+/// See also [transactionLocalDataSource].
+@ProviderFor(transactionLocalDataSource)
+final transactionLocalDataSourceProvider =
+    FutureProvider<TransactionLocalDataSource>.internal(
+  transactionLocalDataSource,
+  name: r'transactionLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$transactionLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TransactionLocalDataSourceRef
+    = FutureProviderRef<TransactionLocalDataSource>;
+String _$transactionRemoteDataSourceHash() =>
+    r'b4567ce548e9e2e8b4a012dc26584b35250148a1';
+
+/// See also [transactionRemoteDataSource].
+@ProviderFor(transactionRemoteDataSource)
+final transactionRemoteDataSourceProvider =
+    Provider<MockTransactionRemoteDataSource>.internal(
+  transactionRemoteDataSource,
+  name: r'transactionRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$transactionRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TransactionRemoteDataSourceRef
+    = ProviderRef<MockTransactionRemoteDataSource>;
+String _$transactionRepositoryHash() =>
+    r'4a4f133ac9c87f10782fc3bb15aa340e1a52f05d';
+
+/// See also [transactionRepository].
+@ProviderFor(transactionRepository)
+final transactionRepositoryProvider =
+    FutureProvider<TransactionRepository>.internal(
+  transactionRepository,
+  name: r'transactionRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$transactionRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TransactionRepositoryRef = FutureProviderRef<TransactionRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

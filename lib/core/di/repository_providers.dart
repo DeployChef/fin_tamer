@@ -14,6 +14,10 @@ import 'package:fin_tamer/features/account/data/local/stat_item_local_data_sourc
 import 'package:fin_tamer/features/account/data/local/entities/stat_item_entity.dart';
 import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/account_repository.dart';
+import 'package:fin_tamer/features/transaction/data/local/transaction_local_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
+import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/transaction_repository.dart';
 
 part 'repository_providers.g.dart';
 
@@ -88,5 +92,33 @@ Future<AccountRepository> accountRepository(Ref ref) async {
     localDataSource: local,
     statItemLocalDataSource: statItem,
     remoteDataSource: remote,
+  );
+}
+
+@Riverpod(keepAlive: true)
+Future<TransactionLocalDataSource> transactionLocalDataSource(Ref ref) async {
+  final store = await ref.watch(objectBoxStoreProvider.future);
+  final box = store.box<TransactionEntity>();
+  return TransactionLocalDataSource(box);
+}
+
+@Riverpod(keepAlive: true)
+MockTransactionRemoteDataSource transactionRemoteDataSource(Ref ref) {
+  final accountRemote = ref.watch(accountRemoteDataSourceProvider);
+  final categoryRemote = ref.watch(categoryRemoteDataSourceProvider);
+  return MockTransactionRemoteDataSource(accountRemote, categoryRemote);
+}
+
+@Riverpod(keepAlive: true)
+Future<TransactionRepository> transactionRepository(Ref ref) async {
+  final local = await ref.watch(transactionLocalDataSourceProvider.future);
+  final remote = ref.watch(transactionRemoteDataSourceProvider);
+  final accountLocal = await ref.watch(accountLocalDataSourceProvider.future);
+  final categoryLocal = await ref.watch(categoryLocalDataSourceProvider.future);
+  return TransactionRepository(
+    localDataSource: local,
+    remoteDataSource: remote,
+    accountLocalDataSource: accountLocal,
+    categoryLocalDataSource: categoryLocal,
   );
 }

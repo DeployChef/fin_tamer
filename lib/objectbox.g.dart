@@ -18,6 +18,7 @@ import 'features/account/data/local/entities/account_entity.dart';
 import 'features/account/data/local/entities/stat_item_entity.dart';
 import 'features/category/data/local/entities/category_entity.dart';
 import 'features/history/data/local/entities/history_entity.dart';
+import 'features/transaction/data/local/entities/transaction_entity.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -218,6 +219,70 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(7, 7913135380541029049),
+    name: 'TransactionEntity',
+    lastPropertyId: const obx_int.IdUid(9, 2795732724551334393),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 8710773663591771476),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 7748649751561391004),
+        name: 'apiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 6883603647684010312),
+        name: 'accountApiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1263007903486449490),
+        name: 'categoryApiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 6850583749076550394),
+        name: 'amount',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 8187690267295782108),
+        name: 'transactionDate',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 8086552041661888079),
+        name: 'comment',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 2173491501105075079),
+        name: 'createdAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 2795732724551334393),
+        name: 'updatedAt',
+        type: 10,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -258,7 +323,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(6, 7419752769170049923),
+    lastEntityId: const obx_int.IdUid(7, 7913135380541029049),
     lastIndexId: const obx_int.IdUid(1, 2005279266660496490),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -555,6 +620,89 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    TransactionEntity: obx_int.EntityDefinition<TransactionEntity>(
+      model: _entities[4],
+      toOneRelations: (TransactionEntity object) => [],
+      toManyRelations: (TransactionEntity object) => {},
+      getId: (TransactionEntity object) => object.id,
+      setId: (TransactionEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (TransactionEntity object, fb.Builder fbb) {
+        final amountOffset = fbb.writeString(object.amount);
+        final commentOffset = object.comment == null
+            ? null
+            : fbb.writeString(object.comment!);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.apiId);
+        fbb.addInt64(2, object.accountApiId);
+        fbb.addInt64(3, object.categoryApiId);
+        fbb.addOffset(4, amountOffset);
+        fbb.addInt64(5, object.transactionDate.millisecondsSinceEpoch);
+        fbb.addOffset(6, commentOffset);
+        fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+        fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final apiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final accountApiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final categoryApiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final amountParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final transactionDateParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
+        );
+        final commentParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0),
+        );
+        final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0),
+        );
+        final object = TransactionEntity(
+          id: idParam,
+          apiId: apiIdParam,
+          accountApiId: accountApiIdParam,
+          categoryApiId: categoryApiIdParam,
+          amount: amountParam,
+          transactionDate: transactionDateParam,
+          comment: commentParam,
+          createdAt: createdAtParam,
+          updatedAt: updatedAtParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -699,5 +847,53 @@ class StatItemEntity_ {
   /// See [StatItemEntity.isIncome].
   static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
     _entities[3].properties[5],
+  );
+}
+
+/// [TransactionEntity] entity fields to define ObjectBox queries.
+class TransactionEntity_ {
+  /// See [TransactionEntity.id].
+  static final id = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[0],
+  );
+
+  /// See [TransactionEntity.apiId].
+  static final apiId = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[1],
+  );
+
+  /// See [TransactionEntity.accountApiId].
+  static final accountApiId = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[2],
+  );
+
+  /// See [TransactionEntity.categoryApiId].
+  static final categoryApiId = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[3],
+  );
+
+  /// See [TransactionEntity.amount].
+  static final amount = obx.QueryStringProperty<TransactionEntity>(
+    _entities[4].properties[4],
+  );
+
+  /// See [TransactionEntity.transactionDate].
+  static final transactionDate = obx.QueryDateProperty<TransactionEntity>(
+    _entities[4].properties[5],
+  );
+
+  /// See [TransactionEntity.comment].
+  static final comment = obx.QueryStringProperty<TransactionEntity>(
+    _entities[4].properties[6],
+  );
+
+  /// See [TransactionEntity.createdAt].
+  static final createdAt = obx.QueryDateProperty<TransactionEntity>(
+    _entities[4].properties[7],
+  );
+
+  /// See [TransactionEntity.updatedAt].
+  static final updatedAt = obx.QueryDateProperty<TransactionEntity>(
+    _entities[4].properties[8],
   );
 }
