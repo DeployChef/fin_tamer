@@ -1,22 +1,38 @@
 import 'package:fin_tamer/features/category/domain/interfaces/i_category_repository.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
-import 'remote/category_remote_data_source.dart';
-import 'remote/mappers/category_mapper.dart';
+import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
+import 'package:fin_tamer/features/category/data/remote/mappers/category_mapper.dart';
+import 'package:fin_tamer/features/category/data/local/category_local_data_source.dart';
+import 'package:fin_tamer/features/category/data/local/mappers/category_local_mapper.dart';
 
 class CategoryRepository implements ICategoryRepository {
   final CategoryRemoteDataSource remoteDataSource;
+  final CategoryLocalDataSource localDataSource;
 
-  CategoryRepository(this.remoteDataSource);
+  CategoryRepository({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<List<Category>> getAll() async {
-    final dtos = await remoteDataSource.getAll();
-    return dtos.map((e) => e.toDomain()).toList();
+    final localEntities = await localDataSource.getAll();
+    if (localEntities.isNotEmpty) {
+      return localEntities.map((e) => e.toDomain()).toList();
+    }
+    final remoteDtos = await remoteDataSource.getAll();
+    await localDataSource.saveAll(remoteDtos.map((e) => e.toDomain().toEntity()).toList());
+    return remoteDtos.map((e) => e.toDomain()).toList();
   }
 
   @override
   Future<List<Category>> getByType(bool isIncome) async {
-    final dtos = await remoteDataSource.getByType(isIncome);
-    return dtos.map((e) => e.toDomain()).toList();
+    final localEntities = await localDataSource.getByType(isIncome);
+    if (localEntities.isNotEmpty) {
+      return localEntities.map((e) => e.toDomain()).toList();
+    }
+    final remoteDtos = await remoteDataSource.getByType(isIncome);
+    await localDataSource.saveAll(remoteDtos.map((e) => e.toDomain().toEntity()).toList());
+    return remoteDtos.map((e) => e.toDomain()).toList();
   }
 }
