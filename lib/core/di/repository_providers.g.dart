@@ -117,5 +117,79 @@ final historyRepositoryProvider = FutureProvider<HistoryRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef HistoryRepositoryRef = FutureProviderRef<HistoryRepository>;
+String _$accountLocalDataSourceHash() =>
+    r'22f6e59fbae7c8c0b919bd6a5df98786d7b68e53';
+
+/// See also [accountLocalDataSource].
+@ProviderFor(accountLocalDataSource)
+final accountLocalDataSourceProvider =
+    FutureProvider<AccountLocalDataSource>.internal(
+  accountLocalDataSource,
+  name: r'accountLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$accountLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AccountLocalDataSourceRef = FutureProviderRef<AccountLocalDataSource>;
+String _$statItemLocalDataSourceHash() =>
+    r'2e115e1cb8eafc5ff675b0efea11547ebdbc0556';
+
+/// See also [statItemLocalDataSource].
+@ProviderFor(statItemLocalDataSource)
+final statItemLocalDataSourceProvider =
+    FutureProvider<StatItemLocalDataSource>.internal(
+  statItemLocalDataSource,
+  name: r'statItemLocalDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$statItemLocalDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef StatItemLocalDataSourceRef = FutureProviderRef<StatItemLocalDataSource>;
+String _$accountRemoteDataSourceHash() =>
+    r'3038eb6a35404c6de0ea687e2d09cf348755fa85';
+
+/// See also [accountRemoteDataSource].
+@ProviderFor(accountRemoteDataSource)
+final accountRemoteDataSourceProvider =
+    Provider<MockRemoteAccountDataSource>.internal(
+  accountRemoteDataSource,
+  name: r'accountRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$accountRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AccountRemoteDataSourceRef = ProviderRef<MockRemoteAccountDataSource>;
+String _$accountRepositoryHash() => r'a335f8e93257407b0ea0374d894b30c2ef5b5304';
+
+/// See also [accountRepository].
+@ProviderFor(accountRepository)
+final accountRepositoryProvider = FutureProvider<AccountRepository>.internal(
+  accountRepository,
+  name: r'accountRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$accountRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AccountRepositoryRef = FutureProviderRef<AccountRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,18 +1,15 @@
-import 'package:fin_tamer/features/account/data/account_repository.dart';
-import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
-import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
+import 'package:fin_tamer/core/di/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account_service.g.dart';
 
 @riverpod
 class AccountService extends _$AccountService {
-  static final IAccountRepository accountRepo = AccountRepository(MockRemoteAccountDataSource());
-
   @override
   FutureOr<Account?> build() async {
-    final accounts = await accountRepo.getAll();
+    final repo = await ref.watch(accountRepositoryProvider.future);
+    final accounts = await repo.getAll();
 
     if (accounts.isEmpty) return null;
 

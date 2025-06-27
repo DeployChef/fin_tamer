@@ -14,6 +14,8 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'features/account/data/local/entities/account_entity.dart';
+import 'features/account/data/local/entities/stat_item_entity.dart';
 import 'features/category/data/local/entities/category_entity.dart';
 import 'features/history/data/local/entities/history_entity.dart';
 
@@ -118,6 +120,104 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(5, 3218171980000344758),
+    name: 'AccountEntity',
+    lastPropertyId: const obx_int.IdUid(9, 7502156885642015775),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 2634608706535449416),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4644545482946923430),
+        name: 'apiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 3242103203123592301),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1773618268272246912),
+        name: 'balance',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 7858932498738227295),
+        name: 'currency',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 1995406758587971667),
+        name: 'createdAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 7502156885642015775),
+        name: 'updatedAt',
+        type: 10,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(6, 7419752769170049923),
+    name: 'StatItemEntity',
+    lastPropertyId: const obx_int.IdUid(7, 3501366388118049952),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5702036449626325574),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 1347678859445470119),
+        name: 'apiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 2718226763762621476),
+        name: 'accountApiId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 5316522730820120505),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 5862021724767335644),
+        name: 'value',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 3501366388118049952),
+        name: 'isIncome',
+        type: 1,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -158,7 +258,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(4, 7951609919812821731),
+    lastEntityId: const obx_int.IdUid(6, 7419752769170049923),
     lastIndexId: const obx_int.IdUid(1, 2005279266660496490),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -178,6 +278,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
       1645820557717940178,
       3733016997206402289,
       6922564085595008223,
+      5957917243085841111,
+      5372237746619062107,
+      8685277185981112531,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -320,6 +423,138 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    AccountEntity: obx_int.EntityDefinition<AccountEntity>(
+      model: _entities[2],
+      toOneRelations: (AccountEntity object) => [],
+      toManyRelations: (AccountEntity object) => {},
+      getId: (AccountEntity object) => object.id,
+      setId: (AccountEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (AccountEntity object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        final balanceOffset = fbb.writeString(object.balance);
+        final currencyOffset = fbb.writeString(object.currency);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.apiId);
+        fbb.addOffset(2, nameOffset);
+        fbb.addOffset(3, balanceOffset);
+        fbb.addOffset(4, currencyOffset);
+        fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+        fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final apiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final balanceParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final currencyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0),
+        );
+        final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0),
+        );
+        final object = AccountEntity(
+          id: idParam,
+          apiId: apiIdParam,
+          name: nameParam,
+          balance: balanceParam,
+          currency: currencyParam,
+          createdAt: createdAtParam,
+          updatedAt: updatedAtParam,
+        );
+
+        return object;
+      },
+    ),
+    StatItemEntity: obx_int.EntityDefinition<StatItemEntity>(
+      model: _entities[3],
+      toOneRelations: (StatItemEntity object) => [],
+      toManyRelations: (StatItemEntity object) => {},
+      getId: (StatItemEntity object) => object.id,
+      setId: (StatItemEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (StatItemEntity object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        final valueOffset = fbb.writeString(object.value);
+        fbb.startTable(8);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.apiId);
+        fbb.addInt64(2, object.accountApiId);
+        fbb.addOffset(4, nameOffset);
+        fbb.addOffset(5, valueOffset);
+        fbb.addBool(6, object.isIncome);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final apiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final accountApiIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final isIncomeParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          16,
+          false,
+        );
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final valueParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 14, '');
+        final object = StatItemEntity(
+          id: idParam,
+          apiId: apiIdParam,
+          accountApiId: accountApiIdParam,
+          isIncome: isIncomeParam,
+          name: nameParam,
+          value: valueParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -393,5 +628,76 @@ class HistoryEntity_ {
   /// See [HistoryEntity.createdAt].
   static final createdAt = obx.QueryDateProperty<HistoryEntity>(
     _entities[1].properties[7],
+  );
+}
+
+/// [AccountEntity] entity fields to define ObjectBox queries.
+class AccountEntity_ {
+  /// See [AccountEntity.id].
+  static final id = obx.QueryIntegerProperty<AccountEntity>(
+    _entities[2].properties[0],
+  );
+
+  /// See [AccountEntity.apiId].
+  static final apiId = obx.QueryIntegerProperty<AccountEntity>(
+    _entities[2].properties[1],
+  );
+
+  /// See [AccountEntity.name].
+  static final name = obx.QueryStringProperty<AccountEntity>(
+    _entities[2].properties[2],
+  );
+
+  /// See [AccountEntity.balance].
+  static final balance = obx.QueryStringProperty<AccountEntity>(
+    _entities[2].properties[3],
+  );
+
+  /// See [AccountEntity.currency].
+  static final currency = obx.QueryStringProperty<AccountEntity>(
+    _entities[2].properties[4],
+  );
+
+  /// See [AccountEntity.createdAt].
+  static final createdAt = obx.QueryDateProperty<AccountEntity>(
+    _entities[2].properties[5],
+  );
+
+  /// See [AccountEntity.updatedAt].
+  static final updatedAt = obx.QueryDateProperty<AccountEntity>(
+    _entities[2].properties[6],
+  );
+}
+
+/// [StatItemEntity] entity fields to define ObjectBox queries.
+class StatItemEntity_ {
+  /// See [StatItemEntity.id].
+  static final id = obx.QueryIntegerProperty<StatItemEntity>(
+    _entities[3].properties[0],
+  );
+
+  /// See [StatItemEntity.apiId].
+  static final apiId = obx.QueryIntegerProperty<StatItemEntity>(
+    _entities[3].properties[1],
+  );
+
+  /// See [StatItemEntity.accountApiId].
+  static final accountApiId = obx.QueryIntegerProperty<StatItemEntity>(
+    _entities[3].properties[2],
+  );
+
+  /// See [StatItemEntity.name].
+  static final name = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[3],
+  );
+
+  /// See [StatItemEntity.value].
+  static final value = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[4],
+  );
+
+  /// See [StatItemEntity.isIncome].
+  static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
+    _entities[3].properties[5],
   );
 }
