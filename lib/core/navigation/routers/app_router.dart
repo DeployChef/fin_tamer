@@ -3,12 +3,14 @@ import 'package:fin_tamer/core/navigation/ui/main_wrapper.dart';
 import 'package:fin_tamer/features/account/ui/account_page.dart';
 import 'package:fin_tamer/features/category/ui/categories_page.dart';
 import 'package:fin_tamer/features/settings/ui/settings_page.dart';
-import 'package:fin_tamer/features/transaction/ui/income_details_page.dart';
-import 'package:fin_tamer/features/transaction/ui/income_history_page.dart';
-import 'package:fin_tamer/features/transaction/ui/income_page.dart';
-import 'package:fin_tamer/features/transaction/ui/outcome_details_page.dart';
-import 'package:fin_tamer/features/transaction/ui/outcome_page.dart';
-import 'package:fin_tamer/features/transaction/ui/outcome_history_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income/income_analytics_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income/income_details_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income/income_history_page.dart';
+import 'package:fin_tamer/features/transaction/ui/income/income_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome/outcome_analytics_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome/outcome_details_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome/outcome_page.dart';
+import 'package:fin_tamer/features/transaction/ui/outcome/outcome_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,6 +59,15 @@ class AppRouter {
                     builder: (context, state) => OutcomeHistoryPage(
                       key: state.pageKey,
                     ),
+                    routes: [
+                      GoRoute(
+                        path: AppRoutes.outcomeAnalytics.path,
+                        name: AppRoutes.outcomeAnalytics.name,
+                        builder: (context, state) => OutcomeAnalyticsPage(
+                          key: state.pageKey,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -85,6 +96,15 @@ class AppRouter {
                     builder: (context, state) => IncomeHistoryPage(
                       key: state.pageKey,
                     ),
+                    routes: [
+                      GoRoute(
+                        path: AppRoutes.incomeAnalytics.path,
+                        name: AppRoutes.incomeAnalytics.name,
+                        builder: (context, state) => IncomeAnalyticsPage(
+                          key: state.pageKey,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),

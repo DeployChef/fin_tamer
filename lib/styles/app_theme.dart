@@ -1,9 +1,23 @@
 import 'package:fin_tamer/styles/app_colors.dart';
+import 'package:fin_tamer/styles/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData light() {
     return ThemeData.light().copyWith(
+      primaryColor: AppColors.primaryLight,
+      colorScheme: const ColorScheme(
+        brightness: Brightness.light,
+        primary: AppColors.primaryLight,
+        onPrimary: Colors.white,
+        secondary: AppColors.alarmLight,
+        onSecondary: Colors.white,
+        surface: Color(0xffF3EDF7),
+        onSurface: AppColors.foregroundLight,
+        error: Colors.red,
+        onError: Colors.white,
+      ),
+      scaffoldBackgroundColor: AppColors.backgroundLight,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.primaryLight,
@@ -14,37 +28,46 @@ class AppTheme {
         backgroundColor: AppColors.primaryLight,
         centerTitle: true,
       ),
-      navigationBarTheme: const NavigationBarThemeData(
+      navigationBarTheme: NavigationBarThemeData(
         indicatorColor: AppColors.navigationLight,
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppFonts.labelMedium.copyWith(color: AppColors.foregroundLight);
+          }
+          return AppFonts.labelMedium.copyWith(color: AppColors.foregroundLight.withAlpha(100));
+        }),
       ),
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 22,
-          height: 28 / 22,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
+      dividerTheme: const DividerThemeData(
+        space: 1,
+        color: Colors.black26,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primaryLight,
+          textStyle: const TextStyle(fontWeight: FontWeight.w600),
         ),
-        labelMedium: TextStyle(
-          fontSize: 12,
-          height: 16 / 12,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-          color: Colors.black,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryLight,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          height: 24 / 16,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
-          letterSpacing: 0.5,
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primaryLight,
+          side: const BorderSide(color: AppColors.primaryLight),
         ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          height: 20 / 14,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.25,
-          color: Colors.black,
-        ),
+      ),
+      textTheme: TextTheme(
+        titleLarge: AppFonts.titleLarge.copyWith(color: AppColors.foregroundLight),
+        labelMedium: AppFonts.labelMedium.copyWith(color: AppColors.foregroundLight),
+        bodyLarge: AppFonts.bodyLarge.copyWith(color: AppColors.foregroundLight),
+        bodyMedium: AppFonts.bodyMedium.copyWith(color: AppColors.foregroundLight),
+        headlineMedium: AppFonts.headlineMedium.copyWith(color: AppColors.foregroundLight),
       ),
     );
   }
@@ -64,30 +87,15 @@ class AppTheme {
       navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: AppColors.navigationLight,
       ),
+      dividerTheme: const DividerThemeData(
+        space: 1,
+      ),
       textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 22,
-          height: 28 / 22,
-          fontWeight: FontWeight.w400,
-        ),
-        labelMedium: TextStyle(
-          fontSize: 12,
-          height: 16 / 12,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          height: 24 / 16,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.5,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          height: 20 / 14,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.25,
-        ),
+        titleLarge: AppFonts.titleLarge,
+        labelMedium: AppFonts.labelMedium,
+        bodyLarge: AppFonts.bodyLarge,
+        bodyMedium: AppFonts.bodyMedium,
+        headlineMedium: AppFonts.headlineMedium,
       ),
     );
   }

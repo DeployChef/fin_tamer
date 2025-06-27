@@ -1,5 +1,5 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
-import 'package:fin_tamer/features/transaction/domain/services/filtered_transaction_service.dart';
+import 'package:fin_tamer/features/transaction/domain/services/history/history_filtered_transaction_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/amount_widget.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class HistoryTransactionsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transactionService = ref.watch(filteredTransactionServiceProvider(
+    final transactionService = ref.watch(historyFilteredTransactionServiceProvider(
       isIncome: isIncome,
     ));
 
@@ -28,7 +28,7 @@ class HistoryTransactionsList extends ConsumerWidget {
               error: (_, __) => 0,
               loading: () => 0,
             )),
-        const Divider(height: 1),
+        const Divider(),
         Expanded(
           child: transactionService.when(
             data: (transactions) {

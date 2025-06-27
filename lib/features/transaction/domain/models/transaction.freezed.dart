@@ -16,8 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Transaction {
   int get id;
-  int get accountId;
-  int get categoryId;
+  AccountBrief get account;
+  Category get category;
   String get amount;
   DateTime get transactionDate;
   String? get comment;
@@ -40,10 +40,9 @@ mixin _$Transaction {
         (other.runtimeType == runtimeType &&
             other is Transaction &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.transactionDate, transactionDate) ||
                 other.transactionDate == transactionDate) &&
@@ -56,12 +55,12 @@ mixin _$Transaction {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, accountId, categoryId,
-      amount, transactionDate, comment, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, account, category, amount,
+      transactionDate, comment, createdAt, updatedAt);
 
   @override
   String toString() {
-    return 'Transaction(id: $id, accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Transaction(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -73,13 +72,16 @@ abstract mixin class $TransactionCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int accountId,
-      int categoryId,
+      AccountBrief account,
+      Category category,
       String amount,
       DateTime transactionDate,
       String? comment,
       DateTime createdAt,
       DateTime updatedAt});
+
+  $AccountBriefCopyWith<$Res> get account;
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -95,8 +97,8 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
-    Object? accountId = null,
-    Object? categoryId = null,
+    Object? account = null,
+    Object? category = null,
     Object? amount = null,
     Object? transactionDate = null,
     Object? comment = freezed,
@@ -108,14 +110,14 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      accountId: null == accountId
-          ? _self.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: null == categoryId
-          ? _self.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+      account: null == account
+          ? _self.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as AccountBrief,
+      category: null == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -138,6 +140,26 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
               as DateTime,
     ));
   }
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBriefCopyWith<$Res> get account {
+    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+      return _then(_self.copyWith(account: value));
+    });
+  }
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_self.category, (value) {
+      return _then(_self.copyWith(category: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -145,8 +167,8 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
 class _Transaction extends Transaction {
   const _Transaction(
       {required this.id,
-      required this.accountId,
-      required this.categoryId,
+      required this.account,
+      required this.category,
       required this.amount,
       required this.transactionDate,
       this.comment,
@@ -159,9 +181,9 @@ class _Transaction extends Transaction {
   @override
   final int id;
   @override
-  final int accountId;
+  final AccountBrief account;
   @override
-  final int categoryId;
+  final Category category;
   @override
   final String amount;
   @override
@@ -194,10 +216,9 @@ class _Transaction extends Transaction {
         (other.runtimeType == runtimeType &&
             other is _Transaction &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.accountId, accountId) ||
-                other.accountId == accountId) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.transactionDate, transactionDate) ||
                 other.transactionDate == transactionDate) &&
@@ -210,12 +231,12 @@ class _Transaction extends Transaction {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, accountId, categoryId,
-      amount, transactionDate, comment, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, account, category, amount,
+      transactionDate, comment, createdAt, updatedAt);
 
   @override
   String toString() {
-    return 'Transaction(id: $id, accountId: $accountId, categoryId: $categoryId, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Transaction(id: $id, account: $account, category: $category, amount: $amount, transactionDate: $transactionDate, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -229,13 +250,18 @@ abstract mixin class _$TransactionCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int accountId,
-      int categoryId,
+      AccountBrief account,
+      Category category,
       String amount,
       DateTime transactionDate,
       String? comment,
       DateTime createdAt,
       DateTime updatedAt});
+
+  @override
+  $AccountBriefCopyWith<$Res> get account;
+  @override
+  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -251,8 +277,8 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? accountId = null,
-    Object? categoryId = null,
+    Object? account = null,
+    Object? category = null,
     Object? amount = null,
     Object? transactionDate = null,
     Object? comment = freezed,
@@ -264,14 +290,14 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      accountId: null == accountId
-          ? _self.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: null == categoryId
-          ? _self.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+      account: null == account
+          ? _self.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as AccountBrief,
+      category: null == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category,
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -293,6 +319,26 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
+  }
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountBriefCopyWith<$Res> get account {
+    return $AccountBriefCopyWith<$Res>(_self.account, (value) {
+      return _then(_self.copyWith(account: value));
+    });
+  }
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res> get category {
+    return $CategoryCopyWith<$Res>(_self.category, (value) {
+      return _then(_self.copyWith(category: value));
+    });
   }
 }
 

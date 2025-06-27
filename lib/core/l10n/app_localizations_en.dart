@@ -51,6 +51,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterEndDate => 'End';
 
   @override
+  String get filterStartDatePeriod => 'Period: start';
+
+  @override
+  String get filterEndDatePeriod => 'Period: end';
+
+  @override
   String get filterSort => 'Order by';
 
   @override
@@ -61,4 +67,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get byAmount => 'amount';
+
+  @override
+  String get analytics => 'Analytics';
 }

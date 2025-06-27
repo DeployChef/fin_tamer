@@ -16,10 +16,11 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Account {
   int get id;
-  int get userId;
   String get name;
   String get balance;
   String get currency;
+  List<StatItem> get incomeStats;
+  List<StatItem> get expenseStats;
   DateTime get createdAt;
   DateTime get updatedAt;
 
@@ -39,11 +40,14 @@ mixin _$Account {
         (other.runtimeType == runtimeType &&
             other is Account &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
+            const DeepCollectionEquality()
+                .equals(other.incomeStats, incomeStats) &&
+            const DeepCollectionEquality()
+                .equals(other.expenseStats, expenseStats) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -53,11 +57,19 @@ mixin _$Account {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, userId, name, balance, currency, createdAt, updatedAt);
+      runtimeType,
+      id,
+      name,
+      balance,
+      currency,
+      const DeepCollectionEquality().hash(incomeStats),
+      const DeepCollectionEquality().hash(expenseStats),
+      createdAt,
+      updatedAt);
 
   @override
   String toString() {
-    return 'Account(id: $id, userId: $userId, name: $name, balance: $balance, currency: $currency, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Account(id: $id, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -68,10 +80,11 @@ abstract mixin class $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int userId,
       String name,
       String balance,
       String currency,
+      List<StatItem> incomeStats,
+      List<StatItem> expenseStats,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -89,10 +102,11 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
+    Object? incomeStats = null,
+    Object? expenseStats = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -100,10 +114,6 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _self.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name
@@ -117,6 +127,14 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      incomeStats: null == incomeStats
+          ? _self.incomeStats
+          : incomeStats // ignore: cast_nullable_to_non_nullable
+              as List<StatItem>,
+      expenseStats: null == expenseStats
+          ? _self.expenseStats
+          : expenseStats // ignore: cast_nullable_to_non_nullable
+              as List<StatItem>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -134,26 +152,45 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 class _Account extends Account {
   const _Account(
       {required this.id,
-      required this.userId,
       required this.name,
       required this.balance,
       required this.currency,
+      final List<StatItem> incomeStats = const [],
+      final List<StatItem> expenseStats = const [],
       required this.createdAt,
       required this.updatedAt})
-      : super._();
+      : _incomeStats = incomeStats,
+        _expenseStats = expenseStats,
+        super._();
   factory _Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);
 
   @override
   final int id;
   @override
-  final int userId;
-  @override
   final String name;
   @override
   final String balance;
   @override
   final String currency;
+  final List<StatItem> _incomeStats;
+  @override
+  @JsonKey()
+  List<StatItem> get incomeStats {
+    if (_incomeStats is EqualUnmodifiableListView) return _incomeStats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_incomeStats);
+  }
+
+  final List<StatItem> _expenseStats;
+  @override
+  @JsonKey()
+  List<StatItem> get expenseStats {
+    if (_expenseStats is EqualUnmodifiableListView) return _expenseStats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_expenseStats);
+  }
+
   @override
   final DateTime createdAt;
   @override
@@ -180,11 +217,14 @@ class _Account extends Account {
         (other.runtimeType == runtimeType &&
             other is _Account &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
+            const DeepCollectionEquality()
+                .equals(other._incomeStats, _incomeStats) &&
+            const DeepCollectionEquality()
+                .equals(other._expenseStats, _expenseStats) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -194,11 +234,19 @@ class _Account extends Account {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, userId, name, balance, currency, createdAt, updatedAt);
+      runtimeType,
+      id,
+      name,
+      balance,
+      currency,
+      const DeepCollectionEquality().hash(_incomeStats),
+      const DeepCollectionEquality().hash(_expenseStats),
+      createdAt,
+      updatedAt);
 
   @override
   String toString() {
-    return 'Account(id: $id, userId: $userId, name: $name, balance: $balance, currency: $currency, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Account(id: $id, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -210,10 +258,11 @@ abstract mixin class _$AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int userId,
       String name,
       String balance,
       String currency,
+      List<StatItem> incomeStats,
+      List<StatItem> expenseStats,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -231,10 +280,11 @@ class __$AccountCopyWithImpl<$Res> implements _$AccountCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
+    Object? incomeStats = null,
+    Object? expenseStats = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -242,10 +292,6 @@ class __$AccountCopyWithImpl<$Res> implements _$AccountCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _self.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name
@@ -259,6 +305,14 @@ class __$AccountCopyWithImpl<$Res> implements _$AccountCopyWith<$Res> {
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      incomeStats: null == incomeStats
+          ? _self._incomeStats
+          : incomeStats // ignore: cast_nullable_to_non_nullable
+              as List<StatItem>,
+      expenseStats: null == expenseStats
+          ? _self._expenseStats
+          : expenseStats // ignore: cast_nullable_to_non_nullable
+              as List<StatItem>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable

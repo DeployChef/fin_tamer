@@ -18,7 +18,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get account => 'Счет';
 
   @override
-  String get categories => 'Категории';
+  String get categories => 'Статьи';
 
   @override
   String get settings => 'Настройки';
@@ -51,6 +51,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get filterEndDate => 'Конец';
 
   @override
+  String get filterStartDatePeriod => 'Период: начало';
+
+  @override
+  String get filterEndDatePeriod => 'Период: конец';
+
+  @override
   String get filterSort => 'Сортировка';
 
   @override
@@ -61,4 +67,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get byAmount => 'по сумме';
+
+  @override
+  String get analytics => 'Анализ';
 }

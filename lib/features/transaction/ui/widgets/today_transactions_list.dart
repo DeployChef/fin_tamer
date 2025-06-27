@@ -28,7 +28,7 @@ class TodayTransactionsList extends ConsumerWidget {
               error: (_, __) => 0,
               loading: () => 0,
             )),
-        const Divider(height: 1),
+        const Divider(),
         Expanded(
           child: transactionService.when(
             data: (transactions) {
@@ -44,9 +44,7 @@ class TodayTransactionsList extends ConsumerWidget {
                               item: item,
                               showTime: false,
                             ),
-                            const Divider(
-                              height: 1,
-                            ),
+                            const Divider(),
                           ],
                         );
                       },

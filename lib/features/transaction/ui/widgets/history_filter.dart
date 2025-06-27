@@ -1,7 +1,7 @@
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
-import 'package:fin_tamer/features/transaction/domain/services/history_filter_service.dart';
+import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/sort_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,7 +54,7 @@ class HistoryFilter extends ConsumerWidget {
             ref.read(provider.notifier).setStart(startDate: dateTime);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
@@ -79,7 +79,7 @@ class HistoryFilter extends ConsumerWidget {
             ref.read(provider.notifier).setEnd(endDate: dateTime);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           tileColor: const Color(0xffD4FAE6),
@@ -95,7 +95,7 @@ class HistoryFilter extends ConsumerWidget {
             await showOrderBottomSheet(context);
           },
         ),
-        const Divider(height: 1),
+        const Divider(),
       ],
     );
   }

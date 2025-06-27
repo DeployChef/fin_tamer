@@ -34,6 +34,14 @@ enum AppRoutes {
   outcomeHistory(
     'OUTCOME_HISTORY',
     '/history',
+  ),
+  incomeAnalytics(
+    'INCOME_ANALYTICS',
+    '/analytics',
+  ),
+  outcomeAnalytics(
+    'OUTCOME_ANALYTICS',
+    '/analytics',
   );
 
   final String name;

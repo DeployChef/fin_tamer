@@ -1,15 +1,16 @@
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
-import 'package:fin_tamer/features/transaction/domain/models/transaction_response.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({super.key, required this.item, this.showTime = false});
+  const TransactionItem({super.key, required this.item, this.showTime = false, this.enableDetails = true});
 
-  final TransactionResponse item;
+  final Transaction item;
   final bool showTime;
+  final bool enableDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +54,18 @@ class TransactionItem extends StatelessWidget {
                 : const SizedBox.shrink(),
           ],
         ),
-        const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
+        enableDetails
+            ? const Icon(
+                Icons.chevron_right,
+                color: Color(0x4d3c3c43),
+              )
+            : const SizedBox.shrink(),
       ]),
-      onTap: () {
-        context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
-      },
+      onTap: enableDetails
+          ? () {
+              context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
+            }
+          : null,
     );
   }
 }

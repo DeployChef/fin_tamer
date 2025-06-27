@@ -2,7 +2,7 @@
     "outcomes": "Расходы",
     "incomes": "Доходы",
     "account": "Счет",
-    "categories": "Категории",
+    "categories": "Статьи",
     "settings": "Настройки",
     "accountTitle": "Мой счет",
     "categoriesTitle": "Мои статьи",
@@ -13,8 +13,11 @@
     "amountHistoryTitle": "Сумма",
     "filterStartDate": "Начало",
     "filterEndDate": "Конец",
+    "filterStartDatePeriod": "Период: начало",
+    "filterEndDatePeriod": "Период: конец",
     "filterSort": "Сортировка",
     "notFound": "Записи не найдены",
     "byDate": "по дате",
-    "byAmount": "по сумме"
+    "byAmount": "по сумме",
+    "analytics": "Анализ"
 }

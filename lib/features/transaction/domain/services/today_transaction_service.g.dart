@@ -7,7 +7,7 @@ part of 'today_transaction_service.dart';
 // **************************************************************************
 
 String _$todayTransactionServiceHash() =>
-    r'0ab5a8c2ce02f6f678447bf2831ed261ff85d5d2';
+    r'54cca5c7d9c81126545c089100c6c955ec1a0ef8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 }
 
 abstract class _$TodayTransactionService
-    extends BuildlessAutoDisposeAsyncNotifier<List<TransactionResponse>> {
+    extends BuildlessAutoDisposeAsyncNotifier<List<Transaction>> {
   late final bool isIncome;
 
-  FutureOr<List<TransactionResponse>> build({
+  FutureOr<List<Transaction>> build({
     required bool isIncome,
   });
 }
@@ -45,7 +45,7 @@ const todayTransactionServiceProvider = TodayTransactionServiceFamily();
 
 /// See also [TodayTransactionService].
 class TodayTransactionServiceFamily
-    extends Family<AsyncValue<List<TransactionResponse>>> {
+    extends Family<AsyncValue<List<Transaction>>> {
   /// See also [TodayTransactionService].
   const TodayTransactionServiceFamily();
 
@@ -91,7 +91,7 @@ class TodayTransactionServiceFamily
 /// See also [TodayTransactionService].
 class TodayTransactionServiceProvider
     extends AutoDisposeAsyncNotifierProviderImpl<TodayTransactionService,
-        List<TransactionResponse>> {
+        List<Transaction>> {
   /// See also [TodayTransactionService].
   TodayTransactionServiceProvider({
     required bool isIncome,
@@ -122,7 +122,7 @@ class TodayTransactionServiceProvider
   final bool isIncome;
 
   @override
-  FutureOr<List<TransactionResponse>> runNotifierBuild(
+  FutureOr<List<Transaction>> runNotifierBuild(
     covariant TodayTransactionService notifier,
   ) {
     return notifier.build(
@@ -148,7 +148,7 @@ class TodayTransactionServiceProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<TodayTransactionService,
-      List<TransactionResponse>> createElement() {
+      List<Transaction>> createElement() {
     return _TodayTransactionServiceProviderElement(this);
   }
 
@@ -170,14 +170,14 @@ class TodayTransactionServiceProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin TodayTransactionServiceRef
-    on AutoDisposeAsyncNotifierProviderRef<List<TransactionResponse>> {
+    on AutoDisposeAsyncNotifierProviderRef<List<Transaction>> {
   /// The parameter `isIncome` of this provider.
   bool get isIncome;
 }
 
 class _TodayTransactionServiceProviderElement
     extends AutoDisposeAsyncNotifierProviderElement<TodayTransactionService,
-        List<TransactionResponse>> with TodayTransactionServiceRef {
+        List<Transaction>> with TodayTransactionServiceRef {
   _TodayTransactionServiceProviderElement(super.provider);
 
   @override

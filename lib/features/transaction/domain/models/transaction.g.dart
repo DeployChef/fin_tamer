@@ -8,8 +8,8 @@ part of 'transaction.dart';
 
 _Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
       id: (json['id'] as num).toInt(),
-      accountId: (json['accountId'] as num).toInt(),
-      categoryId: (json['categoryId'] as num).toInt(),
+      account: AccountBrief.fromJson(json['account'] as Map<String, dynamic>),
+      category: Category.fromJson(json['category'] as Map<String, dynamic>),
       amount: json['amount'] as String,
       transactionDate: DateTime.parse(json['transactionDate'] as String),
       comment: json['comment'] as String?,
@@ -20,8 +20,8 @@ _Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
 Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'accountId': instance.accountId,
-      'categoryId': instance.categoryId,
+      'account': instance.account,
+      'category': instance.category,
       'amount': instance.amount,
       'transactionDate': instance.transactionDate.toIso8601String(),
       'comment': instance.comment,

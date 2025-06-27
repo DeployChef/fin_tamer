@@ -182,6 +182,18 @@ abstract class AppLocalizations {
   /// **'End'**
   String get filterEndDate;
 
+  /// No description provided for @filterStartDatePeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period: start'**
+  String get filterStartDatePeriod;
+
+  /// No description provided for @filterEndDatePeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period: end'**
+  String get filterEndDatePeriod;
+
   /// No description provided for @filterSort.
   ///
   /// In en, this message translates to:
@@ -205,6 +217,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'amount'**
   String get byAmount;
+
+  /// No description provided for @analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get analytics;
 }
 
 class _AppLocalizationsDelegate
