@@ -35,7 +35,7 @@ class AccountPage extends ConsumerWidget {
           AccountBalance(),
           Divider(),
           AccountCurrency(),
-          ChartWidget(text: "Feature chart"),
+          BarChartWidget(text: "Feature chart"),
         ],
       ),
     );

@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
+library;
 
-class ChartWidget extends StatelessWidget {
-  final String text;
-
-  const ChartWidget({super.key, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(text, style: const TextStyle(fontSize: 24)));
-  }
-}
+export 'src/pie_chart_widget.dart';
+export 'src/bar_chart_widget.dart';
+export 'src/chart_config.dart';

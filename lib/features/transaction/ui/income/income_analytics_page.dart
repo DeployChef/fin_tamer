@@ -1,3 +1,4 @@
+import 'package:chart_widget/chart_widget.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/analytics_filter.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/analytics_list.dart';
@@ -21,6 +22,7 @@ class IncomeAnalyticsPage extends StatelessWidget {
           children: [
             AnalyticsFilter.income(),
             Expanded(child: AnalyticsList.income()),
+            PieChartWidget(text: "chart"),
           ],
         ),
       ),
