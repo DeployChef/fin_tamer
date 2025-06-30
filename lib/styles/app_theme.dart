@@ -65,6 +65,7 @@ class AppTheme {
       textTheme: TextTheme(
         titleLarge: AppFonts.titleLarge.copyWith(color: AppColors.foregroundLight),
         labelMedium: AppFonts.labelMedium.copyWith(color: AppColors.foregroundLight),
+        labelSmall: AppFonts.labelSmall.copyWith(color: AppColors.foregroundLight),
         bodyLarge: AppFonts.bodyLarge.copyWith(color: AppColors.foregroundLight),
         bodyMedium: AppFonts.bodyMedium.copyWith(color: AppColors.foregroundLight),
         headlineMedium: AppFonts.headlineMedium.copyWith(color: AppColors.foregroundLight),

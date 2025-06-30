@@ -1,5 +1,5 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class PieChartSection {
   final String title;
@@ -18,6 +18,7 @@ class PieChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieChart(
       PieChartData(
+        startDegreeOffset: -90, // Начало с верхней точки
         sections: data
             .map(
               (e) => PieChartSectionData(

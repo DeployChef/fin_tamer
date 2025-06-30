@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "fin_tamer",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "fin_tamer (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "fin_tamer (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "chart_widget",
+            "cwd": "chart_widget",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "chart_widget (profile mode)",
+            "cwd": "chart_widget",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "chart_widget (release mode)",
+            "cwd": "chart_widget",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
