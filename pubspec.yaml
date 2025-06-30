@@ -7,6 +7,9 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
+  chart_widget:
+    path: ./chart_widget
+    
   collection: ^1.19.1
   flutter:
     sdk: flutter

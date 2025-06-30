@@ -1,3 +1,4 @@
+import 'package:chart_widget/chart_widget.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/account/ui/widgets/account_balance.dart';
@@ -34,6 +35,7 @@ class AccountPage extends ConsumerWidget {
           AccountBalance(),
           Divider(),
           AccountCurrency(),
+          ChartWidget(text: "Feature chart"),
         ],
       ),
     );
