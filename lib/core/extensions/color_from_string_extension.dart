@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 extension ColorFromStringExtension on String {
   Color get colorFromString {
-    int sum = 0;
-    for (var codeUnit in codeUnits) {
-      sum += codeUnit;
-    }
-    final hue = (sum % 360).toDouble();
-    const sat = 0.6;
-    const light = 0.55;
-    return HSLColor.fromAHSL(1.0, hue, sat, light).toColor();
+    final hash = hashCode.abs();
+    const goldenRatio = 0.618033988749895;
+    final hue = ((hash * goldenRatio) % 1.0) * 360;
+    const saturation = 0.8;
+    const value = 0.9;
+
+    return HSVColor.fromAHSV(1.0, hue, saturation, value).toColor();
   }
 }
