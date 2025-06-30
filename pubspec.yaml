@@ -38,6 +38,8 @@ dev_dependencies:
   objectbox_generator: ^4.3.0
   riverpod_generator: ^2.6.5
   riverpod_lint: ^2.6.5
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.10
 
 flutter:
   generate: true
@@ -46,3 +48,17 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/favicon.png"
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#ffffff" # Цвет фона (можно заменить на свой)
+  image: assets/images/splash.png
+  android: true
+  ios: true
+  android_gravity: fill
+  ios_content_mode: scaleToFill
