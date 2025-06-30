@@ -62,6 +62,36 @@ class MockTransactionRemoteDataSource {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ),
+    TransactionResponseDto(
+      id: 6,
+      account: const AccountBriefDto(id: 1, name: 'Основной счёт', balance: '1000.00', currency: 'RUB'),
+      category: const CategoryDto(id: 6, name: 'Продукты', emoji: '🎈', isIncome: false),
+      amount: '12500.00',
+      transactionDate: DateTime.now(),
+      comment: "поел",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ),
+    TransactionResponseDto(
+      id: 7,
+      account: const AccountBriefDto(id: 1, name: 'Основной счёт', balance: '1000.00', currency: 'RUB'),
+      category: const CategoryDto(id: 3, name: 'Одежда', emoji: '👗', isIncome: false),
+      amount: '33500.00',
+      transactionDate: DateTime.now(),
+      comment: "оделся",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ),
+    TransactionResponseDto(
+      id: 8,
+      account: const AccountBriefDto(id: 1, name: 'Основной счёт', balance: '1000.00', currency: 'RUB'),
+      category: const CategoryDto(id: 7, name: 'Спортзал', emoji: '🏋️‍♀️', isIncome: false),
+      amount: '3500.00',
+      transactionDate: DateTime.now(),
+      comment: "подкачался",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ),
   ];
 
   Future<TransactionResponseDto> create(TransactionRequestDto request) async {
