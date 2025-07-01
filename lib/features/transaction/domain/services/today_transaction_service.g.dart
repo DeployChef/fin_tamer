@@ -7,7 +7,7 @@ part of 'today_transaction_service.dart';
 // **************************************************************************
 
 String _$todayTransactionServiceHash() =>
-    r'54cca5c7d9c81126545c089100c6c955ec1a0ef8';
+    r'82f6c421a7882d4d3cbdeb1ebdbbe06e06df406b';
 
 /// Copied from Dart SDK
 class _SystemHash {

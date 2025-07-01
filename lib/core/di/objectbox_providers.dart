@@ -1,3 +1,4 @@
+import 'package:fin_tamer/objectbox.g.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:fin_tamer/core/local/objectbox_store.dart';
