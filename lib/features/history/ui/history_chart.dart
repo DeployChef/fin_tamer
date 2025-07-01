@@ -17,30 +17,37 @@ class HistoryChart extends ConsumerWidget {
 
     final now = DateTime.now();
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
-    final Map<int, double> daySums = {for (var i = 1; i <= daysInMonth; i++) i: 0};
-    // Агрегируем изменения баланса по дням за текущий месяц
-    for (final h in historyFeed.history) {
+    final sortedHistory = [...historyFeed.history]..sort((a, b) => a.changeTimestamp.compareTo(b.changeTimestamp));
+
+    final Map<int, double> dayBalances = {};
+    double startBalance = sortedHistory.isNotEmpty ? sortedHistory.first.previousState.balance : 0.0;
+
+    for (final h in sortedHistory) {
       final date = h.changeTimestamp;
+      final day = date.day;
+
       if (date.month == now.month && date.year == now.year) {
-        final day = date.day;
-        final prev = h.previousState.balance;
-        final next = h.newState.balance;
-        final diff = next - prev;
-        daySums[day] = (daySums[day] ?? 0) + diff;
+        dayBalances[day] = h.newState.balance;
       }
     }
-    final bars = daySums.entries
-        .map((entry) => BalanceBarData(
-              x: entry.key,
-              value: entry.value,
-              color: entry.value >= 0 ? const Color(0xFF2AE881) : const Color(0xFFFF5F00),
-              label: null,
-            ))
-        .toList();
+
+    // 2. Заполняем каждый день месяца, если нет изменений — берем предыдущий баланс
+    double prevBalance = startBalance;
+    final bars = <BalanceBarData>[];
+    for (int day = 1; day <= daysInMonth; day++) {
+      final balance = dayBalances.containsKey(day) ? dayBalances[day]! : prevBalance;
+      bars.add(BalanceBarData(
+        x: day,
+        value: balance,
+        color: balance >= 0 ? const Color(0xFF2AE881) : const Color(0xFFFF5F00),
+        label: null,
+      ));
+      prevBalance = balance;
+    }
     final labelX = [1, (daysInMonth / 2).round(), daysInMonth];
     final config = BalanceChartConfig(
       minY: 0,
-      maxY: daySums.values.isNotEmpty ? daySums.values.map((v) => v.abs()).reduce(max) * 1.2 : 10,
+      maxY: bars.isNotEmpty ? bars.map((b) => b.value.abs()).reduce(max) * 1.2 : 10,
       barsCount: daysInMonth,
       labelX: labelX,
       xLabelFormatter: (x) {
@@ -101,7 +108,7 @@ class BalanceBarChart extends StatelessWidget {
                         BarChartRodData(
                           toY: bar.value.abs(),
                           color: bar.color,
-                          width: 10,
+                          width: 6,
                           borderRadius: BorderRadius.all(Radius.circular(92)),
                         ),
                       ],
