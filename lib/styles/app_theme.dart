@@ -62,6 +62,27 @@ class AppTheme {
           side: const BorderSide(color: AppColors.primaryLight),
         ),
       ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const Color(0xff2AE881);
+            }
+            return const Color(0xffD4FAE6);
+          }),
+          foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+          overlayColor: WidgetStateProperty.all<Color>(const Color(0x332AE881)),
+          elevation: WidgetStateProperty.all<double>(0),
+          side: WidgetStateProperty.all<BorderSide>(
+            const BorderSide(color: Color(0xff2AE881), width: 2),
+          ),
+          visualDensity: VisualDensity.compact,
+          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+        ),
+      ),
       textTheme: TextTheme(
         titleLarge: AppFonts.titleLarge.copyWith(color: AppColors.foregroundLight),
         labelMedium: AppFonts.labelMedium.copyWith(color: AppColors.foregroundLight),
