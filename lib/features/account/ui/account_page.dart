@@ -57,14 +57,16 @@ class BarChartWidget extends ConsumerWidget {
     final Map<int, double> daySums = {for (var i = 1; i <= daysInMonth; i++) i: 0};
 
     for (final stat in account.incomeStats) {
-      final day = DateTime.tryParse(stat.name)?.day;
-      if (day != null) {
+      final date = DateTime.tryParse(stat.name);
+      if (date != null && date.month == now.month && date.year == now.year) {
+        final day = date.day;
         daySums[day] = (daySums[day] ?? 0) + (double.tryParse(stat.value) ?? 0);
       }
     }
     for (final stat in account.expenseStats) {
-      final day = DateTime.tryParse(stat.name)?.day;
-      if (day != null) {
+      final date = DateTime.tryParse(stat.name);
+      if (date != null && date.month == now.month && date.year == now.year) {
+        final day = date.day;
         daySums[day] = (daySums[day] ?? 0) + (double.tryParse(stat.value) ?? 0);
       }
     }
@@ -110,11 +112,14 @@ class BarChartWidget extends ConsumerWidget {
                     if (day == 1 || day == (daysInMonth / 2).round() || day == daysInMonth) {
                       final date = DateTime(now.year, now.month, day);
                       final label = '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}';
-                      return Text(label, style: const TextStyle(fontSize: 10));
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(label, style: const TextStyle(fontSize: 10)),
+                      );
                     }
                     return const SizedBox.shrink();
                   },
-                  reservedSize: 28,
+                  reservedSize: 24,
                 ),
               ),
             ),
