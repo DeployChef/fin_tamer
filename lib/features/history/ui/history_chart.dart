@@ -3,11 +3,16 @@ import 'package:fin_tamer/features/history/domain/services/history_service.dart'
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_tamer/features/history/domain/models/account_history.dart';
 
 enum HistoryChartMode { byDay, byMonth }
+
+class _ChartData {
+  final List<BalanceBarData> bars;
+  final BalanceChartConfig config;
+  _ChartData(this.bars, this.config);
+}
 
 class HistoryChart extends ConsumerStatefulWidget {
   const HistoryChart({super.key});
@@ -25,6 +30,8 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     if (account == null) return const SizedBox();
     final historyFeed = ref.watch(historyServiceProvider(account.id)).value;
     if (historyFeed == null) return const SizedBox();
+
+    final _ChartData chartData = _mode == HistoryChartMode.byDay ? _chartCurrentMonthData(historyFeed) : _chartByMonthsData(historyFeed);
 
     return Column(
       children: [
@@ -46,36 +53,17 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
               if (modes.isNotEmpty) setState(() => _mode = modes.first);
             },
             showSelectedIcon: false,
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-                if (states.contains(WidgetState.selected)) {
-                  return const Color(0xff2AE881);
-                }
-                return const Color(0xffD4FAE6);
-              }),
-              foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-              overlayColor: WidgetStateProperty.all<Color>(const Color(0x332AE881)),
-              elevation: WidgetStateProperty.all<double>(0),
-              side: WidgetStateProperty.all<BorderSide>(
-                const BorderSide(color: Color(0xff2AE881), width: 2),
-              ),
-              visualDensity: VisualDensity.compact,
-              padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-            ),
           ),
         ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 800),
-          child: _mode == HistoryChartMode.byDay ? _chartCurrentMonth(historyFeed) : _chartByMonths(historyFeed),
+        BalanceBarChart(
+          bars: chartData.bars,
+          config: chartData.config,
         ),
       ],
     );
   }
 
-  Widget _chartCurrentMonth(historyFeed) {
+  _ChartData _chartCurrentMonthData(historyFeed) {
     final now = DateTime.now();
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
     final sortedHistory = [...historyFeed.history]..sort((a, b) => a.changeTimestamp.compareTo(b.changeTimestamp));
@@ -95,11 +83,6 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     double prevBalance = startBalance;
     final bars = <BalanceBarData>[];
     for (int day = 1; day <= daysInMonth; day++) {
-      // if (DateTime.now().day < day) {
-      //   bars.add(BalanceBarData(x: day, value: 0, color: Colors.grey, label: null));
-      //   continue;
-      // }
-
       final balance = dayBalances.containsKey(day) ? dayBalances[day]! : prevBalance;
       bars.add(BalanceBarData(
         x: day,
@@ -120,10 +103,10 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
         return '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}';
       },
     );
-    return BalanceBarChart(bars: bars, config: config);
+    return _ChartData(bars, config);
   }
 
-  Widget _chartByMonths(historyFeed) {
+  _ChartData _chartByMonthsData(historyFeed) {
     final sortedHistory = [...historyFeed.history]..sort((a, b) => a.changeTimestamp.compareTo(b.changeTimestamp));
     final Map<String, AccountHistory> lastOfMonth = {};
     for (final h in sortedHistory) {
@@ -132,7 +115,6 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
         lastOfMonth[key] = h;
       }
     }
-
     final monthKeys = lastOfMonth.keys.toList()..sort((a, b) => a.compareTo(b));
     final bars = <BalanceBarData>[];
     int x = 1;
@@ -160,7 +142,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
         return '';
       },
     );
-    return BalanceBarChart(bars: bars, config: config);
+    return _ChartData(bars, config);
   }
 }
 
