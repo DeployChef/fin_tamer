@@ -15,6 +15,10 @@ class HistoryChart extends ConsumerWidget {
     final historyFeed = ref.watch(historyServiceProvider(account.id)).value;
     if (historyFeed == null) return const SizedBox();
 
+    return _chartCurrentMonth(historyFeed);
+  }
+
+  Widget _chartCurrentMonth(historyFeed) {
     final now = DateTime.now();
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
     final sortedHistory = [...historyFeed.history]..sort((a, b) => a.changeTimestamp.compareTo(b.changeTimestamp));
@@ -31,7 +35,6 @@ class HistoryChart extends ConsumerWidget {
       }
     }
 
-    // 2. Заполняем каждый день месяца, если нет изменений — берем предыдущий баланс
     double prevBalance = startBalance;
     final bars = <BalanceBarData>[];
     for (int day = 1; day <= daysInMonth; day++) {
