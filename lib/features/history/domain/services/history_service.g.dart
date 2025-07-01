@@ -6,7 +6,7 @@ part of 'history_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$historyServiceHash() => r'2fc9c133524a91aa4c84fba38ef53a5e71bda314';
+String _$historyServiceHash() => r'a813eb17381c5fc0ae0a4dd2851fb8f631f729f2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 
 abstract class _$HistoryService
     extends BuildlessAutoDisposeAsyncNotifier<AccountHistoryFeed?> {
-  late final int accountId;
+  late final int id;
 
   FutureOr<AccountHistoryFeed?> build(
-    int accountId,
+    int id,
   );
 }
 
@@ -49,10 +49,10 @@ class HistoryServiceFamily extends Family<AsyncValue<AccountHistoryFeed?>> {
 
   /// See also [HistoryService].
   HistoryServiceProvider call(
-    int accountId,
+    int id,
   ) {
     return HistoryServiceProvider(
-      accountId,
+      id,
     );
   }
 
@@ -61,7 +61,7 @@ class HistoryServiceFamily extends Family<AsyncValue<AccountHistoryFeed?>> {
     covariant HistoryServiceProvider provider,
   ) {
     return call(
-      provider.accountId,
+      provider.id,
     );
   }
 
@@ -85,9 +85,9 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
     HistoryService, AccountHistoryFeed?> {
   /// See also [HistoryService].
   HistoryServiceProvider(
-    int accountId,
+    int id,
   ) : this._internal(
-          () => HistoryService()..accountId = accountId,
+          () => HistoryService()..id = id,
           from: historyServiceProvider,
           name: r'historyServiceProvider',
           debugGetCreateSourceHash:
@@ -97,7 +97,7 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
           dependencies: HistoryServiceFamily._dependencies,
           allTransitiveDependencies:
               HistoryServiceFamily._allTransitiveDependencies,
-          accountId: accountId,
+          id: id,
         );
 
   HistoryServiceProvider._internal(
@@ -107,17 +107,17 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.accountId,
+    required this.id,
   }) : super.internal();
 
-  final int accountId;
+  final int id;
 
   @override
   FutureOr<AccountHistoryFeed?> runNotifierBuild(
     covariant HistoryService notifier,
   ) {
     return notifier.build(
-      accountId,
+      id,
     );
   }
 
@@ -126,13 +126,13 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
     return ProviderOverride(
       origin: this,
       override: HistoryServiceProvider._internal(
-        () => create()..accountId = accountId,
+        () => create()..id = id,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        accountId: accountId,
+        id: id,
       ),
     );
   }
@@ -145,13 +145,13 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   bool operator ==(Object other) {
-    return other is HistoryServiceProvider && other.accountId == accountId;
+    return other is HistoryServiceProvider && other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, accountId.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -161,8 +161,8 @@ class HistoryServiceProvider extends AutoDisposeAsyncNotifierProviderImpl<
 // ignore: unused_element
 mixin HistoryServiceRef
     on AutoDisposeAsyncNotifierProviderRef<AccountHistoryFeed?> {
-  /// The parameter `accountId` of this provider.
-  int get accountId;
+  /// The parameter `id` of this provider.
+  int get id;
 }
 
 class _HistoryServiceProviderElement
@@ -171,7 +171,7 @@ class _HistoryServiceProviderElement
   _HistoryServiceProviderElement(super.provider);
 
   @override
-  int get accountId => (origin as HistoryServiceProvider).accountId;
+  int get id => (origin as HistoryServiceProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

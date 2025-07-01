@@ -6,8 +6,6 @@ import 'package:fin_tamer/features/account/ui/widgets/update_account_dialog.dart
 import 'package:fin_tamer/features/history/ui/history_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'dart:math';
 
 class AccountPage extends ConsumerWidget {
   const AccountPage({super.key});
