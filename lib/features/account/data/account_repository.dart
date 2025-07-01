@@ -8,6 +8,7 @@ import 'package:fin_tamer/features/account/data/local/account_local_data_source.
 import 'package:fin_tamer/features/account/data/local/stat_item_local_data_source.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/remote/dto/account_dto.dart';
+import 'package:fin_tamer/features/account/data/local/mappers/stat_item_local_mapper.dart';
 
 class AccountRepository implements IAccountRepository {
   final MockRemoteAccountDataSource remoteDataSource;
@@ -36,33 +37,26 @@ class AccountRepository implements IAccountRepository {
     final dtos = await remoteDataSource.getAll();
     final accountEntities = dtos.map((e) => e.toEntity()).toList();
     await localDataSource.saveAll(accountEntities);
-    for (final entity in accountEntities) {
-      final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-      final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
-      await statItemLocalDataSource.saveAll(incomeStats);
-      await statItemLocalDataSource.saveAll(expenseStats);
-    }
     return accountEntities.map((entity) => entity.toDomain()).toList();
   }
 
   @override
   Future<Account?> getById(int id) async {
     final entity = await localDataSource.getById(id);
-    if (entity != null) {
-      final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-      final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
-      return entity.toDomain(
-        incomeStats: incomeStats,
-        expenseStats: expenseStats,
-      );
+    if (entity == null) return null;
+
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+
+    if (incomeStats.isEmpty || expenseStats.isEmpty) {
+      final dto = await remoteDataSource.getResponseById(entity.apiId);
+      if (dto == null) return null;
+      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
+      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
+      await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
-    final dto = await remoteDataSource.getById(id);
-    if (dto == null) return null;
-    final entityFromDto = dto.toEntity();
-    await localDataSource.save(entityFromDto);
-    final incomeStats = await statItemLocalDataSource.getByAccount(entityFromDto.apiId, isIncome: true);
-    final expenseStats = await statItemLocalDataSource.getByAccount(entityFromDto.apiId, isIncome: false);
-    return entityFromDto.toDomain(
+
+    return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
     );
