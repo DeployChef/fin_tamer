@@ -18,19 +18,19 @@ class HistoryRepository implements IHistoryRepository {
 
   @override
   Future<AccountHistoryFeed?> getAccountById(int id) async {
-    final localEntities = await localDataSource.getAll();
-    final local = localEntities.where((e) => e.accountId == id).toList();
-    if (local.isNotEmpty) {
-      final history = local.map((e) => e.toDomain()).toList();
-      final lastState = history.last.newState;
-      return AccountHistoryFeed(
-        accountId: id,
-        accountName: lastState.name,
-        currency: lastState.currency,
-        currentBalance: lastState.balance,
-        history: history,
-      );
-    }
+    // final localEntities = await localDataSource.getAll();
+    // final local = localEntities.where((e) => e.accountId == id).toList();
+    // if (local.isNotEmpty) {
+    //   final history = local.map((e) => e.toDomain()).toList();
+    //   final lastState = history.last.newState;
+    //   return AccountHistoryFeed(
+    //     accountId: id,
+    //     accountName: lastState.name,
+    //     currency: lastState.currency,
+    //     currentBalance: lastState.balance,
+    //     history: history,
+    //   );
+    // }
 
     final accountEntity = await accountLocalDataSource.getById(id);
     if (accountEntity == null) return null;
@@ -45,7 +45,7 @@ class HistoryRepository implements IHistoryRepository {
       accountId: dto.accountId,
       accountName: dto.accountName,
       currency: dto.currency,
-      currentBalance: dto.currentBalance,
+      currentBalance: double.parse(dto.currentBalance),
       history: entities.map((e) => e.toDomain()).toList(),
     );
   }

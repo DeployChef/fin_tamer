@@ -23,8 +23,8 @@ class HistoryChart extends ConsumerWidget {
       final date = h.changeTimestamp;
       if (date.month == now.month && date.year == now.year) {
         final day = date.day;
-        final prev = double.tryParse(h.previousState.balance) ?? 0;
-        final next = double.tryParse(h.newState.balance) ?? 0;
+        final prev = h.previousState.balance;
+        final next = h.newState.balance;
         final diff = next - prev;
         daySums[day] = (daySums[day] ?? 0) + diff;
       }

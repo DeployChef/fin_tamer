@@ -18,7 +18,7 @@ mixin _$AccountHistoryFeed {
   int get accountId;
   String get accountName;
   String get currency;
-  String get currentBalance;
+  double get currentBalance;
   List<AccountHistory> get history;
 
   /// Create a copy of AccountHistoryFeed
@@ -69,7 +69,7 @@ abstract mixin class $AccountHistoryFeedCopyWith<$Res> {
       {int accountId,
       String accountName,
       String currency,
-      String currentBalance,
+      double currentBalance,
       List<AccountHistory> history});
 }
 
@@ -108,7 +108,7 @@ class _$AccountHistoryFeedCopyWithImpl<$Res>
       currentBalance: null == currentBalance
           ? _self.currentBalance
           : currentBalance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       history: null == history
           ? _self.history
           : history // ignore: cast_nullable_to_non_nullable
@@ -138,7 +138,7 @@ class _AccountHistoryFeed extends AccountHistoryFeed {
   @override
   final String currency;
   @override
-  final String currentBalance;
+  final double currentBalance;
   final List<AccountHistory> _history;
   @override
   List<AccountHistory> get history {
@@ -201,7 +201,7 @@ abstract mixin class _$AccountHistoryFeedCopyWith<$Res>
       {int accountId,
       String accountName,
       String currency,
-      String currentBalance,
+      double currentBalance,
       List<AccountHistory> history});
 }
 
@@ -240,7 +240,7 @@ class __$AccountHistoryFeedCopyWithImpl<$Res>
       currentBalance: null == currentBalance
           ? _self.currentBalance
           : currentBalance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       history: null == history
           ? _self._history
           : history // ignore: cast_nullable_to_non_nullable

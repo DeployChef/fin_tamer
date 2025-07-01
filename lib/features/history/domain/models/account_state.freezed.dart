@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$AccountState {
   int get id;
   String get name;
-  String get balance;
+  double get balance;
   String get currency;
 
   /// Create a copy of AccountState
@@ -59,7 +59,7 @@ abstract mixin class $AccountStateCopyWith<$Res> {
           AccountState value, $Res Function(AccountState) _then) =
       _$AccountStateCopyWithImpl;
   @useResult
-  $Res call({int id, String name, String balance, String currency});
+  $Res call({int id, String name, double balance, String currency});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class _$AccountStateCopyWithImpl<$Res> implements $AccountStateCopyWith<$Res> {
       balance: null == balance
           ? _self.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       currency: null == currency
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -117,7 +117,7 @@ class _AccountState extends AccountState {
   @override
   final String name;
   @override
-  final String balance;
+  final double balance;
   @override
   final String currency;
 
@@ -166,7 +166,7 @@ abstract mixin class _$AccountStateCopyWith<$Res>
       __$AccountStateCopyWithImpl;
   @override
   @useResult
-  $Res call({int id, String name, String balance, String currency});
+  $Res call({int id, String name, double balance, String currency});
 }
 
 /// @nodoc
@@ -199,7 +199,7 @@ class __$AccountStateCopyWithImpl<$Res>
       balance: null == balance
           ? _self.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       currency: null == currency
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable

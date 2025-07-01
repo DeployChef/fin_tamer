@@ -8,56 +8,65 @@ class HistoryRemoteDataSource {
       "accountName": "Основной счет",
       "currency": "USD",
       "currentBalance": "2000.00",
-      "history": [
+      "history": (() {
+        final now = DateTime.now();
+        final List<Map<String, dynamic>> list = [];
+        double prevBalance = 1000;
         // Текущий месяц (25 записей)
-        ...List.generate(25, (i) {
-          final now = DateTime.now();
-          final day = (i * (28 / 24)).round() + 1; // равномерно по месяцу
+        for (int i = 0; i < 25; i++) {
+          final day = (i * (28 / 24)).round() + 1;
           final date = DateTime(now.year, now.month, day, 12);
-          final balance = 1000 + 500 * (1 + sin(0.9 * (i / 24) * 2 * pi));
-          return {
+          final diff = 250 * sin(0.9 * (i / 24) * 2 * pi);
+          final newBalance = prevBalance + diff;
+          list.add({
             "id": i + 1,
             "accountId": 1,
             "changeType": "MODIFICATION",
-            "previousState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
-            "newState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
+            "previousState": {"id": 1, "name": "Основной счет", "balance": prevBalance.toStringAsFixed(2), "currency": "USD"},
+            "newState": {"id": 1, "name": "Основной счет", "balance": newBalance.toStringAsFixed(2), "currency": "USD"},
             "changeTimestamp": date.toIso8601String(),
             "createdAt": date.toIso8601String(),
-          };
-        }),
+          });
+          prevBalance = newBalance;
+        }
         // Прошлый месяц (15 записей)
-        ...List.generate(15, (i) {
-          final now = DateTime.now();
+        prevBalance = 1000;
+        for (int i = 0; i < 15; i++) {
           final day = (i * (28 / 14)).round() + 1;
           final date = DateTime(now.year, now.month - 1, day, 12);
-          final balance = 1000 + 500 * (1 + sin(0.9 * (i / 14) * 2 * pi));
-          return {
+          final diff = 250 * sin(0.9 * (i / 14) * 2 * pi);
+          final newBalance = prevBalance + diff;
+          list.add({
             "id": 100 + i,
             "accountId": 1,
             "changeType": "MODIFICATION",
-            "previousState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
-            "newState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
+            "previousState": {"id": 1, "name": "Основной счет", "balance": prevBalance.toStringAsFixed(2), "currency": "USD"},
+            "newState": {"id": 1, "name": "Основной счет", "balance": newBalance.toStringAsFixed(2), "currency": "USD"},
             "changeTimestamp": date.toIso8601String(),
             "createdAt": date.toIso8601String(),
-          };
-        }),
+          });
+          prevBalance = newBalance;
+        }
         // Следующий месяц (10 записей)
-        ...List.generate(10, (i) {
-          final now = DateTime.now();
+        prevBalance = 1000;
+        for (int i = 0; i < 10; i++) {
           final day = (i * (28 / 9)).round() + 1;
           final date = DateTime(now.year, now.month + 1, day, 12);
-          final balance = 1000 + 500 * (1 + sin(0.9 * (i / 9) * 2 * pi));
-          return {
+          final diff = 250 * sin(0.9 * (i / 9) * 2 * pi);
+          final newBalance = prevBalance + diff;
+          list.add({
             "id": 200 + i,
             "accountId": 1,
             "changeType": "MODIFICATION",
-            "previousState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
-            "newState": {"id": 1, "name": "Основной счет", "balance": balance.toStringAsFixed(2), "currency": "USD"},
+            "previousState": {"id": 1, "name": "Основной счет", "balance": prevBalance.toStringAsFixed(2), "currency": "USD"},
+            "newState": {"id": 1, "name": "Основной счет", "balance": newBalance.toStringAsFixed(2), "currency": "USD"},
             "changeTimestamp": date.toIso8601String(),
             "createdAt": date.toIso8601String(),
-          };
-        }),
-      ]
+          });
+          prevBalance = newBalance;
+        }
+        return list;
+      })(),
     }),
   ];
 

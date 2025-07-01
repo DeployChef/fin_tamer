@@ -13,7 +13,7 @@ abstract class AccountHistoryResponseDto with _$AccountHistoryResponseDto {
     required int accountId,
     required String accountName,
     required String currency,
-    required String currentBalance,
+    required String currentBalance, // DTO: оставляем строкой
     required List<AccountHistoryDto> history,
   }) = _AccountHistoryResponseDto;
 

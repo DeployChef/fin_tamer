@@ -10,7 +10,7 @@ abstract class AccountState with _$AccountState {
   const factory AccountState({
     required int id,
     required String name,
-    required String balance,
+    required double balance,
     required String currency,
   }) = _AccountState;
 
