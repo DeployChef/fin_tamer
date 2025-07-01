@@ -13,7 +13,7 @@ class AccountService extends _$AccountService {
 
     if (accounts.isEmpty) return null;
 
-    final fullAcc = repo.getById(accounts.first.id);
+    final fullAcc = await repo.getById(accounts.first.id);
 
     return fullAcc;
   }
