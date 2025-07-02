@@ -19,14 +19,6 @@ enum AppRoutes {
     'SETTINGS',
     '/settings',
   ),
-  outcomeDetails(
-    'OUTCOME_DETAILS',
-    '/details',
-  ),
-  incomeDetails(
-    'INCOME_DETAILS',
-    '/details',
-  ),
   incomeHistory(
     'INCOME_HISTORY',
     '/history',

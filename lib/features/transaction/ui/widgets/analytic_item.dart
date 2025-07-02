@@ -1,6 +1,6 @@
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_service.dart';
-import 'package:fin_tamer/features/transaction/ui/widgets/category_transaction_bottom_sheet.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/dialogs/category_transaction_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticItem extends StatelessWidget {
