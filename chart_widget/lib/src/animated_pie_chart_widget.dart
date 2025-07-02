@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class PieChartSection {
   final String title;
@@ -50,7 +51,7 @@ class _AnimatedPieChartWidgetState extends State<AnimatedPieChartWidget> with Si
   @override
   void didUpdateWidget(covariant AnimatedPieChartWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.data != oldWidget.data) {
+    if (!listEquals(widget.data, oldWidget.data)) {
       _oldData = oldWidget.data;
       _newData = widget.data;
       _isAnimating = true;
