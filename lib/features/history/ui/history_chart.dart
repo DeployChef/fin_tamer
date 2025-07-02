@@ -1,6 +1,6 @@
+import 'package:chart_widget/chart_widget.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/history/domain/services/history_service.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -27,9 +27,9 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
   @override
   Widget build(BuildContext context) {
     final account = ref.watch(accountServiceProvider).value;
-    if (account == null) return const SizedBox();
+    if (account == null) return const SizedBox.shrink();
     final historyFeed = ref.watch(historyServiceProvider(account.id)).value;
-    if (historyFeed == null) return const SizedBox();
+    if (historyFeed == null) return const SizedBox.shrink();
 
     final _ChartData chartData = _mode == HistoryChartMode.byDay ? _chartCurrentMonthData(historyFeed) : _chartByMonthsData(historyFeed);
 
@@ -55,7 +55,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
             showSelectedIcon: false,
           ),
         ),
-        BalanceBarChart(
+        BalanceBarChartWidget(
           bars: chartData.bars,
           config: chartData.config,
         ),
@@ -143,94 +143,5 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
       },
     );
     return _ChartData(bars, config);
-  }
-}
-
-// --- Модель данных для чистого чарта ---
-// --- Модель данных для чистого чарта ---
-// --- Модель данных для чистого чарта ---
-// --- Модель данных для чистого чарта ---
-// --- Модель данных для чистого чарта ---
-class BalanceBarData {
-  final int x;
-  final double value;
-  final Color color;
-  final String? label;
-  BalanceBarData({required this.x, required this.value, required this.color, this.label});
-}
-
-class BalanceChartConfig {
-  final double minY;
-  final double maxY;
-  final int barsCount;
-  final List<int> labelX;
-  final String Function(int x)? xLabelFormatter;
-  BalanceChartConfig({
-    required this.minY,
-    required this.maxY,
-    required this.barsCount,
-    required this.labelX,
-    this.xLabelFormatter,
-  });
-}
-
-// --- Чистый чарт ---
-class BalanceBarChart extends StatelessWidget {
-  final List<BalanceBarData> bars;
-  final BalanceChartConfig config;
-  const BalanceBarChart({super.key, required this.bars, required this.config});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: SizedBox(
-        height: 220,
-        child: BarChart(
-          BarChartData(
-            barGroups: bars
-                .map((bar) => BarChartGroupData(
-                      x: bar.x,
-                      barRods: [
-                        BarChartRodData(
-                          toY: bar.value.abs(),
-                          color: bar.color,
-                          width: 6,
-                          borderRadius: const BorderRadius.all(Radius.circular(92)),
-                        ),
-                      ],
-                    ))
-                .toList(),
-            titlesData: FlTitlesData(
-              leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    final x = value.toInt();
-                    if (config.labelX.contains(x)) {
-                      final label = config.xLabelFormatter?.call(x) ?? x.toString();
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(label, style: const TextStyle(fontSize: 10)),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  reservedSize: 24,
-                ),
-              ),
-            ),
-            gridData: const FlGridData(show: false),
-            borderData: FlBorderData(show: false),
-            barTouchData: const BarTouchData(enabled: true),
-            maxY: config.maxY,
-            minY: config.minY,
-          ),
-        ),
-      ),
-    );
   }
 }

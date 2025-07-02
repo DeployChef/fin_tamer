@@ -1,5 +1,6 @@
 import 'package:fin_tamer/features/history/data/local/entities/history_entity.dart';
 import 'package:fin_tamer/objectbox.g.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:fin_tamer/core/local/objectbox_store.dart';
@@ -16,6 +17,9 @@ Future<Store> objectBoxStore(Ref ref) async {
 @Riverpod(keepAlive: true)
 Future<Box<CategoryEntity>> categoryBox(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
-  store.box<HistoryEntity>().removeAll();
+  if (kDebugMode) {
+    //если дебаг то почистим историю чтоб граффик в счете стал другим(временно до дио)
+    store.box<HistoryEntity>().removeAll();
+  }
   return store.box<CategoryEntity>();
 }

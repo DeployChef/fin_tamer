@@ -7,6 +7,12 @@ class PieChartSection {
   final Color color;
 
   PieChartSection({required this.title, required this.value, required this.color});
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is PieChartSection && runtimeType == other.runtimeType && title == other.title && value == other.value && color == other.color;
+
+  @override
+  int get hashCode => title.hashCode ^ value.hashCode ^ color.hashCode;
 }
 
 class AnimatedPieChartWidget extends StatefulWidget {

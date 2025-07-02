@@ -9,8 +9,6 @@ environment:
 dependencies:
   chart_widget:
     path: ./chart_widget
-
-  fl_chart: ^1.0.0
     
   collection: ^1.19.1
   flutter:
