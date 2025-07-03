@@ -1,6 +1,6 @@
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class TransactionDetails extends StatefulWidget {
@@ -24,13 +24,13 @@ class _TransactionDetailsState extends State<TransactionDetails> {
   String selectedCategory = 'Продукты';
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
-  final TextEditingController amountController = TextEditingController();
-  final TextEditingController commentController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
 
   @override
   void dispose() {
-    amountController.dispose();
-    commentController.dispose();
+    _amountController.dispose();
+    _commentController.dispose();
     super.dispose();
   }
 
@@ -155,13 +155,24 @@ class _TransactionDetailsState extends State<TransactionDetails> {
               ),
             ),
             const Divider(),
-            TextField(
-              controller: amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              style: theme.textTheme.bodyLarge,
-              decoration: const InputDecoration(
-                hintText: 'Сумма',
-                border: OutlineInputBorder(borderSide: BorderSide.none),
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+              title: const Text('Сумма'),
+              trailing: SizedBox(
+                width: 120,
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
+                  ],
+                  textAlign: TextAlign.right,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
             ),
             const Divider(),
@@ -205,11 +216,20 @@ class _TransactionDetailsState extends State<TransactionDetails> {
               ),
             ),
             const Divider(),
-            TextField(
-              controller: commentController,
-              decoration: const InputDecoration(
-                hintText: "Комментарий",
-                border: OutlineInputBorder(borderSide: BorderSide.none),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: TextField(
+                controller: _commentController,
+                decoration: const InputDecoration(
+                  hintText: 'Комментарий',
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  // border:
+                ),
               ),
             ),
             const Divider(height: 1),
@@ -218,7 +238,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.alarmLight,
+                  backgroundColor: Theme.of(context).colorScheme.error,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),

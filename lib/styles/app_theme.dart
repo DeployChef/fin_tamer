@@ -14,7 +14,7 @@ class AppTheme {
         onSecondary: Colors.white,
         surface: Color(0xffF3EDF7),
         onSurface: AppColors.foregroundLight,
-        error: Colors.red,
+        error: AppColors.alarmLight,
         onError: Colors.white,
       ),
       scaffoldBackgroundColor: AppColors.backgroundLight,
