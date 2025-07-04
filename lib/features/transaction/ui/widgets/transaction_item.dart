@@ -62,7 +62,7 @@ class TransactionItem extends StatelessWidget {
       ]),
       onTap: enableDetails
           ? () async {
-              await TransactionDetails.showDetailsModal(context);
+              await TransactionDetails.showDetailsModal(context, isIncome: item.category.isIncome, transaction: item);
             }
           : null,
     );

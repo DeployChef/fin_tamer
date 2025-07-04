@@ -1,31 +1,62 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
+import 'package:fin_tamer/features/account/domain/models/account.dart';
+import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
+import 'package:fin_tamer/features/account/domain/services/account_service.dart';
+import 'package:fin_tamer/features/category/domain/models/category.dart';
+import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
+import 'package:fin_tamer/features/category/ui/widgets/category_item.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-class TransactionDetails extends StatefulWidget {
-  const TransactionDetails({super.key});
+class TransactionDetails extends ConsumerStatefulWidget {
+  const TransactionDetails({super.key, required this.isIncome, this.transaction});
+
+  final Transaction? transaction;
+  final bool isIncome;
 
   @override
-  State<TransactionDetails> createState() => _TransactionDetailsState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TransactionDetailsState();
 
-  static Future<void> showDetailsModal(BuildContext context, {Transaction? transaction}) {
+  static Future<void> showDetailsModal(BuildContext context, {required bool isIncome, Transaction? transaction}) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => const TransactionDetails(),
+      builder: (context) => TransactionDetails(
+        isIncome: isIncome,
+        transaction: transaction,
+      ),
     );
   }
 }
 
-class _TransactionDetailsState extends State<TransactionDetails> {
-  String selectedAccount = 'Сбербанк';
-  String selectedCategory = 'Продукты';
-  DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
+class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
+  AccountBrief? _selectedAccount;
+  Category? _selectedCategory;
+  late final bool _isCreateMode;
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.transaction != null) {
+      _isCreateMode = false;
+      _selectedAccount = widget.transaction!.account;
+      _selectedCategory = widget.transaction!.category;
+      _selectedDate = widget.transaction!.transactionDate;
+      _selectedTime = TimeOfDay.fromDateTime(widget.transaction!.transactionDate);
+      _commentController.text = widget.transaction!.comment ?? "";
+    } else {
+      _isCreateMode = true;
+    }
+  }
 
   @override
   void dispose() {
@@ -34,24 +65,115 @@ class _TransactionDetailsState extends State<TransactionDetails> {
     super.dispose();
   }
 
-  void _selectAccount() {
-    // TODO: реализовать выбор счета
+  void _selectAccount() async {
+    final selected = await showModalBottomSheet<Account>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) => Consumer(
+        builder: (context, ref, child) {
+          final theme = Theme.of(context);
+
+          return ref
+              .watch(
+                accountServiceProvider,
+              )
+              .when(
+                data: (account) {
+                  return ListTile(
+                    onTap: () => GoRouter.of(context).pop(account),
+                    dense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+                    title: Text(
+                      account!.name,
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return const Text("Error");
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+        },
+      ),
+    );
+
+    if (selected == null) return;
+
+    setState(() {
+      _selectedAccount = selected.toBrief();
+    });
   }
 
-  void _selectCategory() {
-    // TODO: реализовать выбор категории
+  void _selectCategory() async {
+    final selected = await showModalBottomSheet<Category>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) => Consumer(
+        builder: (context, ref, child) {
+          return ref
+              .watch(
+                categoriesServiceProvider,
+              )
+              .when(
+                data: (categories) {
+                  final filteredCategories = categories.where((c) => c.isIncome == widget.isIncome).toList();
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: filteredCategories.length,
+                    itemBuilder: (context, index) {
+                      final category = filteredCategories[index];
+
+                      return GestureDetector(
+                        onTap: () {
+                          GoRouter.of(context).pop(category);
+                        },
+                        child: CategoryItem(
+                          item: category,
+                        ),
+                      );
+                    },
+                  );
+                },
+                error: (error, stackTrace) {
+                  return const Text("Error");
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+        },
+      ),
+    );
+
+    if (selected == null) return;
+
+    setState(() {
+      _selectedCategory = selected;
+    });
+  }
+
+  bool isValid() {
+    return _selectedAccount != null && _selectedCategory != null && _amountController.text.isNotEmpty;
   }
 
   void _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: _selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != _selectedDate) {
       setState(() {
-        selectedDate = picked;
+        _selectedDate = picked;
       });
     }
   }
@@ -59,22 +181,21 @@ class _TransactionDetailsState extends State<TransactionDetails> {
   void _selectTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: selectedTime,
+      initialTime: _selectedTime,
     );
-    if (picked != null && picked != selectedTime) {
+    if (picked != null && picked != _selectedTime) {
       setState(() {
-        selectedTime = picked;
+        _selectedTime = picked;
       });
     }
   }
 
-  void _deleteTransaction() {
-    // TODO: реализовать удаление
-  }
+  void _deleteTransaction() async {}
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight + 56),
@@ -93,7 +214,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                     Text(
-                      "Мои расходы",
+                      widget.isIncome ? loc.incomeTitle : loc.outcomeTitle,
                       style: theme.textTheme.titleLarge,
                     ),
                     IconButton(
@@ -123,7 +244,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    selectedAccount,
+                    _selectedAccount != null ? _selectedAccount!.name : "",
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16),
@@ -143,7 +264,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    selectedCategory,
+                    _selectedCategory != null ? _selectedCategory!.name : "",
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16),
@@ -184,7 +305,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    DateFormat('dd.MM.yyyy').format(selectedDate),
+                    DateFormat('dd.MM.yyyy').format(_selectedDate),
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16),
@@ -204,7 +325,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    selectedTime.format(context),
+                    _selectedTime.format(context),
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16),
@@ -234,20 +355,22 @@ class _TransactionDetailsState extends State<TransactionDetails> {
             ),
             const Divider(height: 1),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+            _isCreateMode
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onPressed: _deleteTransaction,
+                      child: Text(widget.isIncome ? 'Удалить доход' : 'Удалить расход'),
+                    ),
                   ),
-                ),
-                onPressed: _deleteTransaction,
-                child: const Text('Удалить расход'),
-              ),
-            ),
             const SizedBox(height: 32),
           ],
         ),

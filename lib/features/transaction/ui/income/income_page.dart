@@ -28,7 +28,7 @@ class IncomePage extends ConsumerWidget {
       body: const TodayTransactionsList.income(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await TransactionDetails.showDetailsModal(context);
+          await TransactionDetails.showDetailsModal(context, isIncome: true);
         },
         child: const Icon(Icons.add),
       ),

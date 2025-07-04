@@ -27,7 +27,7 @@ class OutcomePage extends StatelessWidget {
       body: const TodayTransactionsList.outcome(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await TransactionDetails.showDetailsModal(context);
+          await TransactionDetails.showDetailsModal(context, isIncome: false);
         },
         child: const Icon(Icons.add),
       ),
