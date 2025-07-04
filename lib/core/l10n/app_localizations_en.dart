@@ -70,4 +70,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get analytics => 'Analytics';
+
+  @override
+  String get accountFieldTitle => 'Account';
+
+  @override
+  String get categoryFieldTitle => 'Category';
+
+  @override
+  String get dateFieldTitle => 'Date';
+
+  @override
+  String get timeFieldTitle => 'Time';
+
+  @override
+  String get commentHint => 'Comment';
+
+  @override
+  String get deleteIncome => 'Delete income';
+
+  @override
+  String get deleteOutcome => 'Delete outcome';
+
+  @override
+  String get validationErrorTitle => 'Validation error';
+
+  @override
+  String get validationErrorContent => 'Please fill all required fields.';
+
+  @override
+  String get okButton => 'OK';
+
+  @override
+  String get error => 'Error';
 }

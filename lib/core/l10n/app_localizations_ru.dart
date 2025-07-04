@@ -70,4 +70,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get analytics => 'Анализ';
+
+  @override
+  String get accountFieldTitle => 'Счет';
+
+  @override
+  String get categoryFieldTitle => 'Статья';
+
+  @override
+  String get dateFieldTitle => 'Дата';
+
+  @override
+  String get timeFieldTitle => 'Время';
+
+  @override
+  String get commentHint => 'Комментарий';
+
+  @override
+  String get deleteIncome => 'Удалить доход';
+
+  @override
+  String get deleteOutcome => 'Удалить расход';
+
+  @override
+  String get validationErrorTitle => 'Ошибка заполнения';
+
+  @override
+  String get validationErrorContent => 'Пожалуйста, заполните все обязательные поля.';
+
+  @override
+  String get okButton => 'Oк';
+
+  @override
+  String get error => 'Ошибка';
 }

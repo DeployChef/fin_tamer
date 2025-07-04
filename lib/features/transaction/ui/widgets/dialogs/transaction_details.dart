@@ -1,4 +1,5 @@
 import 'package:fin_tamer/core/di/repository_providers.dart';
+import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/core/utils/locale_decimal_formatter.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
@@ -99,7 +100,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   );
                 },
                 error: (error, stackTrace) {
-                  return const Text("Error");
+                  return Text(AppLocalizations.of(context)!.error);
                 },
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
@@ -150,7 +151,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   );
                 },
                 error: (error, stackTrace) {
-                  return const Text("Error");
+                  return Text(AppLocalizations.of(context)!.error);
                 },
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
@@ -263,15 +264,19 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       context: context,
       barrierDismissible: false,
       builder: (context) {
+        final loc = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Ошибка заполнения'),
+          title: Text(
+            loc.validationErrorTitle,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
           content: Text(
-            'Пожалуйста, заполните все обязательные поля.',
+            loc.validationErrorContent,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Oк'),
+              child: Text(loc.okButton),
               onPressed: () {
                 GoRouter.of(context).pop();
               },
@@ -331,7 +336,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
               onTap: _selectAccount,
-              title: Text('Счет', style: theme.textTheme.bodyLarge),
+              title: Text(loc.accountFieldTitle, style: theme.textTheme.bodyLarge),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -351,7 +356,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
               onTap: _selectCategory,
-              title: Text('Статья', style: theme.textTheme.bodyLarge),
+              title: Text(loc.categoryFieldTitle, style: theme.textTheme.bodyLarge),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -370,7 +375,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             const Divider(),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-              title: const Text('Сумма'),
+              title: Text(loc.amountDayTitle),
               trailing: SizedBox(
                 width: 120,
                 child: TextField(
@@ -393,12 +398,12 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
               onTap: _selectDate,
-              title: Text('Дата', style: theme.textTheme.bodyLarge),
+              title: Text(loc.dateFieldTitle, style: theme.textTheme.bodyLarge),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    DateFormat('dd.MM.yyyy').format(_selectedDate),
+                    _selectedDate.toddMMyyyy(),
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16),
@@ -413,7 +418,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
               onTap: _selectTime,
-              title: Text('Время', style: theme.textTheme.bodyLarge),
+              title: Text(loc.timeFieldTitle, style: theme.textTheme.bodyLarge),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -437,12 +442,11 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
               ),
               child: TextField(
                 controller: _commentController,
-                decoration: const InputDecoration(
-                  hintText: 'Комментарий',
-                  border: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  hintText: loc.commentHint,
+                  border: const UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
-                  // border:
                 ),
               ),
             ),
@@ -461,7 +465,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                         ),
                       ),
                       onPressed: _deleteTransaction,
-                      child: Text(widget.isIncome ? 'Удалить доход' : 'Удалить расход'),
+                      child: Text(widget.isIncome ? loc.deleteIncome : loc.deleteOutcome),
                     ),
                   ),
             const SizedBox(height: 32),
