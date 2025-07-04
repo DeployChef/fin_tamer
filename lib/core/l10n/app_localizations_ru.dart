@@ -96,7 +96,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get validationErrorTitle => 'Ошибка заполнения';
 
   @override
-  String get validationErrorContent => 'Пожалуйста, заполните все обязательные поля.';
+  String get validationErrorContent =>
+      'Пожалуйста, заполните все обязательные поля.';
 
   @override
   String get okButton => 'Oк';

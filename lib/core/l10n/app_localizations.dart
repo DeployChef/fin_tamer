@@ -46,12 +46,12 @@ import 'app_localizations_ru.dart';
 ///
 /// iOS applications define key application metadata, including supported
 /// locales, in an Info.plist file that is built into the application bundle.
-/// To configure the locales supported by your app, you'll need to edit this
+/// To configure the locales supported by your app, you’ll need to edit this
 /// file.
 ///
-/// First, open your project's ios/Runner.xcworkspace Xcode workspace file.
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
 /// Then, in the Project Navigator, open the Info.plist file under the Runner
-/// project's Runner folder.
+/// project’s Runner folder.
 ///
 /// Next, select the Information Property List item, select Add Item from the
 /// Editor menu, then select Localizations from the pop-up menu.
@@ -62,7 +62,8 @@ import 'app_localizations_ru.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,7 +84,8 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -90,7 +93,10 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('ru')
+  ];
 
   /// No description provided for @outcomes.
   ///
@@ -219,62 +225,74 @@ abstract class AppLocalizations {
   String get analytics;
 
   /// No description provided for @accountFieldTitle.
+  ///
   /// In en, this message translates to:
   /// **'Account'**
   String get accountFieldTitle;
 
   /// No description provided for @categoryFieldTitle.
+  ///
   /// In en, this message translates to:
   /// **'Category'**
   String get categoryFieldTitle;
 
   /// No description provided for @dateFieldTitle.
+  ///
   /// In en, this message translates to:
   /// **'Date'**
   String get dateFieldTitle;
 
   /// No description provided for @timeFieldTitle.
+  ///
   /// In en, this message translates to:
   /// **'Time'**
   String get timeFieldTitle;
 
   /// No description provided for @commentHint.
+  ///
   /// In en, this message translates to:
   /// **'Comment'**
   String get commentHint;
 
   /// No description provided for @deleteIncome.
+  ///
   /// In en, this message translates to:
   /// **'Delete income'**
   String get deleteIncome;
 
   /// No description provided for @deleteOutcome.
+  ///
   /// In en, this message translates to:
   /// **'Delete outcome'**
   String get deleteOutcome;
 
   /// No description provided for @validationErrorTitle.
+  ///
   /// In en, this message translates to:
   /// **'Validation error'**
   String get validationErrorTitle;
 
   /// No description provided for @validationErrorContent.
+  ///
   /// In en, this message translates to:
   /// **'Please fill all required fields.'**
   String get validationErrorContent;
 
   /// No description provided for @okButton.
+  ///
   /// In en, this message translates to:
   /// **'OK'**
   String get okButton;
 
   /// No description provided for @error.
+  ///
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -283,7 +301,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -298,7 +317,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsRu();
   }
 
-  throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+  throw FlutterError(
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');
