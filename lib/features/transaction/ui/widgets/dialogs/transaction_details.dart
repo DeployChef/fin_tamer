@@ -1,4 +1,6 @@
+import 'package:fin_tamer/core/di/repository_providers.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
+import 'package:fin_tamer/core/utils/locale_decimal_formatter.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
@@ -6,6 +8,10 @@ import 'package:fin_tamer/features/category/domain/models/category.dart';
 import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:fin_tamer/features/category/ui/widgets/category_item.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
+import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
+import 'package:fin_tamer/features/transaction/domain/services/history/history_filtered_transaction_service.dart';
+import 'package:fin_tamer/features/transaction/domain/services/today_transaction_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,6 +58,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       _selectedCategory = widget.transaction!.category;
       _selectedDate = widget.transaction!.transactionDate;
       _selectedTime = TimeOfDay.fromDateTime(widget.transaction!.transactionDate);
+      _amountController.text = widget.transaction!.amount;
       _commentController.text = widget.transaction!.comment ?? "";
     } else {
       _isCreateMode = true;
@@ -161,7 +168,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
   }
 
   bool isValid() {
-    return _selectedAccount != null && _selectedCategory != null && _amountController.text.isNotEmpty;
+    return _selectedAccount != null && _selectedCategory != null && _amountController.text.trim().isNotEmpty;
   }
 
   void _selectDate() async {
@@ -169,7 +176,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -182,6 +189,11 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: child!,
+      ),
     );
     if (picked != null && picked != _selectedTime) {
       setState(() {
@@ -190,12 +202,93 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
     }
   }
 
-  void _deleteTransaction() async {}
+  void _deleteTransaction() async {
+    final transactionService = await ref.read(transactionRepositoryProvider.future);
+
+    transactionService.delete(widget.transaction!.id);
+
+    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+
+    GoRouter.of(context).pop();
+  }
+
+  Future<void> _onSave() async {
+    final combinedDate = DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      _selectedDate.day,
+      _selectedTime.hour,
+      _selectedTime.minute,
+    );
+
+    if (!isValid()) {
+      await _showValidationDialog();
+      return;
+    }
+
+    final transactionService = await ref.read(transactionRepositoryProvider.future);
+
+    if (_isCreateMode) {
+      final request = TransactionCreateData(
+        accountId: _selectedAccount!.id,
+        categoryId: _selectedCategory!.id,
+        amount: _amountController.text.trim(),
+        transactionDate: combinedDate,
+        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+      );
+
+      await transactionService.create(request);
+    } else {
+      final request = TransactionUpdateData(
+        id: widget.transaction!.id,
+        accountId: _selectedAccount!.id,
+        categoryId: _selectedCategory!.id,
+        amount: _amountController.text.trim(),
+        transactionDate: combinedDate,
+        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+      );
+
+      await transactionService.update(request);
+    }
+
+    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+
+    GoRouter.of(context).pop();
+  }
+
+  Future<void> _showValidationDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Ошибка заполнения'),
+          content: Text(
+            'Пожалуйста, заполните все обязательные поля.',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Oк'),
+              onPressed: () {
+                GoRouter.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final separator = NumberFormat.decimalPattern(locale).symbols.DECIMAL_SEP;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight + 56),
@@ -211,7 +304,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => GoRouter.of(context).pop(),
                     ),
                     Text(
                       widget.isIncome ? loc.incomeTitle : loc.outcomeTitle,
@@ -219,9 +312,8 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.check),
-                      onPressed: () {
-                        // TODO: обработка сохранения
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        await _onSave();
                       },
                     ),
                   ],
@@ -288,6 +380,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
+                    LocaleDecimalFormatter(separator),
                   ],
                   textAlign: TextAlign.right,
                   decoration: const InputDecoration(
