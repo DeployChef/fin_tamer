@@ -93,7 +93,6 @@ class TransactionRepository implements ITransactionRepository {
   Future<void> delete(int id) async {
     final localEntity = await localDataSource.getById(id);
     if (localEntity == null) {
-      //TODO обработка ошибок
       return;
     }
     final apiId = localEntity.apiId;

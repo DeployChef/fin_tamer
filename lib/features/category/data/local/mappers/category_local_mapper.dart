@@ -3,7 +3,7 @@ import 'package:fin_tamer/features/category/domain/models/category.dart';
 
 extension CategoryEntityMapper on CategoryEntity {
   Category toDomain() => Category(
-        id: apiId,
+        id: id,
         name: name,
         emoji: emoji,
         isIncome: isIncome,

@@ -223,6 +223,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analytics'**
   String get analytics;
+
+  /// No description provided for @accountFieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountFieldTitle;
+
+  /// No description provided for @categoryFieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryFieldTitle;
+
+  /// No description provided for @dateFieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateFieldTitle;
+
+  /// No description provided for @timeFieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeFieldTitle;
+
+  /// No description provided for @commentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get commentHint;
+
+  /// No description provided for @deleteIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete income'**
+  String get deleteIncome;
+
+  /// No description provided for @deleteOutcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete outcome'**
+  String get deleteOutcome;
+
+  /// No description provided for @validationErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error'**
+  String get validationErrorTitle;
+
+  /// No description provided for @validationErrorContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all required fields.'**
+  String get validationErrorContent;
+
+  /// No description provided for @okButton.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get okButton;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
 }
 
 class _AppLocalizationsDelegate

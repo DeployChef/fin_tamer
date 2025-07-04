@@ -9,7 +9,7 @@ extension TransactionEntityMapper on TransactionEntity {
     required Category category,
   }) =>
       Transaction(
-        id: apiId,
+        id: id,
         account: account,
         category: category,
         amount: amount,

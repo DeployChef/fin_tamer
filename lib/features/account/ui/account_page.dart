@@ -3,6 +3,7 @@ import 'package:fin_tamer/features/account/domain/services/account_service.dart'
 import 'package:fin_tamer/features/account/ui/widgets/account_balance.dart';
 import 'package:fin_tamer/features/account/ui/widgets/account_currency.dart';
 import 'package:fin_tamer/features/account/ui/widgets/update_account_dialog.dart';
+import 'package:fin_tamer/features/history/ui/history_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,6 +35,7 @@ class AccountPage extends ConsumerWidget {
           AccountBalance(),
           Divider(),
           AccountCurrency(),
+          HistoryChart(),
         ],
       ),
     );

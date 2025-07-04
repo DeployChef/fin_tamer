@@ -18,7 +18,7 @@ mixin _$AccountHistoryResponseDto {
   int get accountId;
   String get accountName;
   String get currency;
-  String get currentBalance;
+  String get currentBalance; // DTO: оставляем строкой
   List<AccountHistoryDto> get history;
 
   /// Create a copy of AccountHistoryResponseDto
@@ -139,7 +139,9 @@ class _AccountHistoryResponseDto extends AccountHistoryResponseDto {
   final String currency;
   @override
   final String currentBalance;
+// DTO: оставляем строкой
   final List<AccountHistoryDto> _history;
+// DTO: оставляем строкой
   @override
   List<AccountHistoryDto> get history {
     if (_history is EqualUnmodifiableListView) return _history;

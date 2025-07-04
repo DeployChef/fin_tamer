@@ -58,9 +58,11 @@ HistoryRemoteDataSource historyRemoteDataSource(Ref ref) {
 Future<HistoryRepository> historyRepository(Ref ref) async {
   final local = await ref.watch(historyLocalDataSourceProvider.future);
   final remote = ref.watch(historyRemoteDataSourceProvider);
+  final localAccount = await ref.watch(accountLocalDataSourceProvider.future);
   return HistoryRepository(
     localDataSource: local,
     remoteDataSource: remote,
+    accountLocalDataSource: localAccount,
   );
 }
 

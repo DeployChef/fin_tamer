@@ -7,6 +7,11 @@ class AppFonts {
     fontWeight: FontWeight.w400,
   );
 
+  static const TextStyle labelSmall = TextStyle(
+    fontSize: 8,
+    fontWeight: FontWeight.w500,
+  );
+
   static const TextStyle labelMedium = TextStyle(
     fontSize: 12,
     height: 16 / 12,

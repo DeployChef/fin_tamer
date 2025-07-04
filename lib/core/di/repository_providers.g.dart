@@ -100,7 +100,7 @@ final historyRemoteDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef HistoryRemoteDataSourceRef = ProviderRef<HistoryRemoteDataSource>;
-String _$historyRepositoryHash() => r'f3e27413eac16c66ba012083f76596073e85d46d';
+String _$historyRepositoryHash() => r'5ce80d3e2a984057f974656d2d8cabae00c03c73';
 
 /// See also [historyRepository].
 @ProviderFor(historyRepository)

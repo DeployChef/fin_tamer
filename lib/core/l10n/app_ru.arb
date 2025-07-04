@@ -19,5 +19,16 @@
     "notFound": "Записи не найдены",
     "byDate": "по дате",
     "byAmount": "по сумме",
-    "analytics": "Анализ"
+    "analytics": "Анализ",
+    "accountFieldTitle": "Счет",
+    "categoryFieldTitle": "Статья",
+    "dateFieldTitle": "Дата",
+    "timeFieldTitle": "Время",
+    "commentHint": "Комментарий",
+    "deleteIncome": "Удалить доход",
+    "deleteOutcome": "Удалить расход",
+    "validationErrorTitle": "Ошибка заполнения",
+    "validationErrorContent": "Пожалуйста, заполните все обязательные поля.",
+    "okButton": "Oк",
+    "error": "Ошибка"
 }

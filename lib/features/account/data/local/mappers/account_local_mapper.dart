@@ -10,7 +10,7 @@ extension AccountEntityMapper on AccountEntity {
     List<StatItemEntity> expenseStats = const [],
   }) =>
       Account(
-        id: apiId,
+        id: id,
         name: name,
         balance: balance,
         currency: currency,
@@ -35,7 +35,7 @@ extension AccountDomainMapper on Account {
 
 extension AccountEntityToBrief on AccountEntity {
   AccountBrief toBrief() => AccountBrief(
-        id: apiId,
+        id: id,
         name: name,
         balance: balance,
         currency: currency,

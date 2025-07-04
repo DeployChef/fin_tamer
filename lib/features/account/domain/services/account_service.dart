@@ -13,7 +13,9 @@ class AccountService extends _$AccountService {
 
     if (accounts.isEmpty) return null;
 
-    return accounts.first;
+    final fullAcc = await repo.getById(accounts.first.id);
+
+    return fullAcc;
   }
 
   Future<void> updateAccount({required String name}) async {

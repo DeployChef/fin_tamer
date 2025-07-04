@@ -2,6 +2,7 @@ import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/analytic_item.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/analytics_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,10 +20,20 @@ class AnalyticsList extends ConsumerWidget {
 
     final loc = AppLocalizations.of(context)!;
 
-    final amount = analyticsService.when(
-      data: (transactions) => transactions.isNotEmpty ? transactions.map((c) => c.amount).reduce((a, b) => a + b) : 0.0,
-      error: (_, __) => 0.0,
-      loading: () => 0.0,
+    bool isLoading = false;
+    String? error;
+    List analyticsList = [];
+
+    analyticsService.when(
+      data: (list) {
+        analyticsList = list;
+      },
+      loading: () {
+        isLoading = true;
+      },
+      error: (e, st) {
+        error = e.toString();
+      },
     );
 
     return Column(
@@ -30,45 +41,33 @@ class AnalyticsList extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(loc.amountHistoryTitle),
-          trailing: MoneyWidget(amount: amount),
+          trailing: MoneyWidget(amount: analyticsList.isNotEmpty ? analyticsList.map((c) => c.amount).reduce((a, b) => a + b) : 0.0),
         ),
         const Divider(),
-        SizedBox(
-          height: 185,
-          child: Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: BoxBorder.all(color: Colors.yellow, width: 5),
-              ),
-            ),
-          ),
+        AnalyticsChart(
+          isIncome: isIncome,
         ),
-        const Divider(),
         Expanded(
-          child: analyticsService.when(
-            data: (transactions) {
-              return transactions.isEmpty
-                  ? Center(child: Text(loc.notFound))
-                  : ListView.builder(
-                      itemCount: transactions.length,
-                      itemBuilder: (context, index) {
-                        final item = transactions[index];
-                        return Column(
-                          children: [
-                            AnalyticItem(item: item),
-                            const Divider(
-                              height: 1,
-                            ),
-                          ],
-                        );
-                      },
-                    );
-            },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => const Center(child: Text("Error")),
-          ),
+          child: isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : error != null
+                  ? Center(child: Text("Error [$error]"))
+                  : (analyticsList.isEmpty
+                      ? Center(child: Text(loc.notFound))
+                      : ListView.builder(
+                          itemCount: analyticsList.length,
+                          itemBuilder: (context, index) {
+                            final item = analyticsList[index];
+                            return Column(
+                              children: [
+                                AnalyticItem(item: item),
+                                const Divider(
+                                  height: 1,
+                                ),
+                              ],
+                            );
+                          },
+                        )),
         ),
       ],
     );

@@ -1,9 +1,8 @@
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
-import 'package:fin_tamer/core/navigation/routers/app_routes.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
+import 'package:fin_tamer/features/transaction/ui/widgets/dialogs/transaction_details.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class TransactionItem extends StatelessWidget {
   const TransactionItem({super.key, required this.item, this.showTime = false, this.enableDetails = true});
@@ -62,8 +61,8 @@ class TransactionItem extends StatelessWidget {
             : const SizedBox.shrink(),
       ]),
       onTap: enableDetails
-          ? () {
-              context.goNamed(item.category.isIncome ? AppRoutes.incomeDetails.name : AppRoutes.outcomeDetails.name);
+          ? () async {
+              await TransactionDetails.showDetailsModal(context, isIncome: item.category.isIncome, transaction: item);
             }
           : null,
     );

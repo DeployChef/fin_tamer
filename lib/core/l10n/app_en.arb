@@ -19,6 +19,16 @@
     "notFound": "Not found",
     "byDate": "date",
     "byAmount": "amount",
-    "analytics": "Analytics"
-
+    "analytics": "Analytics",
+    "accountFieldTitle": "Account",
+    "categoryFieldTitle": "Category",
+    "dateFieldTitle": "Date",
+    "timeFieldTitle": "Time",
+    "commentHint": "Comment",
+    "deleteIncome": "Delete income",
+    "deleteOutcome": "Delete outcome",
+    "validationErrorTitle": "Validation error",
+    "validationErrorContent": "Please fill all required fields.",
+    "okButton": "OK",
+    "error": "Error"
 }
