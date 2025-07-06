@@ -16,7 +16,6 @@ class LoggerService {
 
   static Logger get logger => _logger;
 
-  // Методы для удобного логирования
   static void debug(String message) {
     _logger.d(message);
   }
@@ -33,7 +32,6 @@ class LoggerService {
     _logger.e(message, error: error, stackTrace: stackTrace);
   }
 
-  // Специальные методы для сетевого логирования
   static void networkRequest(String method, String path, {Map<String, dynamic>? headers, dynamic body}) {
     if (AppConfig.enableNetworkLogging) {
       _logger.i('🌐 REQUEST: $method $path');

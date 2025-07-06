@@ -27,13 +27,11 @@ class RetryInterceptor extends Interceptor {
 
       await Future.delayed(Duration(seconds: delay));
 
-      // Повторяем запрос
       try {
         final response = await _retryRequest(err.requestOptions);
         handler.resolve(response);
         return;
       } catch (retryError) {
-        // Если retry тоже упал, увеличиваем счетчик и пробуем еще раз
         if (retryError is DioException) {
           _setRetryCount(retryError, retryCount);
           if (retryCount < maxRetries) {
@@ -50,14 +48,8 @@ class RetryInterceptor extends Interceptor {
   }
 
   bool _shouldRetry(DioException error) {
-    // Retry для серверных ошибок и rate limiting
     final statusCode = error.response?.statusCode;
-    return statusCode == 500 || // Internal Server Error
-        statusCode == 502 || // Bad Gateway
-        statusCode == 503 || // Service Unavailable
-        statusCode == 504 || // Gateway Timeout
-        statusCode == 408 || // Request Timeout
-        statusCode == 429; // Too Many Requests
+    return statusCode == 500 || statusCode == 502 || statusCode == 503 || statusCode == 504 || statusCode == 408 || statusCode == 429;
   }
 
   int _getRetryCount(DioException error) {
@@ -69,16 +61,14 @@ class RetryInterceptor extends Interceptor {
   }
 
   int _calculateDelay(int retryCount) {
-    // Exponential backoff: baseDelay * 2^(retryCount - 1) + jitter
     final exponentialDelay = baseDelaySeconds * pow(2, retryCount - 1);
-    final jitter = Random().nextInt(1000) / 1000; // 0-1 секунда случайности
+    final jitter = Random().nextInt(1000) / 1000;
     return (exponentialDelay + jitter).round();
   }
 
   Future<Response> _retryRequest(RequestOptions requestOptions) async {
     final dio = Dio();
 
-    // Копируем настройки запроса
     final options = Options(
       method: requestOptions.method,
       headers: requestOptions.headers,
