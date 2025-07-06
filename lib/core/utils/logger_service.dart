@@ -1,17 +1,49 @@
 import 'package:logger/logger.dart';
 import 'package:fin_tamer/core/config/app_config.dart';
 
+class SerilogPrinter extends LogPrinter {
+  static const _reset = '\x1B[0m';
+  static const _gray = '\x1B[90m';
+  static const _blue = '\x1B[34m';
+  static const _yellow = '\x1B[33m';
+  static const _red = '\x1B[31m';
+  static const _magenta = '\x1B[35m';
+  static const _green = '\x1B[32m';
+
+  static final Map<Level, String> _levelPrefixes = {
+    Level.verbose: 'VRB',
+    Level.debug: 'DBG',
+    Level.info: 'INF',
+    Level.warning: 'WRN',
+    Level.error: 'ERR',
+    Level.wtf: 'FTL',
+  };
+
+  static final Map<Level, String> _levelColors = {
+    Level.verbose: _green,
+    Level.debug: _blue,
+    Level.info: _gray,
+    Level.warning: _yellow,
+    Level.error: _red,
+    Level.wtf: _magenta,
+  };
+
+  @override
+  List<String> log(LogEvent event) {
+    final time = DateTime.now().toIso8601String().replaceFirst('T', ' ').substring(0, 19);
+    final level = _levelPrefixes[event.level] ?? event.level.toString().toUpperCase();
+    final color = _levelColors[event.level] ?? _reset;
+    final msg = event.message;
+    final error = event.error != null ? ' {Exception: ${event.error}}' : '';
+    final stack = event.stackTrace != null ? '\n${event.stackTrace}' : '';
+    return ['$color[$time $level]$_reset $msg$error$stack'];
+  }
+}
+
 class LoggerService {
   static final Logger _logger = Logger(
     filter: AppConfig.enableNetworkLogging ? DevelopmentFilter() : ProductionFilter(),
-    printer: PrettyPrinter(
-      methodCount: 0,
-      errorMethodCount: 8,
-      lineLength: 120,
-      colors: true,
-      printEmojis: true,
-      dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
-    ),
+    printer: SerilogPrinter(),
   );
 
   static Logger get logger => _logger;
