@@ -4,7 +4,6 @@ import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_r
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
-import 'package:fin_tamer/features/transaction/data/remote/mappers/transaction_mapper.dart';
 import 'package:fin_tamer/features/transaction/data/local/transaction_local_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/local/mappers/transaction_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/local/account_local_data_source.dart';
@@ -31,136 +30,161 @@ class TransactionRepository implements ITransactionRepository {
 
   @override
   Future<Transaction> create(TransactionCreateData data) async {
-    final tempApiId = DateTime.now().millisecondsSinceEpoch * -1;
+    try {
+      final tempApiId = DateTime.now().millisecondsSinceEpoch * -1;
 
-    final accountEntity = await accountLocalDataSource.getById(data.accountId);
-    final categoryEntity = await categoryLocalDataSource.getById(data.categoryId);
+      final accountEntity = await accountLocalDataSource.getById(data.accountId);
+      final categoryEntity = await categoryLocalDataSource.getById(data.categoryId);
 
-    if (accountEntity == null || categoryEntity == null) {
-      //TODO обработка ошибок
-      throw Exception('Account or Category not found for transaction');
+      if (accountEntity == null || categoryEntity == null) {
+        LoggerService.error('Account or Category not found for transaction');
+        throw Exception('Account or Category not found for transaction');
+      }
+
+      final tempEntity = TransactionEntity(
+        id: 0,
+        apiId: tempApiId,
+        accountApiId: accountEntity.apiId,
+        categoryApiId: categoryEntity.apiId,
+        amount: data.amount,
+        transactionDate: data.transactionDate.toUtc(),
+        comment: data.comment,
+        createdAt: DateTime.now().toUtc(),
+        updatedAt: DateTime.now().toUtc(),
+      );
+      await localDataSource.save(tempEntity);
+
+      var request = TransactionRequestDto(
+        accountId: tempEntity.accountApiId,
+        categoryId: tempEntity.categoryApiId,
+        amount: tempEntity.amount,
+        transactionDate: tempEntity.transactionDate,
+        comment: tempEntity.comment,
+      );
+
+      final dto = await remoteDataSource.create(request);
+
+      tempEntity.apiId = dto.id;
+      await localDataSource.save(tempEntity);
+
+      final account = accountEntity.toBrief();
+      final category = categoryEntity.toDomain();
+      return tempEntity.toDomain(account: account, category: category);
+    } catch (e, stack) {
+      LoggerService.error('Error in create', e, stack);
+      rethrow;
     }
-
-    final tempEntity = TransactionEntity(
-      id: 0,
-      apiId: tempApiId,
-      accountApiId: accountEntity.apiId,
-      categoryApiId: categoryEntity.apiId,
-      amount: data.amount,
-      transactionDate: data.transactionDate.toUtc(),
-      comment: data.comment,
-      createdAt: DateTime.now().toUtc(),
-      updatedAt: DateTime.now().toUtc(),
-    );
-    await localDataSource.save(tempEntity);
-
-    var request = TransactionRequestDto(
-      accountId: tempEntity.accountApiId,
-      categoryId: tempEntity.categoryApiId,
-      amount: tempEntity.amount,
-      transactionDate: tempEntity.transactionDate,
-      comment: tempEntity.comment,
-    );
-
-    final dto = await remoteDataSource.create(request);
-
-    tempEntity.apiId = dto.id;
-    await localDataSource.save(tempEntity);
-
-    final account = accountEntity.toBrief();
-    final category = categoryEntity.toDomain();
-    return tempEntity.toDomain(account: account, category: category);
   }
 
   @override
   Future<Transaction?> update(TransactionUpdateData data) async {
-    final localEntity = await localDataSource.getById(data.id);
+    try {
+      final localEntity = await localDataSource.getById(data.id);
 
-    if (localEntity == null) {
-      //TODO обработка ошибок
+      if (localEntity == null) {
+        LoggerService.error('Transaction not found for update: id=${data.id}');
+        return null;
+      }
+
+      final accountEntity = await accountLocalDataSource.getByApiId(data.accountId);
+      final categoryEntity = await categoryLocalDataSource.getByApiId(data.categoryId);
+      if (accountEntity == null || categoryEntity == null) {
+        LoggerService.error('Account or Category not found for transaction update');
+        return null;
+      }
+
+      localEntity.accountApiId = accountEntity.apiId;
+      localEntity.categoryApiId = categoryEntity.apiId;
+      localEntity.amount = data.amount;
+      localEntity.transactionDate = data.transactionDate.toUtc();
+      localEntity.comment = data.comment;
+      localEntity.updatedAt = DateTime.now().toUtc();
+      await localDataSource.save(localEntity);
+
+      final account = accountEntity.toBrief();
+      final category = categoryEntity.toDomain();
+      return localEntity.toDomain(account: account, category: category);
+    } catch (e, stack) {
+      LoggerService.error('Error in update', e, stack);
       return null;
     }
-
-    final accountEntity = await accountLocalDataSource.getByApiId(data.accountId);
-    final categoryEntity = await categoryLocalDataSource.getByApiId(data.categoryId);
-    if (accountEntity == null || categoryEntity == null) {
-      //TODO обработка ошибок
-      return null;
-    }
-
-    localEntity.accountApiId = accountEntity.apiId;
-    localEntity.categoryApiId = categoryEntity.apiId;
-    localEntity.amount = data.amount;
-    localEntity.transactionDate = data.transactionDate.toUtc();
-    localEntity.comment = data.comment;
-    localEntity.updatedAt = DateTime.now().toUtc();
-    await localDataSource.save(localEntity);
-
-    final account = accountEntity.toBrief();
-    final category = categoryEntity.toDomain();
-    return localEntity.toDomain(account: account, category: category);
   }
 
   @override
   Future<void> delete(int id) async {
-    final localEntity = await localDataSource.getById(id);
-    if (localEntity == null) {
-      return;
-    }
-    final apiId = localEntity.apiId;
-    await localDataSource.delete(id);
-    if (apiId > 0) {
-      await remoteDataSource.delete(apiId);
+    try {
+      final localEntity = await localDataSource.getById(id);
+      if (localEntity == null) {
+        LoggerService.error('Transaction not found for delete: id=$id');
+        return;
+      }
+      final apiId = localEntity.apiId;
+      await localDataSource.delete(id);
+      if (apiId > 0) {
+        await remoteDataSource.delete(apiId);
+      }
+    } catch (e, stack) {
+      LoggerService.error('Error in delete', e, stack);
     }
   }
 
   @override
   Future<Transaction?> getById(int id) async {
-    final entity = await localDataSource.getById(id);
-    if (entity == null) return null;
+    try {
+      final entity = await localDataSource.getById(id);
+      if (entity == null) return null;
 
-    final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
+      final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+      final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
 
-    if (accountEntity == null || categoryEntity == null) {
-      //TODO обработка ошибок
+      if (accountEntity == null || categoryEntity == null) {
+        LoggerService.error('Account or Category not found for transaction getById: transactionId=$id');
+        return null;
+      }
+
+      final account = accountEntity.toBrief();
+      final category = categoryEntity.toDomain();
+
+      return entity.toDomain(account: account, category: category);
+    } catch (e, stack) {
+      LoggerService.error('Error in getById', e, stack);
       return null;
     }
-
-    final account = accountEntity.toBrief();
-    final category = categoryEntity.toDomain();
-
-    return entity.toDomain(account: account, category: category);
   }
 
   Future<Transaction?> getByApiId(int apiId) async {
-    final entity = await localDataSource.getByApiId(apiId);
+    try {
+      final entity = await localDataSource.getByApiId(apiId);
 
-    if (entity != null) {
-      final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
-      final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
+      if (entity != null) {
+        final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+        final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
+        if (accountEntity == null || categoryEntity == null) {
+          LoggerService.error('Account or Category not found for transaction getByApiId: apiId=$apiId');
+          return null;
+        }
+        final account = accountEntity.toBrief();
+        final category = categoryEntity.toDomain();
+        return entity.toDomain(account: account, category: category);
+      }
+
+      final dto = await remoteDataSource.getById(apiId);
+      if (dto == null) return null;
+      final entityFromDto = dto.toEntity();
+      await localDataSource.save(entityFromDto);
+      final accountEntity = await accountLocalDataSource.getByApiId(entityFromDto.accountApiId);
+      final categoryEntity = await categoryLocalDataSource.getByApiId(entityFromDto.categoryApiId);
       if (accountEntity == null || categoryEntity == null) {
-        //TODO обработка ошибок
+        LoggerService.error('Account or Category not found for transaction getByApiId (from remote): apiId=$apiId');
         return null;
       }
       final account = accountEntity.toBrief();
       final category = categoryEntity.toDomain();
-      return entity.toDomain(account: account, category: category);
-    }
-
-    final dto = await remoteDataSource.getById(apiId);
-    if (dto == null) return null;
-    final entityFromDto = dto.toEntity();
-    await localDataSource.save(entityFromDto);
-    final accountEntity = await accountLocalDataSource.getByApiId(entityFromDto.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getByApiId(entityFromDto.categoryApiId);
-    if (accountEntity == null || categoryEntity == null) {
-      //TODO обработка ошибок
+      return entityFromDto.toDomain(account: account, category: category);
+    } catch (e, stack) {
+      LoggerService.error('Error in getByApiId', e, stack);
       return null;
     }
-    final account = accountEntity.toBrief();
-    final category = categoryEntity.toDomain();
-    return entityFromDto.toDomain(account: account, category: category);
   }
 
   @override
