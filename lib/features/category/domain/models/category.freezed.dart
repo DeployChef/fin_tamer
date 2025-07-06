@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Category {
   int get id;
+  int get apiId;
   String get name;
   String get emoji;
   bool get isIncome;
@@ -36,6 +37,7 @@ mixin _$Category {
         (other.runtimeType == runtimeType &&
             other is Category &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.apiId, apiId) || other.apiId == apiId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.emoji, emoji) || other.emoji == emoji) &&
             (identical(other.isIncome, isIncome) ||
@@ -44,11 +46,12 @@ mixin _$Category {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, emoji, isIncome);
+  int get hashCode =>
+      Object.hash(runtimeType, id, apiId, name, emoji, isIncome);
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, emoji: $emoji, isIncome: $isIncome)';
+    return 'Category(id: $id, apiId: $apiId, name: $name, emoji: $emoji, isIncome: $isIncome)';
   }
 }
 
@@ -57,7 +60,7 @@ abstract mixin class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) _then) =
       _$CategoryCopyWithImpl;
   @useResult
-  $Res call({int id, String name, String emoji, bool isIncome});
+  $Res call({int id, int apiId, String name, String emoji, bool isIncome});
 }
 
 /// @nodoc
@@ -73,6 +76,7 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
+    Object? apiId = null,
     Object? name = null,
     Object? emoji = null,
     Object? isIncome = null,
@@ -81,6 +85,10 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      apiId: null == apiId
+          ? _self.apiId
+          : apiId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name
@@ -103,6 +111,7 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
 class _Category extends Category {
   const _Category(
       {required this.id,
+      required this.apiId,
       required this.name,
       required this.emoji,
       required this.isIncome})
@@ -112,6 +121,8 @@ class _Category extends Category {
 
   @override
   final int id;
+  @override
+  final int apiId;
   @override
   final String name;
   @override
@@ -140,6 +151,7 @@ class _Category extends Category {
         (other.runtimeType == runtimeType &&
             other is _Category &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.apiId, apiId) || other.apiId == apiId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.emoji, emoji) || other.emoji == emoji) &&
             (identical(other.isIncome, isIncome) ||
@@ -148,11 +160,12 @@ class _Category extends Category {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, emoji, isIncome);
+  int get hashCode =>
+      Object.hash(runtimeType, id, apiId, name, emoji, isIncome);
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, emoji: $emoji, isIncome: $isIncome)';
+    return 'Category(id: $id, apiId: $apiId, name: $name, emoji: $emoji, isIncome: $isIncome)';
   }
 }
 
@@ -163,7 +176,7 @@ abstract mixin class _$CategoryCopyWith<$Res>
       __$CategoryCopyWithImpl;
   @override
   @useResult
-  $Res call({int id, String name, String emoji, bool isIncome});
+  $Res call({int id, int apiId, String name, String emoji, bool isIncome});
 }
 
 /// @nodoc
@@ -179,6 +192,7 @@ class __$CategoryCopyWithImpl<$Res> implements _$CategoryCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
+    Object? apiId = null,
     Object? name = null,
     Object? emoji = null,
     Object? isIncome = null,
@@ -187,6 +201,10 @@ class __$CategoryCopyWithImpl<$Res> implements _$CategoryCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      apiId: null == apiId
+          ? _self.apiId
+          : apiId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name

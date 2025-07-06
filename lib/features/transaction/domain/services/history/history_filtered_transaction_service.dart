@@ -8,11 +8,10 @@ import 'package:fin_tamer/core/di/repository_providers.dart';
 
 part 'history_filtered_transaction_service.g.dart';
 
-@Riverpod(dependencies: [AccountService, HistoryFilterService, CategoriesService])
+@Riverpod(dependencies: [AccountService, HistoryFilterService])
 class HistoryFilteredTransactionService extends _$HistoryFilteredTransactionService {
   @override
   FutureOr<List<Transaction>> build({required bool isIncome}) async {
-    await ref.watch(categoriesServiceProvider.future);
     final account = await ref.watch(accountServiceProvider.future);
     if (account == null) return [];
 

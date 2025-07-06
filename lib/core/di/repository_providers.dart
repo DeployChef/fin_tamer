@@ -132,12 +132,14 @@ Future<TransactionLocalDataSource> transactionLocalDataSource(Ref ref) async {
 Future<TransactionRepository> transactionRepository(Ref ref) async {
   final local = await ref.watch(transactionLocalDataSourceProvider.future);
   final remote = ref.watch(transactionRemoteDataSourceProvider);
-  final accountLocal = await ref.watch(accountLocalDataSourceProvider.future);
-  final categoryLocal = await ref.watch(categoryLocalDataSourceProvider.future);
+  final accountRepo = await ref.watch(accountRepositoryProvider.future);
+  final categoryRepo = await ref.watch(categoryRepositoryProvider.future);
+  final historyRepo = await ref.watch(historyRepositoryProvider.future);
   return TransactionRepository(
     localDataSource: local,
     remoteDataSource: remote,
-    accountLocalDataSource: accountLocal,
-    categoryLocalDataSource: categoryLocal,
+    accountRepository: accountRepo,
+    categoryRepository: categoryRepo,
+    historyRepository: historyRepo,
   );
 }

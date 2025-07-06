@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Account {
   int get id;
+  int get apiId;
   String get name;
   String get balance;
   String get currency;
@@ -40,6 +41,7 @@ mixin _$Account {
         (other.runtimeType == runtimeType &&
             other is Account &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.apiId, apiId) || other.apiId == apiId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
@@ -59,6 +61,7 @@ mixin _$Account {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      apiId,
       name,
       balance,
       currency,
@@ -69,7 +72,7 @@ mixin _$Account {
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Account(id: $id, apiId: $apiId, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -80,6 +83,7 @@ abstract mixin class $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      int apiId,
       String name,
       String balance,
       String currency,
@@ -102,6 +106,7 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
+    Object? apiId = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
@@ -114,6 +119,10 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      apiId: null == apiId
+          ? _self.apiId
+          : apiId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name
@@ -152,6 +161,7 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 class _Account extends Account {
   const _Account(
       {required this.id,
+      required this.apiId,
       required this.name,
       required this.balance,
       required this.currency,
@@ -167,6 +177,8 @@ class _Account extends Account {
 
   @override
   final int id;
+  @override
+  final int apiId;
   @override
   final String name;
   @override
@@ -217,6 +229,7 @@ class _Account extends Account {
         (other.runtimeType == runtimeType &&
             other is _Account &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.apiId, apiId) || other.apiId == apiId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.currency, currency) ||
@@ -236,6 +249,7 @@ class _Account extends Account {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      apiId,
       name,
       balance,
       currency,
@@ -246,7 +260,7 @@ class _Account extends Account {
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Account(id: $id, apiId: $apiId, name: $name, balance: $balance, currency: $currency, incomeStats: $incomeStats, expenseStats: $expenseStats, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -258,6 +272,7 @@ abstract mixin class _$AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      int apiId,
       String name,
       String balance,
       String currency,
@@ -280,6 +295,7 @@ class __$AccountCopyWithImpl<$Res> implements _$AccountCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
+    Object? apiId = null,
     Object? name = null,
     Object? balance = null,
     Object? currency = null,
@@ -292,6 +308,10 @@ class __$AccountCopyWithImpl<$Res> implements _$AccountCopyWith<$Res> {
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      apiId: null == apiId
+          ? _self.apiId
+          : apiId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _self.name

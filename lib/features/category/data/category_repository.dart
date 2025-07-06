@@ -37,4 +37,36 @@ class CategoryRepository implements ICategoryRepository {
     await localDataSource.saveAll(entities);
     return entities.map((e) => e.toDomain()).toList();
   }
+
+  @override
+  Future<Category?> getById(int id) async {
+    var localEntity = await localDataSource.getById(id);
+    if (localEntity == null) {
+      await getAll();
+      localEntity = await localDataSource.getById(id);
+    }
+
+    return localEntity?.toDomain();
+  }
+
+  @override
+  Future<Category?> getByApiId(int apiId) async {
+    var localEntity = await localDataSource.getByApiId(apiId);
+    if (localEntity == null) {
+      await getAll();
+      localEntity = await localDataSource.getByApiId(apiId);
+    }
+
+    if (localEntity != null) {
+      return localEntity.toDomain();
+    }
+
+    final remoteDto = await remoteDataSource.getById(apiId);
+    if (remoteDto != null) {
+      final entity = remoteDto.toEntity();
+      await localDataSource.save(entity);
+      return entity.toDomain();
+    }
+    return null;
+  }
 }

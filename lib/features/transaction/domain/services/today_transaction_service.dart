@@ -6,11 +6,10 @@ import 'package:fin_tamer/core/di/repository_providers.dart';
 
 part 'today_transaction_service.g.dart';
 
-@Riverpod(dependencies: [AccountService, CategoriesService])
+@Riverpod(dependencies: [AccountService])
 class TodayTransactionService extends _$TodayTransactionService {
   @override
   FutureOr<List<Transaction>> build({required bool isIncome}) async {
-    await ref.watch(categoriesServiceProvider.future);
     final account = await ref.watch(accountServiceProvider.future);
     if (account == null) return [];
 

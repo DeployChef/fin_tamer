@@ -232,7 +232,7 @@ final transactionLocalDataSourceProvider =
 typedef TransactionLocalDataSourceRef
     = FutureProviderRef<TransactionLocalDataSource>;
 String _$transactionRepositoryHash() =>
-    r'4a4f133ac9c87f10782fc3bb15aa340e1a52f05d';
+    r'643158167541bd7f9a2f348ac62c8fdaf931fea2';
 
 /// See also [transactionRepository].
 @ProviderFor(transactionRepository)
