@@ -137,7 +137,7 @@ final statItemLocalDataSourceProvider =
 // ignore: unused_element
 typedef StatItemLocalDataSourceRef = FutureProviderRef<StatItemLocalDataSource>;
 String _$accountRemoteDataSourceHash() =>
-    r'9e9047eddc12109bfeae930d400ef669322fe38a';
+    r'83c51d600de9e4a125289ab94bf6b7fc911d4a23';
 
 /// See also [accountRemoteDataSource].
 @ProviderFor(accountRemoteDataSource)
@@ -156,7 +156,7 @@ final accountRemoteDataSourceProvider =
 // ignore: unused_element
 typedef AccountRemoteDataSourceRef = ProviderRef<IAccountRemoteDataSource>;
 String _$transactionRemoteDataSourceHash() =>
-    r'd25d39bd0490c05cf978e2764ee1cc0bcb1abe31';
+    r'291e5d11dcb181c4b5ae3d36d019fc7ee707f4f9';
 
 /// See also [transactionRemoteDataSource].
 @ProviderFor(transactionRemoteDataSource)
@@ -176,12 +176,12 @@ final transactionRemoteDataSourceProvider =
 typedef TransactionRemoteDataSourceRef
     = ProviderRef<ITransactionRemoteDataSource>;
 String _$categoryRemoteDataSourceHash() =>
-    r'c9b79f385705dcd70204b578adc3b9e091b5bca4';
+    r'74ad5b70218851982e01c53f759973f61791b05e';
 
 /// See also [categoryRemoteDataSource].
 @ProviderFor(categoryRemoteDataSource)
 final categoryRemoteDataSourceProvider =
-    Provider<CategoryRemoteDataSource>.internal(
+    Provider<ICategoryRemoteDataSource>.internal(
   categoryRemoteDataSource,
   name: r'categoryRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -193,7 +193,7 @@ final categoryRemoteDataSourceProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CategoryRemoteDataSourceRef = ProviderRef<CategoryRemoteDataSource>;
+typedef CategoryRemoteDataSourceRef = ProviderRef<ICategoryRemoteDataSource>;
 String _$accountRepositoryHash() => r'a335f8e93257407b0ea0374d894b30c2ef5b5304';
 
 /// See also [accountRepository].

@@ -4,7 +4,8 @@ import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_sou
 import 'package:fin_tamer/features/account/data/remote/mock_account_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
-import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
+import 'package:fin_tamer/features/category/data/remote/mock_category_remote_data_source.dart';
+import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
 
 part 'mock_providers.g.dart';
 
@@ -21,6 +22,6 @@ ITransactionRemoteDataSource transactionMockRemoteDataSource(Ref ref) {
 }
 
 @riverpod
-CategoryRemoteDataSource categoryMockRemoteDataSource(Ref ref) {
-  return CategoryRemoteDataSource();
+ICategoryRemoteDataSource categoryMockRemoteDataSource(Ref ref) {
+  return MockCategoryRemoteDataSource();
 }

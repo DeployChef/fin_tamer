@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:fin_tamer/features/category/data/local/category_local_data_source.dart';
-import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
+import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/category_repository.dart';
 import 'package:fin_tamer/core/di/objectbox_providers.dart';
 import 'package:fin_tamer/features/history/data/local/history_local_data_source.dart';
@@ -98,12 +98,11 @@ ITransactionRemoteDataSource transactionRemoteDataSource(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-CategoryRemoteDataSource categoryRemoteDataSource(Ref ref) {
+ICategoryRemoteDataSource categoryRemoteDataSource(Ref ref) {
   if (AppConfig.useMockCategories) {
     return ref.watch(categoryMockRemoteDataSourceProvider);
   } else {
-    // TODO: Добавить categoryApiRemoteDataSourceProvider когда создадим API
-    return ref.watch(categoryMockRemoteDataSourceProvider);
+    return ref.watch(categoryApiRemoteDataSourceProvider);
   }
 }
 
