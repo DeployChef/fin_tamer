@@ -96,8 +96,7 @@ ITransactionRemoteDataSource transactionRemoteDataSource(Ref ref) {
   if (AppConfig.useMockTransactions) {
     return ref.watch(transactionMockRemoteDataSourceProvider);
   } else {
-    // TODO: Добавить transactionApiRemoteDataSourceProvider когда создадим API
-    return ref.watch(transactionMockRemoteDataSourceProvider);
+    return ref.watch(transactionApiRemoteDataSourceProvider);
   }
 }
 

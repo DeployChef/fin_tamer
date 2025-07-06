@@ -98,5 +98,25 @@ final historyApiRemoteDataSourceProvider =
 // ignore: unused_element
 typedef HistoryApiRemoteDataSourceRef
     = AutoDisposeProviderRef<IHistoryRemoteDataSource>;
+String _$transactionApiRemoteDataSourceHash() =>
+    r'82ff03c8ae74eee3a9b891a220bd52ea845a279b';
+
+/// See also [transactionApiRemoteDataSource].
+@ProviderFor(transactionApiRemoteDataSource)
+final transactionApiRemoteDataSourceProvider =
+    AutoDisposeProvider<ITransactionRemoteDataSource>.internal(
+  transactionApiRemoteDataSource,
+  name: r'transactionApiRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$transactionApiRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TransactionApiRemoteDataSourceRef
+    = AutoDisposeProviderRef<ITransactionRemoteDataSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

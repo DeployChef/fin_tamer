@@ -1,11 +1,11 @@
 import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
 
-import 'dto/transaction_response_dto.dart';
-import 'dto/transaction_request_dto.dart';
-import 'dto/account_brief_dto.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/account_brief_dto.dart';
 import 'package:fin_tamer/features/category/data/remote/dto/category_dto.dart';
-import 'i_transaction_remote_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 
 class MockTransactionRemoteDataSource implements ITransactionRemoteDataSource {
   final IAccountRemoteDataSource accountRemoteDataSource;

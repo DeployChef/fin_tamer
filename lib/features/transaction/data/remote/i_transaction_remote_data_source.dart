@@ -1,5 +1,5 @@
-import 'dto/transaction_response_dto.dart';
-import 'dto/transaction_request_dto.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
 
 abstract class ITransactionRemoteDataSource {
   Future<TransactionResponseDto> create(TransactionRequestDto request);

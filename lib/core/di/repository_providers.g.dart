@@ -63,7 +63,7 @@ final historyLocalDataSourceProvider =
 // ignore: unused_element
 typedef HistoryLocalDataSourceRef = FutureProviderRef<HistoryLocalDataSource>;
 String _$historyRemoteDataSourceHash() =>
-    r'8f827c8fe97ff9db558a8e9b36cdc6f950bb042c';
+    r'04cf43b79c96d410de4be9068e35201f9487e9a0';
 
 /// See also [historyRemoteDataSource].
 @ProviderFor(historyRemoteDataSource)
@@ -156,7 +156,7 @@ final accountRemoteDataSourceProvider =
 // ignore: unused_element
 typedef AccountRemoteDataSourceRef = ProviderRef<IAccountRemoteDataSource>;
 String _$transactionRemoteDataSourceHash() =>
-    r'291e5d11dcb181c4b5ae3d36d019fc7ee707f4f9';
+    r'66244ef53daa38cd6603e11cbb6a694c9f337158';
 
 /// See also [transactionRemoteDataSource].
 @ProviderFor(transactionRemoteDataSource)
