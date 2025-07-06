@@ -11,6 +11,8 @@ dependencies:
     path: ./chart_widget
     
   collection: ^1.19.1
+  dio: ^5.4.0
+  logger: ^2.0.2+1
   flutter:
     sdk: flutter
   flutter_localizations:
