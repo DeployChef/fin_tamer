@@ -18,7 +18,7 @@ mixin _$Transaction {
   int get id;
   AccountBrief get account;
   Category get category;
-  String get amount;
+  double get amount;
   DateTime get transactionDate;
   String? get comment;
   DateTime get createdAt;
@@ -74,7 +74,7 @@ abstract mixin class $TransactionCopyWith<$Res> {
       {int id,
       AccountBrief account,
       Category category,
-      String amount,
+      double amount,
       DateTime transactionDate,
       String? comment,
       DateTime createdAt,
@@ -121,7 +121,7 @@ class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       transactionDate: null == transactionDate
           ? _self.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
@@ -185,7 +185,7 @@ class _Transaction extends Transaction {
   @override
   final Category category;
   @override
-  final String amount;
+  final double amount;
   @override
   final DateTime transactionDate;
   @override
@@ -252,7 +252,7 @@ abstract mixin class _$TransactionCopyWith<$Res>
       {int id,
       AccountBrief account,
       Category category,
-      String amount,
+      double amount,
       DateTime transactionDate,
       String? comment,
       DateTime createdAt,
@@ -301,7 +301,7 @@ class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       transactionDate: null == transactionDate
           ? _self.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable

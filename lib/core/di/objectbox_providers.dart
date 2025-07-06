@@ -21,11 +21,11 @@ Future<Store> objectBoxStore(Ref ref) async {
 Future<Box<CategoryEntity>> categoryBox(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
   if (kDebugMode) {
-    // store.box<TransactionEntity>().removeAll();
-    // store.box<StatItemEntity>().removeAll();
-    // store.box<CategoryEntity>().removeAll();
-    // store.box<AccountEntity>().removeAll();
-    // store.box<HistoryEntity>().removeAll();
+    store.box<TransactionEntity>().removeAll();
+    store.box<StatItemEntity>().removeAll();
+    store.box<CategoryEntity>().removeAll();
+    store.box<AccountEntity>().removeAll();
+    store.box<HistoryEntity>().removeAll();
   }
   return store.box<CategoryEntity>();
 }

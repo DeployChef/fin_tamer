@@ -7,25 +7,19 @@ class SerilogPrinter extends LogPrinter {
   static const _blue = '\x1B[34m';
   static const _yellow = '\x1B[33m';
   static const _red = '\x1B[31m';
-  static const _magenta = '\x1B[35m';
-  static const _green = '\x1B[32m';
 
   static final Map<Level, String> _levelPrefixes = {
-    Level.verbose: 'VRB',
     Level.debug: 'DBG',
     Level.info: 'INF',
     Level.warning: 'WRN',
     Level.error: 'ERR',
-    Level.wtf: 'FTL',
   };
 
   static final Map<Level, String> _levelColors = {
-    Level.verbose: _green,
     Level.debug: _blue,
     Level.info: _gray,
     Level.warning: _yellow,
     Level.error: _red,
-    Level.wtf: _magenta,
   };
 
   @override

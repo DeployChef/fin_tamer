@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$TransactionCreateData {
   int get accountId;
   int get categoryId;
-  String get amount;
+  double get amount;
   DateTime get transactionDate;
   String? get comment;
 
@@ -67,7 +67,7 @@ abstract mixin class $TransactionCreateDataCopyWith<$Res> {
   $Res call(
       {int accountId,
       int categoryId,
-      String amount,
+      double amount,
       DateTime transactionDate,
       String? comment});
 }
@@ -103,7 +103,7 @@ class _$TransactionCreateDataCopyWithImpl<$Res>
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       transactionDate: null == transactionDate
           ? _self.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
@@ -134,7 +134,7 @@ class _TransactionCreateData extends TransactionCreateData {
   @override
   final int categoryId;
   @override
-  final String amount;
+  final double amount;
   @override
   final DateTime transactionDate;
   @override
@@ -193,7 +193,7 @@ abstract mixin class _$TransactionCreateDataCopyWith<$Res>
   $Res call(
       {int accountId,
       int categoryId,
-      String amount,
+      double amount,
       DateTime transactionDate,
       String? comment});
 }
@@ -229,7 +229,7 @@ class __$TransactionCreateDataCopyWithImpl<$Res>
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       transactionDate: null == transactionDate
           ? _self.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable

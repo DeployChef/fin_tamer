@@ -10,7 +10,7 @@ abstract class TransactionCreateData with _$TransactionCreateData {
   const factory TransactionCreateData({
     required int accountId,
     required int categoryId,
-    required String amount,
+    required double amount,
     required DateTime transactionDate,
     String? comment,
   }) = _TransactionCreateData;

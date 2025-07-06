@@ -1,5 +1,4 @@
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
-import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:fin_tamer/core/di/repository_providers.dart';

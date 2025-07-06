@@ -1,7 +1,6 @@
 import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/account_brief_dto.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
-import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
 
 extension AccountBriefDtoMapper on AccountBriefDto {
@@ -26,7 +25,7 @@ extension TransactionUpdateDataMapper on TransactionUpdateData {
   TransactionRequestDto toDto() => TransactionRequestDto(
         accountId: accountId,
         categoryId: categoryId,
-        amount: amount,
+        amount: amount.toString(),
         transactionDate: transactionDate.toUtc(),
         comment: comment,
       );

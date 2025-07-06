@@ -59,7 +59,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       _selectedCategory = widget.transaction!.category;
       _selectedDate = widget.transaction!.transactionDate;
       _selectedTime = TimeOfDay.fromDateTime(widget.transaction!.transactionDate);
-      _amountController.text = widget.transaction!.amount;
+      _amountController.text = widget.transaction!.amount.toString();
       _commentController.text = widget.transaction!.comment ?? "";
     } else {
       _isCreateMode = true;
@@ -234,7 +234,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       final request = TransactionCreateData(
         accountId: _selectedAccount!.id,
         categoryId: _selectedCategory!.id,
-        amount: _amountController.text.trim(),
+        amount: NumberFormat().parse(_amountController.text.trim()) as double,
         transactionDate: combinedDate,
         comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
       );
@@ -245,7 +245,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
         id: widget.transaction!.id,
         accountId: _selectedAccount!.id,
         categoryId: _selectedCategory!.id,
-        amount: _amountController.text.trim(),
+        amount: NumberFormat().parse(_amountController.text.trim()) as double,
         transactionDate: combinedDate,
         comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
       );

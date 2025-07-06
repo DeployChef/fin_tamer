@@ -22,12 +22,12 @@ class AnalyticsService extends _$AnalyticsService {
 
     final transactions = await transactionRepo.getByPeriod(account.id, filter.startDate, filter.endDate);
     final filtered = transactions.where((c) => c.category.isIncome == isIncome).toList();
-    final fullAmount = filtered.isNotEmpty ? filtered.map((c) => double.tryParse(c.amount) ?? 0.0).reduce((a, b) => a + b) : 0.0;
+    final fullAmount = filtered.isNotEmpty ? filtered.map((c) => c.amount).reduce((a, b) => a + b) : 0.0;
     final categoryMap = groupBy(filtered, (c) => c.category);
 
     final analytics = categoryMap.entries
         .map((e) {
-          final amount = e.value.map((c) => double.tryParse(c.amount) ?? 0.0).reduce((a, b) => a + b);
+          final amount = e.value.map((c) => c.amount).reduce((a, b) => a + b);
           final last = e.value.lastOrNull;
           final percentage = fullAmount > 0 ? (amount / fullAmount) * 100 : 0.0;
           return last == null

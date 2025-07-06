@@ -45,7 +45,7 @@ class TransactionRepository implements ITransactionRepository {
         apiId: tempApiId,
         accountApiId: account.apiId,
         categoryApiId: category.apiId,
-        amount: data.amount,
+        amount: data.amount.toString(),
         transactionDate: data.transactionDate.toUtc(),
         comment: data.comment,
         createdAt: DateTime.now().toUtc(),
@@ -92,11 +92,21 @@ class TransactionRepository implements ITransactionRepository {
 
       localEntity.accountApiId = account.apiId;
       localEntity.categoryApiId = category.apiId;
-      localEntity.amount = data.amount;
+      localEntity.amount = data.amount.toString();
       localEntity.transactionDate = data.transactionDate.toUtc();
       localEntity.comment = data.comment;
       localEntity.updatedAt = DateTime.now().toUtc();
       await localDataSource.save(localEntity);
+
+      var request = TransactionRequestDto(
+        accountId: localEntity.accountApiId,
+        categoryId: localEntity.categoryApiId,
+        amount: localEntity.amount.toString(),
+        transactionDate: localEntity.transactionDate,
+        comment: localEntity.comment,
+      );
+
+      final dto = await remoteDataSource.update(localEntity.apiId, request);
 
       return localEntity.toDomain(account: account.toBrief(), category: category);
     } catch (e, stack) {
@@ -184,7 +194,7 @@ class TransactionRepository implements ITransactionRepository {
         return [];
       }
 
-      final localEntities = await localDataSource.getByAccount(account.id);
+      final localEntities = await localDataSource.getByAccount(account.apiId);
       final filtered = localEntities.where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
       if (filtered.isNotEmpty) {
         final futures = filtered.map((entity) async {

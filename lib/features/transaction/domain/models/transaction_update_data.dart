@@ -11,7 +11,7 @@ abstract class TransactionUpdateData with _$TransactionUpdateData {
     required int id,
     required int accountId,
     required int categoryId,
-    required String amount,
+    required double amount,
     required DateTime transactionDate,
     String? comment,
   }) = _TransactionUpdateData;

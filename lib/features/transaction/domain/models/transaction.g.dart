@@ -10,7 +10,7 @@ _Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
       id: (json['id'] as num).toInt(),
       account: AccountBrief.fromJson(json['account'] as Map<String, dynamic>),
       category: Category.fromJson(json['category'] as Map<String, dynamic>),
-      amount: json['amount'] as String,
+      amount: (json['amount'] as num).toDouble(),
       transactionDate: DateTime.parse(json['transactionDate'] as String),
       comment: json['comment'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),

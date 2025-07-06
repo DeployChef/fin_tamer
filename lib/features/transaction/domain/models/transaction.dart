@@ -13,7 +13,7 @@ abstract class Transaction with _$Transaction {
     required int id,
     required AccountBrief account,
     required Category category,
-    required String amount,
+    required double amount,
     required DateTime transactionDate,
     String? comment,
     required DateTime createdAt,
