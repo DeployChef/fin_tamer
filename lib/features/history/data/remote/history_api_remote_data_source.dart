@@ -10,8 +10,8 @@ class HistoryApiRemoteDataSource implements IHistoryRemoteDataSource {
   @override
   Future<AccountHistoryResponseDto?> getAccountById(int apiId) async {
     try {
-      final response = await _apiService.get('/accounts/$apiId/history');
-      return AccountHistoryResponseDto.fromJson(response.data);
+      final Map<String, dynamic> data = await _apiService.get<Map<String, dynamic>>('/accounts/$apiId/history');
+      return AccountHistoryResponseDto.fromJson(data);
     } catch (e) {
       // Если история не найдена, возвращаем null
       return null;

@@ -42,7 +42,6 @@ class RemoteAccountDataSource implements IAccountRemoteDataSource {
       final response = await _apiService.get<Map<String, dynamic>>('/accounts/$id');
       return AccountDto.fromJson(response);
     } catch (e) {
-      // Если счет не найден, возвращаем null
       return null;
     }
   }
@@ -56,22 +55,7 @@ class RemoteAccountDataSource implements IAccountRemoteDataSource {
       );
       return AccountDto.fromJson(response);
     } catch (e) {
-      // Если счет не найден, возвращаем null
       return null;
-    }
-  }
-
-  @override
-  Future<void> updateAccountName(int apiId, String newName) async {
-    // Для обновления только имени используем текущий баланс и валюту
-    final currentAccount = await getResponseById(apiId);
-    if (currentAccount != null) {
-      final updateRequest = AccountUpdateRequestDto(
-        name: newName,
-        balance: currentAccount.balance,
-        currency: currentAccount.currency,
-      );
-      await update(apiId, updateRequest);
     }
   }
 }

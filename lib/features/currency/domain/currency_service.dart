@@ -16,6 +16,8 @@ class CurrencyService extends _$CurrencyService {
   }
 
   Future<void> setCurrency(Currency currency) async {
+    final account = ref.read(accountServiceProvider.notifier);
+    await account.updateCurrency(currency: currency);
     state = AsyncData(currency);
   }
 }

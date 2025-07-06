@@ -132,14 +132,4 @@ class MockRemoteAccountDataSource implements IAccountRemoteDataSource {
     }
     return null;
   }
-
-  @override
-  Future<void> updateAccountName(int apiId, String newName) async {
-    final acc = _db.where((c) => c.id == apiId).firstOrNull;
-    if (acc != null) {
-      _db.remove(acc);
-      _db.add(acc.copyWith(name: newName, updatedAt: DateTime.now().toUtc()));
-    }
-    return;
-  }
 }

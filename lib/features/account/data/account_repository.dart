@@ -102,15 +102,4 @@ class AccountRepository implements IAccountRepository {
       expenseStats: expenseStats,
     );
   }
-
-  Future<void> updateAccountName(int id, String newName) async {
-    var entity = await localDataSource.getById(id);
-    if (entity == null) return;
-
-    entity.name = newName;
-    entity.updatedAt = DateTime.now().toUtc();
-
-    await localDataSource.save(entity);
-    await remoteDataSource.updateAccountName(entity.apiId, newName);
-  }
 }

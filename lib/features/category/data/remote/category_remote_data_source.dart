@@ -9,25 +9,27 @@ class CategoryRemoteDataSource implements ICategoryRemoteDataSource {
 
   @override
   Future<List<CategoryDto>> getAll() async {
-    final response = await _apiService.get('/categories');
-    final List<dynamic> data = response.data;
+    final List<dynamic> data = await _apiService.get<List<dynamic>>('/categories');
     return data.map((json) => CategoryDto.fromJson(json)).toList();
   }
 
   @override
   Future<List<CategoryDto>> getByType(bool isIncome) async {
-    final response = await _apiService.get('/categories', queryParameters: {
-      'isIncome': isIncome.toString(),
-    });
-    final List<dynamic> data = response.data;
-    return data.map((json) => CategoryDto.fromJson(json)).toList();
+    try {
+      final List<dynamic> data = await _apiService.get<List<dynamic>>('/categories', queryParameters: {
+        'isIncome': isIncome.toString(),
+      });
+      return data.map((json) => CategoryDto.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   @override
   Future<CategoryDto?> getById(int id) async {
     try {
-      final response = await _apiService.get('/categories/$id');
-      return CategoryDto.fromJson(response.data);
+      final Map<String, dynamic> data = await _apiService.get<Map<String, dynamic>>('/categories/$id');
+      return CategoryDto.fromJson(data);
     } catch (e) {
       // Если категория не найдена, возвращаем null
       return null;

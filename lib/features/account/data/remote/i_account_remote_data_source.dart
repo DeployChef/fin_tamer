@@ -9,5 +9,4 @@ abstract class IAccountRemoteDataSource {
   Future<AccountResponseDto?> getResponseById(int id);
   Future<AccountDto?> getById(int id);
   Future<AccountDto?> update(int id, AccountUpdateRequestDto request);
-  Future<void> updateAccountName(int apiId, String newName);
 }

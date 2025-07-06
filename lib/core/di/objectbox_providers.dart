@@ -1,4 +1,7 @@
+import 'package:fin_tamer/features/account/data/local/entities/account_entity.dart';
+import 'package:fin_tamer/features/account/data/local/entities/stat_item_entity.dart';
 import 'package:fin_tamer/features/history/data/local/entities/history_entity.dart';
+import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
 import 'package:fin_tamer/objectbox.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,8 +21,8 @@ Future<Store> objectBoxStore(Ref ref) async {
 Future<Box<CategoryEntity>> categoryBox(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
   if (kDebugMode) {
-    //если дебаг то почистим историю чтоб граффик в счете стал другим(временно до дио)
-    store.box<HistoryEntity>().removeAll();
+    store.box<TransactionEntity>().removeAll();
+    store.box<StatItemEntity>().removeAll();
   }
   return store.box<CategoryEntity>();
 }
