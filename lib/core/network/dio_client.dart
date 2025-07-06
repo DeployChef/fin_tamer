@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fin_tamer/core/config/app_config.dart';
 import 'package:fin_tamer/core/utils/logger_service.dart';
+import 'retry_interceptor.dart';
 
 class DioClient {
   late final Dio _dio;
@@ -24,7 +25,10 @@ class DioClient {
   Dio get dio => _dio;
 
   void _setupInterceptors() {
-    // Interceptor для авторизации
+    // Retry interceptor (должен быть первым)
+    _dio.interceptors.add(RetryInterceptor());
+
+    // Interceptor для авторизации и логирования
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {

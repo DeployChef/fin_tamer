@@ -54,4 +54,10 @@ class LoggerService {
       _logger.e('❌ ERROR: $statusCode $path', error: error, stackTrace: StackTrace.current);
     }
   }
+
+  static void networkRetry(String path, int retryCount, int delaySeconds, int? statusCode) {
+    if (AppConfig.enableNetworkLogging) {
+      _logger.w('🔄 RETRY: $path (attempt $retryCount, delay ${delaySeconds}s, original status: $statusCode)');
+    }
+  }
 }
