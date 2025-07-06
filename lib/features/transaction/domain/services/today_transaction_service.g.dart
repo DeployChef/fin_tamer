@@ -7,7 +7,7 @@ part of 'today_transaction_service.dart';
 // **************************************************************************
 
 String _$todayTransactionServiceHash() =>
-    r'82f6c421a7882d4d3cbdeb1ebdbbe06e06df406b';
+    r'79ae34e35684e779b266dd578cf922fc85d4bda2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -68,7 +68,8 @@ class TodayTransactionServiceFamily
   }
 
   static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
-    accountServiceProvider
+    accountServiceProvider,
+    categoriesServiceProvider
   ];
 
   @override
@@ -77,7 +78,9 @@ class TodayTransactionServiceFamily
   static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
       <ProviderOrFamily>{
     accountServiceProvider,
-    ...?accountServiceProvider.allTransitiveDependencies
+    ...?accountServiceProvider.allTransitiveDependencies,
+    categoriesServiceProvider,
+    ...?categoriesServiceProvider.allTransitiveDependencies
   };
 
   @override

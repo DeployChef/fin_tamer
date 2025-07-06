@@ -7,9 +7,10 @@ part 'stat_item.g.dart';
 abstract class StatItem with _$StatItem {
   const StatItem._();
   const factory StatItem({
-    required int id,
-    required String name,
-    required String value,
+    required int categoryId,
+    required String categoryName,
+    required String emoji,
+    required double amount,
   }) = _StatItem;
 
   factory StatItem.fromJson(Map<String, dynamic> json) => _$StatItemFromJson(json);

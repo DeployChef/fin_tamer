@@ -1,3 +1,4 @@
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
 import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
@@ -13,6 +14,7 @@ import 'package:fin_tamer/features/category/data/local/mappers/category_local_ma
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
+import 'package:fin_tamer/core/utils/logger_service.dart';
 
 class TransactionRepository implements ITransactionRepository {
   final ITransactionRemoteDataSource remoteDataSource;
@@ -30,11 +32,20 @@ class TransactionRepository implements ITransactionRepository {
   @override
   Future<Transaction> create(TransactionCreateData data) async {
     final tempApiId = DateTime.now().millisecondsSinceEpoch * -1;
+
+    final accountEntity = await accountLocalDataSource.getById(data.accountId);
+    final categoryEntity = await categoryLocalDataSource.getById(data.categoryId);
+
+    if (accountEntity == null || categoryEntity == null) {
+      //TODO обработка ошибок
+      throw Exception('Account or Category not found for transaction');
+    }
+
     final tempEntity = TransactionEntity(
       id: 0,
       apiId: tempApiId,
-      accountApiId: data.accountId,
-      categoryApiId: data.categoryId,
+      accountApiId: accountEntity.apiId,
+      categoryApiId: categoryEntity.apiId,
       amount: data.amount,
       transactionDate: data.transactionDate.toUtc(),
       comment: data.comment,
@@ -43,21 +54,22 @@ class TransactionRepository implements ITransactionRepository {
     );
     await localDataSource.save(tempEntity);
 
-    final dto = await remoteDataSource.create(data.toDto());
-    final entity = dto.toEntity();
+    var request = TransactionRequestDto(
+      accountId: tempEntity.accountApiId,
+      categoryId: tempEntity.categoryApiId,
+      amount: tempEntity.amount,
+      transactionDate: tempEntity.transactionDate,
+      comment: tempEntity.comment,
+    );
 
-    await localDataSource.delete(tempEntity.id);
-    await localDataSource.save(entity);
+    final dto = await remoteDataSource.create(request);
 
-    final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
-    final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
-    if (accountEntity == null || categoryEntity == null) {
-      //TODO обработка ошибок
-      throw Exception('Account or Category not found for transaction');
-    }
+    tempEntity.apiId = dto.id;
+    await localDataSource.save(tempEntity);
+
     final account = accountEntity.toBrief();
     final category = categoryEntity.toDomain();
-    return entity.toDomain(account: account, category: category);
+    return tempEntity.toDomain(account: account, category: category);
   }
 
   @override
@@ -153,47 +165,56 @@ class TransactionRepository implements ITransactionRepository {
 
   @override
   Future<List<Transaction>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
-    final accountEntity = await accountLocalDataSource.getByApiId(accountId);
-    if (accountEntity == null) {
-      //TODO обработка ошибок
-      throw Exception('Account not found');
-    }
+    try {
+      final accountEntity = await accountLocalDataSource.getById(accountId);
+      if (accountEntity == null) {
+        LoggerService.error('Account not found: id=$accountId');
+        return [];
+      }
 
-    final localEntities = await localDataSource.getByAccount(accountEntity.apiId);
-    final filtered = localEntities.where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
-    if (filtered.isNotEmpty) {
-      return Future.wait(filtered.map((entity) async {
+      final localEntities = await localDataSource.getByAccount(accountEntity.apiId);
+      final filtered = localEntities.where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+      if (filtered.isNotEmpty) {
+        final futures = filtered.map((entity) async {
+          final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
+          final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
+          if (accountEntity == null || categoryEntity == null) {
+            LoggerService.error('Account or Category not found for transaction: transactionApiId=${entity.apiId}');
+            return null;
+          }
+          final category = categoryEntity.toDomain();
+          final account = accountEntity.toDomain().toBrief();
+          return entity.toDomain(account: account, category: category);
+        });
+        final results = await Future.wait(futures);
+        return results.whereType<Transaction>().toList();
+      }
+
+      final dtos = await remoteDataSource.getByPeriod(accountEntity.apiId, startDate, endDate);
+      final existing = await localDataSource.getByAccount(accountEntity.apiId);
+
+      final existingApiIds = existing.map((e) => e.apiId).toSet();
+      final newEntities = dtos.where((dto) => !existingApiIds.contains(dto.id)).map((dto) => dto.toEntity()).toList();
+
+      await localDataSource.saveAll(newEntities);
+
+      final allEntities = [...existing, ...newEntities].where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+      final futures = allEntities.map((entity) async {
         final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
         final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
         if (accountEntity == null || categoryEntity == null) {
-          //TODO обработка ошибок
-          throw Exception('Account or Category not found for transaction');
+          LoggerService.error('Account or Category not found for transaction: transactionApiId=${entity.apiId}');
+          return null;
         }
         final category = categoryEntity.toDomain();
         final account = accountEntity.toDomain().toBrief();
         return entity.toDomain(account: account, category: category);
-      }));
+      });
+      final results = await Future.wait(futures);
+      return results.whereType<Transaction>().toList();
+    } catch (e, stack) {
+      LoggerService.error('Error in getByPeriod', e, stack);
+      return [];
     }
-
-    final dtos = await remoteDataSource.getByPeriod(accountEntity.apiId, startDate, endDate);
-    final existing = await localDataSource.getByAccount(accountEntity.apiId);
-
-    final existingApiIds = existing.map((e) => e.apiId).toSet();
-    final newEntities = dtos.where((dto) => !existingApiIds.contains(dto.id)).map((dto) => dto.toEntity()).toList();
-
-    await localDataSource.saveAll(newEntities);
-
-    final allEntities = [...existing, ...newEntities].where((e) => e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
-    return Future.wait(allEntities.map((entity) async {
-      final accountEntity = await accountLocalDataSource.getByApiId(entity.accountApiId);
-      final categoryEntity = await categoryLocalDataSource.getByApiId(entity.categoryApiId);
-      if (accountEntity == null || categoryEntity == null) {
-        //TODO обработка ошибок
-        throw Exception('Account or Category not found for transaction');
-      }
-      final category = categoryEntity.toDomain();
-      final account = accountEntity.toDomain().toBrief();
-      return entity.toDomain(account: account, category: category);
-    }));
   }
 }

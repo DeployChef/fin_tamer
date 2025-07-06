@@ -22,16 +22,6 @@ extension AccountBriefToDtoMapper on AccountBrief {
       );
 }
 
-extension TransactionCreateDataMapper on TransactionCreateData {
-  TransactionRequestDto toDto() => TransactionRequestDto(
-        accountId: accountId,
-        categoryId: categoryId,
-        amount: amount,
-        transactionDate: transactionDate.toUtc(),
-        comment: comment,
-      );
-}
-
 extension TransactionUpdateDataMapper on TransactionUpdateData {
   TransactionRequestDto toDto() => TransactionRequestDto(
         accountId: accountId,

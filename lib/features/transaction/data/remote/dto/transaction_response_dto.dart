@@ -26,10 +26,10 @@ abstract class TransactionResponseDto with _$TransactionResponseDto {
 
 extension TransactionResponseDtoToEntity on TransactionResponseDto {
   TransactionEntity toEntity() => TransactionEntity(
-        id: 0, // всегда новый, ObjectBox сам назначит
-        apiId: id, // id из DTO — это apiId
-        accountApiId: account.id, // id из AccountBriefDto
-        categoryApiId: category.id, // id из CategoryDto
+        id: 0,
+        apiId: id,
+        accountApiId: account.id,
+        categoryApiId: category.id,
         amount: amount,
         transactionDate: transactionDate,
         comment: comment,

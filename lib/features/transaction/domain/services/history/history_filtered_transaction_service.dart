@@ -1,4 +1,5 @@
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
+import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
@@ -7,10 +8,11 @@ import 'package:fin_tamer/core/di/repository_providers.dart';
 
 part 'history_filtered_transaction_service.g.dart';
 
-@Riverpod(dependencies: [AccountService, HistoryFilterService])
+@Riverpod(dependencies: [AccountService, HistoryFilterService, CategoriesService])
 class HistoryFilteredTransactionService extends _$HistoryFilteredTransactionService {
   @override
   FutureOr<List<Transaction>> build({required bool isIncome}) async {
+    await ref.watch(categoriesServiceProvider.future);
     final account = await ref.watch(accountServiceProvider.future);
     if (account == null) return [];
 

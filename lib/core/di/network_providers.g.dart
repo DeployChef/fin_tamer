@@ -99,7 +99,7 @@ final historyApiRemoteDataSourceProvider =
 typedef HistoryApiRemoteDataSourceRef
     = AutoDisposeProviderRef<IHistoryRemoteDataSource>;
 String _$transactionApiRemoteDataSourceHash() =>
-    r'82ff03c8ae74eee3a9b891a220bd52ea845a279b';
+    r'f913b606dd245bdb927b128597e53e99fb301d99';
 
 /// See also [transactionApiRemoteDataSource].
 @ProviderFor(transactionApiRemoteDataSource)

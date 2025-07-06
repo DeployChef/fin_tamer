@@ -7,14 +7,16 @@ part of 'stat_item_dto.dart';
 // **************************************************************************
 
 _StatItemDto _$StatItemDtoFromJson(Map<String, dynamic> json) => _StatItemDto(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      value: json['value'] as String,
+      categoryId: (json['categoryId'] as num).toInt(),
+      categoryName: json['categoryName'] as String,
+      emoji: json['emoji'] as String,
+      amount: json['amount'] as String,
     );
 
 Map<String, dynamic> _$StatItemDtoToJson(_StatItemDto instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'value': instance.value,
+      'categoryId': instance.categoryId,
+      'categoryName': instance.categoryName,
+      'emoji': instance.emoji,
+      'amount': instance.amount,
     };

@@ -1,5 +1,6 @@
 import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_dto.dart';
 
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
@@ -97,7 +98,7 @@ class MockTransactionRemoteDataSource implements ITransactionRemoteDataSource {
   ];
 
   @override
-  Future<TransactionResponseDto> create(TransactionRequestDto request) async {
+  Future<TransactionDto> create(TransactionRequestDto request) async {
     final accountDto = await accountRemoteDataSource.getById(request.accountId);
     final account = AccountBriefDto(
       id: accountDto!.id,
@@ -117,7 +118,15 @@ class MockTransactionRemoteDataSource implements ITransactionRemoteDataSource {
       updatedAt: DateTime.now().toUtc(),
     );
     _db.add(newTransaction);
-    return newTransaction;
+    return TransactionDto(
+      id: newTransaction.id,
+      accountId: newTransaction.account.id,
+      categoryId: newTransaction.category.id,
+      amount: newTransaction.amount,
+      transactionDate: newTransaction.transactionDate,
+      createdAt: newTransaction.createdAt,
+      updatedAt: newTransaction.updatedAt,
+    );
   }
 
   @override

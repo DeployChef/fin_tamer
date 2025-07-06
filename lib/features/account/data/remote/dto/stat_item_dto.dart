@@ -8,9 +8,10 @@ abstract class StatItemDto with _$StatItemDto {
   const StatItemDto._();
 
   const factory StatItemDto({
-    required int id,
-    required String name,
-    required String value,
+    required int categoryId,
+    required String categoryName,
+    required String emoji,
+    required String amount,
   }) = _StatItemDto;
 
   factory StatItemDto.fromJson(Map<String, dynamic> json) => _$StatItemDtoFromJson(json);

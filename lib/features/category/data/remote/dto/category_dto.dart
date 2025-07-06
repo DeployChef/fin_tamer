@@ -20,8 +20,8 @@ abstract class CategoryDto with _$CategoryDto {
 
 extension CategoryDtoToEntity on CategoryDto {
   CategoryEntity toEntity() => CategoryEntity(
-        id: 0, // всегда новый, ObjectBox сам назначит
-        apiId: id, // id из DTO — это apiId
+        id: 0,
+        apiId: id,
         name: name,
         emoji: emoji,
         isIncome: isIncome,

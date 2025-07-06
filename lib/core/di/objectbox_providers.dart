@@ -23,6 +23,9 @@ Future<Box<CategoryEntity>> categoryBox(Ref ref) async {
   if (kDebugMode) {
     store.box<TransactionEntity>().removeAll();
     store.box<StatItemEntity>().removeAll();
+    store.box<CategoryEntity>().removeAll();
+    store.box<AccountEntity>().removeAll();
+    store.box<HistoryEntity>().removeAll();
   }
   return store.box<CategoryEntity>();
 }

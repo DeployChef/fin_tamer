@@ -7,9 +7,10 @@ import 'package:fin_tamer/features/account/data/remote/dto/stat_item_dto.dart';
 
 extension StatItemDtoMapper on StatItemDto {
   StatItem toDomain() => StatItem(
-        id: id,
-        name: name,
-        value: value,
+        categoryId: categoryId,
+        categoryName: categoryName,
+        emoji: emoji,
+        amount: double.tryParse(amount) ?? 0.0,
       );
 }
 

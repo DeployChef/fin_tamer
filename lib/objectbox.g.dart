@@ -176,7 +176,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(6, 7419752769170049923),
     name: 'StatItemEntity',
-    lastPropertyId: const obx_int.IdUid(7, 3501366388118049952),
+    lastPropertyId: const obx_int.IdUid(11, 8455360228724349651),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -198,21 +198,33 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5316522730820120505),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 5862021724767335644),
-        name: 'value',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
         id: const obx_int.IdUid(7, 3501366388118049952),
         name: 'isIncome',
         type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 6732556694054994663),
+        name: 'categoryId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 2011934168724031218),
+        name: 'categoryName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 7727764499745813961),
+        name: 'emoji',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 8455360228724349651),
+        name: 'amount',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -346,6 +358,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       5957917243085841111,
       5372237746619062107,
       8685277185981112531,
+      5316522730820120505,
+      5862021724767335644,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -563,15 +577,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (StatItemEntity object, fb.Builder fbb) {
-        final nameOffset = fbb.writeString(object.name);
-        final valueOffset = fbb.writeString(object.value);
-        fbb.startTable(8);
+        final categoryNameOffset = fbb.writeString(object.categoryName);
+        final emojiOffset = fbb.writeString(object.emoji);
+        final amountOffset = fbb.writeString(object.amount);
+        fbb.startTable(12);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.apiId);
         fbb.addInt64(2, object.accountApiId);
-        fbb.addOffset(4, nameOffset);
-        fbb.addOffset(5, valueOffset);
         fbb.addBool(6, object.isIncome);
+        fbb.addInt64(7, object.categoryId);
+        fbb.addOffset(8, categoryNameOffset);
+        fbb.addOffset(9, emojiOffset);
+        fbb.addOffset(10, amountOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -602,19 +619,30 @@ obx_int.ModelDefinition getObjectBoxModel() {
           16,
           false,
         );
-        final nameParam = const fb.StringReader(
+        final categoryIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        final categoryNameParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final valueParam = const fb.StringReader(
+        ).vTableGet(buffer, rootOffset, 20, '');
+        final emojiParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
+        ).vTableGet(buffer, rootOffset, 22, '');
+        final amountParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 24, '');
         final object = StatItemEntity(
           id: idParam,
           apiId: apiIdParam,
           accountApiId: accountApiIdParam,
           isIncome: isIncomeParam,
-          name: nameParam,
-          value: valueParam,
+          categoryId: categoryIdParam,
+          categoryName: categoryNameParam,
+          emoji: emojiParam,
+          amount: amountParam,
         );
 
         return object;
@@ -834,19 +862,29 @@ class StatItemEntity_ {
     _entities[3].properties[2],
   );
 
-  /// See [StatItemEntity.name].
-  static final name = obx.QueryStringProperty<StatItemEntity>(
+  /// See [StatItemEntity.isIncome].
+  static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
     _entities[3].properties[3],
   );
 
-  /// See [StatItemEntity.value].
-  static final value = obx.QueryStringProperty<StatItemEntity>(
+  /// See [StatItemEntity.categoryId].
+  static final categoryId = obx.QueryIntegerProperty<StatItemEntity>(
     _entities[3].properties[4],
   );
 
-  /// See [StatItemEntity.isIncome].
-  static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
+  /// See [StatItemEntity.categoryName].
+  static final categoryName = obx.QueryStringProperty<StatItemEntity>(
     _entities[3].properties[5],
+  );
+
+  /// See [StatItemEntity.emoji].
+  static final emoji = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[6],
+  );
+
+  /// See [StatItemEntity.amount].
+  static final amount = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[7],
   );
 }
 

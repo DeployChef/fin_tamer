@@ -18,25 +18,28 @@ class MockRemoteAccountDataSource implements IAccountRemoteDataSource {
         ...List.generate(
             31,
             (i) => StatItemDto(
-                  id: i + 1,
-                  name: DateTime(DateTime.now().year, DateTime.now().month, i + 1).toIso8601String().split('T').first,
-                  value: (Random().nextInt(5000) + 1000).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (Random().nextInt(5000) + 1000).toString(),
                 )),
         // Прошлый месяц
         ...List.generate(
             5,
             (i) => StatItemDto(
-                  id: 100 + i,
-                  name: DateTime(DateTime.now().year, DateTime.now().month - 1, i + 1).toIso8601String().split('T').first,
-                  value: (Random().nextInt(5000) + 1000).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (Random().nextInt(5000) + 1000).toString(),
                 )),
         // Позапрошлый месяц
         ...List.generate(
             5,
             (i) => StatItemDto(
-                  id: 200 + i,
-                  name: DateTime(DateTime.now().year, DateTime.now().month - 2, i + 1).toIso8601String().split('T').first,
-                  value: (Random().nextInt(5000) + 1000).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (Random().nextInt(5000) + 1000).toString(),
                 )),
       ],
       expenseStats: [
@@ -44,25 +47,28 @@ class MockRemoteAccountDataSource implements IAccountRemoteDataSource {
         ...List.generate(
             31,
             (i) => StatItemDto(
-                  id: i + 101,
-                  name: DateTime(DateTime.now().year, DateTime.now().month, i + 1).toIso8601String().split('T').first,
-                  value: (-Random().nextInt(5000) - 500).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (-Random().nextInt(5000) - 500).toString(),
                 )),
         // Прошлый месяц
         ...List.generate(
             5,
             (i) => StatItemDto(
-                  id: 300 + i,
-                  name: DateTime(DateTime.now().year, DateTime.now().month - 1, i + 1).toIso8601String().split('T').first,
-                  value: (-Random().nextInt(5000) - 500).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (-Random().nextInt(5000) - 500).toString(),
                 )),
         // Позапрошлый месяц
         ...List.generate(
             5,
             (i) => StatItemDto(
-                  id: 400 + i,
-                  name: DateTime(DateTime.now().year, DateTime.now().month - 2, i + 1).toIso8601String().split('T').first,
-                  value: (-Random().nextInt(5000) - 500).toString(),
+                  categoryId: 1,
+                  categoryName: 'Зарплата',
+                  emoji: '💰',
+                  amount: (-Random().nextInt(5000) - 500).toString(),
                 )),
       ],
       createdAt: DateTime.parse('2025-06-09T16:54:53.139Z'),

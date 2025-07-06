@@ -83,6 +83,15 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     double prevBalance = startBalance;
     final bars = <BalanceBarData>[];
     for (int day = 1; day <= daysInMonth; day++) {
+      if (DateTime.now().day < day) {
+        bars.add(BalanceBarData(
+          x: day,
+          value: 0,
+          color: const Color(0xFF2AE881),
+          label: null,
+        ));
+        continue;
+      }
       final balance = dayBalances.containsKey(day) ? dayBalances[day]! : prevBalance;
       bars.add(BalanceBarData(
         x: day,
