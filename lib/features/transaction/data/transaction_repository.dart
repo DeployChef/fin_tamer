@@ -1,4 +1,4 @@
-import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/domain/interfaces/i_transaction_repository.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
@@ -15,7 +15,7 @@ import 'package:fin_tamer/features/transaction/data/local/entities/transaction_e
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_response_dto.dart';
 
 class TransactionRepository implements ITransactionRepository {
-  final MockTransactionRemoteDataSource remoteDataSource;
+  final ITransactionRemoteDataSource remoteDataSource;
   final TransactionLocalDataSource localDataSource;
   final AccountLocalDataSource accountLocalDataSource;
   final CategoryLocalDataSource categoryLocalDataSource;

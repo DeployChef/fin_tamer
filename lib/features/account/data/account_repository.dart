@@ -1,6 +1,6 @@
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
-import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/remote/mappers/account_mapper.dart';
 import 'package:fin_tamer/features/account/domain/models/account_create_data.dart';
 import 'package:fin_tamer/features/account/domain/models/account_update_data.dart';
@@ -11,7 +11,7 @@ import 'package:fin_tamer/features/account/data/remote/dto/account_dto.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/stat_item_local_mapper.dart';
 
 class AccountRepository implements IAccountRepository {
-  final MockRemoteAccountDataSource remoteDataSource;
+  final IAccountRemoteDataSource remoteDataSource;
   final AccountLocalDataSource localDataSource;
   final StatItemLocalDataSource statItemLocalDataSource;
 

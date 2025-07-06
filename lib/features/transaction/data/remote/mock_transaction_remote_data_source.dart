@@ -1,12 +1,14 @@
+import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
+
 import 'dto/transaction_response_dto.dart';
 import 'dto/transaction_request_dto.dart';
 import 'dto/account_brief_dto.dart';
 import 'package:fin_tamer/features/category/data/remote/dto/category_dto.dart';
-import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
+import 'i_transaction_remote_data_source.dart';
 
-class MockTransactionRemoteDataSource {
-  final MockRemoteAccountDataSource accountRemoteDataSource;
+class MockTransactionRemoteDataSource implements ITransactionRemoteDataSource {
+  final IAccountRemoteDataSource accountRemoteDataSource;
   final CategoryRemoteDataSource categoryRemoteDataSource;
 
   MockTransactionRemoteDataSource(this.accountRemoteDataSource, this.categoryRemoteDataSource);
@@ -94,6 +96,7 @@ class MockTransactionRemoteDataSource {
     ),
   ];
 
+  @override
   Future<TransactionResponseDto> create(TransactionRequestDto request) async {
     final accountDto = await accountRemoteDataSource.getById(request.accountId);
     final account = AccountBriefDto(
@@ -117,6 +120,7 @@ class MockTransactionRemoteDataSource {
     return newTransaction;
   }
 
+  @override
   Future<TransactionResponseDto?> update(int id, TransactionRequestDto request) async {
     final idx = _db.indexWhere((t) => t.id == id);
     if (idx == -1) return null;
@@ -140,14 +144,17 @@ class MockTransactionRemoteDataSource {
     return updated;
   }
 
+  @override
   Future<void> delete(int id) async {
     _db.removeWhere((t) => t.id == id);
   }
 
+  @override
   Future<TransactionResponseDto?> getById(int id) async {
     return _db.where((t) => t.id == id).firstOrNull;
   }
 
+  @override
   Future<List<TransactionResponseDto>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
     return _db.where((t) => t.account.id == accountId && t.transactionDate.isAfter(startDate) && t.transactionDate.isBefore(endDate)).toList();
   }

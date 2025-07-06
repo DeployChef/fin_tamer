@@ -12,12 +12,15 @@ import 'package:fin_tamer/features/account/data/local/account_local_data_source.
 import 'package:fin_tamer/features/account/data/local/entities/account_entity.dart';
 import 'package:fin_tamer/features/account/data/local/stat_item_local_data_source.dart';
 import 'package:fin_tamer/features/account/data/local/entities/stat_item_entity.dart';
-import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/account_repository.dart';
 import 'package:fin_tamer/features/transaction/data/local/transaction_local_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/local/entities/transaction_entity.dart';
-import 'package:fin_tamer/features/transaction/data/remote/mock_transaction_remote_data_source.dart';
+import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/transaction_repository.dart';
+import 'package:fin_tamer/core/di/network_providers.dart';
+import 'package:fin_tamer/core/di/mock_providers.dart';
+import 'package:fin_tamer/core/config/app_config.dart';
 
 part 'repository_providers.g.dart';
 
@@ -25,11 +28,6 @@ part 'repository_providers.g.dart';
 Future<CategoryLocalDataSource> categoryLocalDataSource(Ref ref) async {
   final box = await ref.watch(categoryBoxProvider.future);
   return CategoryLocalDataSource(box);
-}
-
-@Riverpod(keepAlive: true)
-CategoryRemoteDataSource categoryRemoteDataSource(Ref ref) {
-  return CategoryRemoteDataSource();
 }
 
 @Riverpod(keepAlive: true)
@@ -81,8 +79,32 @@ Future<StatItemLocalDataSource> statItemLocalDataSource(Ref ref) async {
 }
 
 @Riverpod(keepAlive: true)
-MockRemoteAccountDataSource accountRemoteDataSource(Ref ref) {
-  return MockRemoteAccountDataSource();
+IAccountRemoteDataSource accountRemoteDataSource(Ref ref) {
+  if (AppConfig.useMockAccounts) {
+    return ref.watch(accountMockRemoteDataSourceProvider);
+  } else {
+    return ref.watch(accountApiRemoteDataSourceProvider);
+  }
+}
+
+@Riverpod(keepAlive: true)
+ITransactionRemoteDataSource transactionRemoteDataSource(Ref ref) {
+  if (AppConfig.useMockTransactions) {
+    return ref.watch(transactionMockRemoteDataSourceProvider);
+  } else {
+    // TODO: Добавить transactionApiRemoteDataSourceProvider когда создадим API
+    return ref.watch(transactionMockRemoteDataSourceProvider);
+  }
+}
+
+@Riverpod(keepAlive: true)
+CategoryRemoteDataSource categoryRemoteDataSource(Ref ref) {
+  if (AppConfig.useMockCategories) {
+    return ref.watch(categoryMockRemoteDataSourceProvider);
+  } else {
+    // TODO: Добавить categoryApiRemoteDataSourceProvider когда создадим API
+    return ref.watch(categoryMockRemoteDataSourceProvider);
+  }
 }
 
 @Riverpod(keepAlive: true)
@@ -102,13 +124,6 @@ Future<TransactionLocalDataSource> transactionLocalDataSource(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
   final box = store.box<TransactionEntity>();
   return TransactionLocalDataSource(box);
-}
-
-@Riverpod(keepAlive: true)
-MockTransactionRemoteDataSource transactionRemoteDataSource(Ref ref) {
-  final accountRemote = ref.watch(accountRemoteDataSourceProvider);
-  final categoryRemote = ref.watch(categoryRemoteDataSourceProvider);
-  return MockTransactionRemoteDataSource(accountRemote, categoryRemote);
 }
 
 @Riverpod(keepAlive: true)
