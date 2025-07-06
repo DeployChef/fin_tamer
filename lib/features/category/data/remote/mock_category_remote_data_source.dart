@@ -1,5 +1,5 @@
-import 'dto/category_dto.dart';
-import 'interfaces/i_category_remote_data_source.dart';
+import 'package:fin_tamer/features/category/data/remote/dto/category_dto.dart';
+import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
 
 class MockCategoryRemoteDataSource implements ICategoryRemoteDataSource {
   final _db = [

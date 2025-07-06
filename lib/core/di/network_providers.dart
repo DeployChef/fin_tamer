@@ -6,6 +6,8 @@ import 'package:fin_tamer/features/account/data/remote/account_remote_data_sourc
 import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/remote/category_remote_data_source.dart';
 import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_remote_data_source.dart';
+import 'package:fin_tamer/features/history/data/remote/history_api_remote_data_source.dart';
+import 'package:fin_tamer/features/history/data/remote/interfaces/i_history_remote_data_source.dart';
 
 part 'network_providers.g.dart';
 
@@ -30,4 +32,10 @@ IAccountRemoteDataSource accountApiRemoteDataSource(Ref ref) {
 ICategoryRemoteDataSource categoryApiRemoteDataSource(Ref ref) {
   final apiService = ref.watch(apiServiceProvider);
   return CategoryRemoteDataSource(apiService);
+}
+
+@riverpod
+IHistoryRemoteDataSource historyApiRemoteDataSource(Ref ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return HistoryApiRemoteDataSource(apiService);
 }

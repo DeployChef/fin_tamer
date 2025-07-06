@@ -47,7 +47,7 @@ final transactionMockRemoteDataSourceProvider =
 typedef TransactionMockRemoteDataSourceRef
     = AutoDisposeProviderRef<ITransactionRemoteDataSource>;
 String _$categoryMockRemoteDataSourceHash() =>
-    r'9b886d7a1bf63a92b7dd51840c3f150e22450ab6';
+    r'58201852ff1dad779e8b5a9b970e0e52f8c080e6';
 
 /// See also [categoryMockRemoteDataSource].
 @ProviderFor(categoryMockRemoteDataSource)
@@ -66,5 +66,25 @@ final categoryMockRemoteDataSourceProvider =
 // ignore: unused_element
 typedef CategoryMockRemoteDataSourceRef
     = AutoDisposeProviderRef<ICategoryRemoteDataSource>;
+String _$historyMockRemoteDataSourceHash() =>
+    r'2c9e3a2713394a0d081c769feb6ccd468c66d654';
+
+/// See also [historyMockRemoteDataSource].
+@ProviderFor(historyMockRemoteDataSource)
+final historyMockRemoteDataSourceProvider =
+    AutoDisposeProvider<IHistoryRemoteDataSource>.internal(
+  historyMockRemoteDataSource,
+  name: r'historyMockRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$historyMockRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef HistoryMockRemoteDataSourceRef
+    = AutoDisposeProviderRef<IHistoryRemoteDataSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

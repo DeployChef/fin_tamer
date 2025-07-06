@@ -63,12 +63,12 @@ final historyLocalDataSourceProvider =
 // ignore: unused_element
 typedef HistoryLocalDataSourceRef = FutureProviderRef<HistoryLocalDataSource>;
 String _$historyRemoteDataSourceHash() =>
-    r'4559a27d5979df5de8144924b35c001a9d2af812';
+    r'8f827c8fe97ff9db558a8e9b36cdc6f950bb042c';
 
 /// See also [historyRemoteDataSource].
 @ProviderFor(historyRemoteDataSource)
 final historyRemoteDataSourceProvider =
-    Provider<HistoryRemoteDataSource>.internal(
+    Provider<IHistoryRemoteDataSource>.internal(
   historyRemoteDataSource,
   name: r'historyRemoteDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -80,7 +80,7 @@ final historyRemoteDataSourceProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef HistoryRemoteDataSourceRef = ProviderRef<HistoryRemoteDataSource>;
+typedef HistoryRemoteDataSourceRef = ProviderRef<IHistoryRemoteDataSource>;
 String _$historyRepositoryHash() => r'5ce80d3e2a984057f974656d2d8cabae00c03c73';
 
 /// See also [historyRepository].

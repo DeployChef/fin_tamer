@@ -7,6 +7,7 @@ class AppConfig {
   static const bool useMockAccounts = true;
   static const bool useMockTransactions = true;
   static const bool useMockCategories = false;
+  static const bool useMockHistory = true;
 
   // Настройки retry
   static const int maxRetries = 3;

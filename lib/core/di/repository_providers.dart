@@ -5,7 +5,7 @@ import 'package:fin_tamer/features/category/data/remote/interfaces/i_category_re
 import 'package:fin_tamer/features/category/data/category_repository.dart';
 import 'package:fin_tamer/core/di/objectbox_providers.dart';
 import 'package:fin_tamer/features/history/data/local/history_local_data_source.dart';
-import 'package:fin_tamer/features/history/data/remote/history_remote_data_source.dart';
+import 'package:fin_tamer/features/history/data/remote/interfaces/i_history_remote_data_source.dart';
 import 'package:fin_tamer/features/history/data/history_repository.dart';
 import 'package:fin_tamer/features/history/data/local/entities/history_entity.dart';
 import 'package:fin_tamer/features/account/data/local/account_local_data_source.dart';
@@ -48,8 +48,12 @@ Future<HistoryLocalDataSource> historyLocalDataSource(Ref ref) async {
 }
 
 @Riverpod(keepAlive: true)
-HistoryRemoteDataSource historyRemoteDataSource(Ref ref) {
-  return HistoryRemoteDataSource();
+IHistoryRemoteDataSource historyRemoteDataSource(Ref ref) {
+  if (AppConfig.useMockHistory) {
+    return ref.watch(historyMockRemoteDataSourceProvider);
+  } else {
+    return ref.watch(historyApiRemoteDataSourceProvider);
+  }
 }
 
 @Riverpod(keepAlive: true)

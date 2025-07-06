@@ -59,7 +59,7 @@ final accountApiRemoteDataSourceProvider =
 typedef AccountApiRemoteDataSourceRef
     = AutoDisposeProviderRef<IAccountRemoteDataSource>;
 String _$categoryApiRemoteDataSourceHash() =>
-    r'b3f24de388060607e77ae3b7464eadbf7f09ba15';
+    r'abb625c27e294e71d5b94f4c1b99e01a59550aee';
 
 /// See also [categoryApiRemoteDataSource].
 @ProviderFor(categoryApiRemoteDataSource)
@@ -78,5 +78,25 @@ final categoryApiRemoteDataSourceProvider =
 // ignore: unused_element
 typedef CategoryApiRemoteDataSourceRef
     = AutoDisposeProviderRef<ICategoryRemoteDataSource>;
+String _$historyApiRemoteDataSourceHash() =>
+    r'6ea9d43e6803faf7b95d448a9178f5bbb2acf583';
+
+/// See also [historyApiRemoteDataSource].
+@ProviderFor(historyApiRemoteDataSource)
+final historyApiRemoteDataSourceProvider =
+    AutoDisposeProvider<IHistoryRemoteDataSource>.internal(
+  historyApiRemoteDataSource,
+  name: r'historyApiRemoteDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$historyApiRemoteDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef HistoryApiRemoteDataSourceRef
+    = AutoDisposeProviderRef<IHistoryRemoteDataSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
