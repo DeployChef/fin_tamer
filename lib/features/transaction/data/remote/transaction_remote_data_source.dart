@@ -4,6 +4,7 @@ import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_respo
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
 import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:intl/intl.dart';
+import 'package:fin_tamer/core/utils/isolate_deserializer.dart';
 
 class TransactionRemoteDataSource implements ITransactionRemoteDataSource {
   final ApiService _apiService;
@@ -12,15 +13,28 @@ class TransactionRemoteDataSource implements ITransactionRemoteDataSource {
 
   @override
   Future<TransactionDto> create(TransactionRequestDto request) async {
-    final Map<String, dynamic> data = await _apiService.post<Map<String, dynamic>>('/transactions', data: request.toJson());
-    return TransactionDto.fromJson(data);
+    final response = await _apiService.post<String>(
+      '/transactions',
+      data: request.toJson(),
+    );
+    return await IsolateDeserializer.deserialize<TransactionDto>(
+      response,
+      TransactionDto.fromJson,
+    );
   }
 
   @override
-  Future<TransactionResponseDto?> update(int id, TransactionRequestDto request) async {
+  Future<TransactionResponseDto?> update(
+      int id, TransactionRequestDto request) async {
     try {
-      final Map<String, dynamic> data = await _apiService.put<Map<String, dynamic>>('/transactions/$id', data: request.toJson());
-      return TransactionResponseDto.fromJson(data);
+      final response = await _apiService.put<String>(
+        '/transactions/$id',
+        data: request.toJson(),
+      );
+      return await IsolateDeserializer.deserialize<TransactionResponseDto>(
+        response,
+        TransactionResponseDto.fromJson,
+      );
     } catch (e) {
       // Если транзакция не найдена, возвращаем null
       return null;
@@ -35,8 +49,11 @@ class TransactionRemoteDataSource implements ITransactionRemoteDataSource {
   @override
   Future<TransactionResponseDto?> getById(int id) async {
     try {
-      final Map<String, dynamic> data = await _apiService.get<Map<String, dynamic>>('/transactions/$id');
-      return TransactionResponseDto.fromJson(data);
+      final response = await _apiService.get<String>('/transactions/$id');
+      return await IsolateDeserializer.deserialize<TransactionResponseDto>(
+        response,
+        TransactionResponseDto.fromJson,
+      );
     } catch (e) {
       // Если транзакция не найдена, возвращаем null
       return null;
@@ -44,19 +61,23 @@ class TransactionRemoteDataSource implements ITransactionRemoteDataSource {
   }
 
   @override
-  Future<List<TransactionResponseDto>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
+  Future<List<TransactionResponseDto>> getByPeriod(
+      int accountId, DateTime startDate, DateTime endDate) async {
     try {
       final from = DateFormat('yyyy-MM-dd').format(startDate);
       final to = DateFormat('yyyy-MM-dd').format(endDate);
 
-      final List<dynamic> data = await _apiService.get<List<dynamic>>(
+      final response = await _apiService.get<String>(
         '/transactions/account/$accountId/period',
         queryParameters: {
           'startDate': from,
           'endDate': to,
         },
       );
-      return data.map((json) => TransactionResponseDto.fromJson(json)).toList();
+      return await IsolateDeserializer.deserializeList<TransactionResponseDto>(
+        response,
+        TransactionResponseDto.fromJson,
+      );
     } catch (e) {
       return [];
     }
