@@ -4,10 +4,10 @@ class AppConfig {
   static const String authToken = 'userName'; // Замените на ваш токен
 
   // Переключатели для тестирования
-  static const bool useMockAccounts = true;
-  static const bool useMockTransactions = true;
+  static const bool useMockAccounts = false;
+  static const bool useMockTransactions = false;
   static const bool useMockCategories = false;
-  static const bool useMockHistory = true;
+  static const bool useMockHistory = false;
 
   // Настройки retry
   static const int maxRetries = 3;
