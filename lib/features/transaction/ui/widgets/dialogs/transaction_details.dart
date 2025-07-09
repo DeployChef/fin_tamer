@@ -206,7 +206,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
   void _deleteTransaction() async {
     final transactionService = await ref.read(transactionRepositoryProvider.future);
 
-    transactionService.delete(widget.transaction!.id);
+    await transactionService.delete(widget.transaction!.id);
 
     ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
