@@ -43,10 +43,7 @@ class AccountRepository implements IAccountRepository {
   @override
   Future<Account?> getById(int id) async {
     final entity = await localDataSource.getById(id);
-    if (entity == null) {
-      final accounts = await getAll();
-      return accounts.firstOrNull?.toEntity().toDomain();
-    }
+    if (entity == null) return null;
 
     var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
     var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
@@ -100,28 +97,6 @@ class AccountRepository implements IAccountRepository {
 
     final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
     final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
-    return entity.toDomain(
-      incomeStats: incomeStats,
-      expenseStats: expenseStats,
-    );
-  }
-
-  @override
-  Future<Account?> getByApiId(int apiId) async {
-    final entity = await localDataSource.getByApiId(apiId);
-    if (entity == null) return null;
-
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
-
-    if (incomeStats.isEmpty || expenseStats.isEmpty) {
-      final dto = await remoteDataSource.getResponseById(entity.apiId);
-      if (dto == null) return null;
-      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
-      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
-      await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
-    }
-
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
