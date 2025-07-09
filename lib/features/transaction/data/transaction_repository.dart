@@ -142,16 +142,14 @@ class TransactionRepository implements ITransactionRepository {
       if (apiId > 0) {
         await remoteDataSource.delete(apiId);
       }
-      // Корректируем баланс аккаунта при удалении транзакции
-      if (localEntity != null) {
-        final account = await accountRepository.getByApiId(localEntity.accountApiId);
-        final category = await categoryRepository.getByApiId(localEntity.categoryApiId);
-        if (account != null && category != null) {
-          final oldBalance = double.tryParse(account.balance) ?? 0.0;
-          final amount = double.tryParse(localEntity.amount) ?? 0.0;
-          final newBalance = category.isIncome ? oldBalance - amount : oldBalance + amount;
-          await accountRepository.updateLocalBalance(account.id, newBalance);
-        }
+
+      final account = await accountRepository.getByApiId(localEntity.accountApiId);
+      final category = await categoryRepository.getByApiId(localEntity.categoryApiId);
+      if (account != null && category != null) {
+        final oldBalance = double.tryParse(account.balance) ?? 0.0;
+        final amount = double.tryParse(localEntity.amount) ?? 0.0;
+        final newBalance = category.isIncome ? oldBalance - amount : oldBalance + amount;
+        await accountRepository.updateLocalBalance(account.id, newBalance);
       }
     } catch (e, stack) {
       LoggerService.error('Error in delete', e, stack);
