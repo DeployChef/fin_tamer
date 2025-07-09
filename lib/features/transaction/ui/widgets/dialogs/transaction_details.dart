@@ -8,6 +8,7 @@ import 'package:fin_tamer/features/account/domain/services/account_service.dart'
 import 'package:fin_tamer/features/category/domain/models/category.dart';
 import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:fin_tamer/features/category/ui/widgets/category_item.dart';
+import 'package:fin_tamer/features/history/domain/services/transaction_chart_service.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
@@ -210,6 +211,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
 
     ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+    ref.invalidate(transactionChartServiceProvider);
 
     GoRouter.of(context).pop();
   }
@@ -255,6 +257,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
 
     ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+    ref.invalidate(transactionChartServiceProvider);
 
     GoRouter.of(context).pop();
   }
