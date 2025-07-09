@@ -234,7 +234,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 7913135380541029049),
     name: 'TransactionEntity',
-    lastPropertyId: const obx_int.IdUid(9, 2795732724551334393),
+    lastPropertyId: const obx_int.IdUid(10, 8229074962202376406),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -289,6 +289,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(9, 2795732724551334393),
         name: 'updatedAt',
         type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 8229074962202376406),
+        name: 'accountId',
+        type: 6,
         flags: 0,
       ),
     ],
@@ -661,7 +667,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final commentOffset = object.comment == null
             ? null
             : fbb.writeString(object.comment!);
-        fbb.startTable(10);
+        fbb.startTable(11);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.apiId);
         fbb.addInt64(2, object.accountApiId);
@@ -671,6 +677,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(6, commentOffset);
         fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
         fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+        fbb.addInt64(9, object.accountId);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -687,6 +694,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           buffer,
           rootOffset,
           6,
+          0,
+        );
+        final accountIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          22,
           0,
         );
         final accountApiIdParam = const fb.Int64Reader().vTableGet(
@@ -719,6 +732,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final object = TransactionEntity(
           id: idParam,
           apiId: apiIdParam,
+          accountId: accountIdParam,
           accountApiId: accountApiIdParam,
           categoryApiId: categoryApiIdParam,
           amount: amountParam,
@@ -933,5 +947,10 @@ class TransactionEntity_ {
   /// See [TransactionEntity.updatedAt].
   static final updatedAt = obx.QueryDateProperty<TransactionEntity>(
     _entities[4].properties[8],
+  );
+
+  /// See [TransactionEntity.accountId].
+  static final accountId = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[9],
   );
 }

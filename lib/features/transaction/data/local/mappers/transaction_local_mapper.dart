@@ -24,6 +24,7 @@ extension TransactionDomainMapper on Transaction {
   TransactionEntity toEntity() => TransactionEntity(
         id: 0,
         apiId: id,
+        accountId: account.id,
         accountApiId: account.id,
         categoryApiId: category.id,
         amount: amount.toString(),

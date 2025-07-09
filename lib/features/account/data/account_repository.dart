@@ -127,4 +127,14 @@ class AccountRepository implements IAccountRepository {
       expenseStats: expenseStats,
     );
   }
+
+  @override
+  Future<void> updateLocalBalance(int accountId, double newBalance) async {
+    final entity = await localDataSource.getById(accountId);
+    if (entity != null) {
+      entity.balance = newBalance.toStringAsFixed(2);
+      entity.updatedAt = DateTime.now().toUtc();
+      await localDataSource.save(entity);
+    }
+  }
 }

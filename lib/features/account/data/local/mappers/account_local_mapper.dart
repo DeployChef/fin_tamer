@@ -24,7 +24,7 @@ extension AccountEntityMapper on AccountEntity {
 
 extension AccountDomainMapper on Account {
   AccountEntity toEntity() => AccountEntity(
-        id: 0,
+        id: id,
         apiId: apiId,
         name: name,
         balance: balance,

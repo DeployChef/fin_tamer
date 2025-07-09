@@ -6,6 +6,7 @@ class TransactionEntity {
   @Id()
   int id;
   int apiId;
+  int accountId;
   int accountApiId;
   int categoryApiId;
   String amount;
@@ -17,6 +18,7 @@ class TransactionEntity {
   TransactionEntity({
     this.id = 0,
     required this.apiId,
+    required this.accountId,
     required this.accountApiId,
     required this.categoryApiId,
     required this.amount,

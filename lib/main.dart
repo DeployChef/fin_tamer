@@ -8,7 +8,9 @@ import 'package:worker_manager/worker_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await workerManager.init();
+
   runApp(const ProviderScope(
     child: MainApp(),
   ));

@@ -43,6 +43,7 @@ class TransactionRepository implements ITransactionRepository {
       final tempEntity = TransactionEntity(
         id: 0,
         apiId: tempApiId,
+        accountId: account.id,
         accountApiId: account.apiId,
         categoryApiId: category.apiId,
         amount: data.amount.toString(),
@@ -52,6 +53,12 @@ class TransactionRepository implements ITransactionRepository {
         updatedAt: DateTime.now().toUtc(),
       );
       await localDataSource.save(tempEntity);
+
+      // Обновление баланса локального аккаунта
+      final oldBalance = double.tryParse(account.balance) ?? 0.0;
+      final amount = data.amount;
+      final newBalance = category.isIncome ? oldBalance + amount : oldBalance - amount;
+      await accountRepository.updateLocalBalance(account.id, newBalance);
 
       var request = TransactionRequestDto(
         accountId: tempEntity.accountApiId,
@@ -90,6 +97,8 @@ class TransactionRepository implements ITransactionRepository {
         return null;
       }
 
+      final oldAmount = double.tryParse(localEntity.amount) ?? 0.0;
+
       localEntity.accountApiId = account.apiId;
       localEntity.categoryApiId = category.apiId;
       localEntity.amount = data.amount.toString();
@@ -97,6 +106,11 @@ class TransactionRepository implements ITransactionRepository {
       localEntity.comment = data.comment;
       localEntity.updatedAt = DateTime.now().toUtc();
       await localDataSource.save(localEntity);
+
+      final oldBalance = double.tryParse(account.balance) ?? 0.0;
+      final revertedBalance = category.isIncome ? oldBalance - oldAmount : oldBalance + oldAmount;
+      final newBalance = category.isIncome ? revertedBalance + data.amount : revertedBalance - data.amount;
+      await accountRepository.updateLocalBalance(account.id, newBalance);
 
       var request = TransactionRequestDto(
         accountId: localEntity.accountApiId,
@@ -127,6 +141,17 @@ class TransactionRepository implements ITransactionRepository {
       await localDataSource.delete(id);
       if (apiId > 0) {
         await remoteDataSource.delete(apiId);
+      }
+      // Корректируем баланс аккаунта при удалении транзакции
+      if (localEntity != null) {
+        final account = await accountRepository.getByApiId(localEntity.accountApiId);
+        final category = await categoryRepository.getByApiId(localEntity.categoryApiId);
+        if (account != null && category != null) {
+          final oldBalance = double.tryParse(account.balance) ?? 0.0;
+          final amount = double.tryParse(localEntity.amount) ?? 0.0;
+          final newBalance = category.isIncome ? oldBalance - amount : oldBalance + amount;
+          await accountRepository.updateLocalBalance(account.id, newBalance);
+        }
       }
     } catch (e, stack) {
       LoggerService.error('Error in delete', e, stack);
@@ -170,14 +195,17 @@ class TransactionRepository implements ITransactionRepository {
 
       final dto = await remoteDataSource.getById(apiId);
       if (dto == null) return null;
-      final entityFromDto = dto.toEntity();
-      await localDataSource.save(entityFromDto);
-      final account = await accountRepository.getByApiId(entityFromDto.accountApiId);
-      final category = await categoryRepository.getByApiId(entityFromDto.categoryApiId);
+      final account = await accountRepository.getByApiId(dto.account.id);
+      final category = await categoryRepository.getByApiId(dto.category.id);
       if (account == null || category == null) {
         LoggerService.error('Account or Category not found for transaction getByApiId (from remote): apiId=$apiId');
         return null;
       }
+
+      final entityFromDto = dto.toEntity(account.id);
+
+      await localDataSource.save(entityFromDto);
+
       return entityFromDto.toDomain(account: account.toBrief(), category: category);
     } catch (e, stack) {
       LoggerService.error('Error in getByApiId', e, stack);
@@ -214,7 +242,18 @@ class TransactionRepository implements ITransactionRepository {
       final existing = await localDataSource.getByAccount(account.apiId);
 
       final existingApiIds = existing.map((e) => e.apiId).toSet();
-      final newEntities = dtos.where((dto) => !existingApiIds.contains(dto.id)).map((dto) => dto.toEntity()).toList();
+      final List<TransactionEntity> newEntities = [];
+      final newDtos = dtos.where((dto) => !existingApiIds.contains(dto.id)).toList();
+      for (final dto in newDtos) {
+        final account = await accountRepository.getByApiId(dto.account.id);
+        final category = await categoryRepository.getByApiId(dto.category.id);
+        if (account == null || category == null) {
+          LoggerService.error('Account or Category not found for transaction: transactionApiId=${dto.id}');
+          continue;
+        }
+        final entity = dto.toEntity(account!.id);
+        newEntities.add(entity);
+      }
 
       await localDataSource.saveAll(newEntities);
 

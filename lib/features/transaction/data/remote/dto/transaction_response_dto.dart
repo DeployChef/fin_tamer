@@ -25,9 +25,10 @@ abstract class TransactionResponseDto with _$TransactionResponseDto {
 }
 
 extension TransactionResponseDtoToEntity on TransactionResponseDto {
-  TransactionEntity toEntity() => TransactionEntity(
+  TransactionEntity toEntity(int localAccountId) => TransactionEntity(
         id: 0,
         apiId: id,
+        accountId: localAccountId,
         accountApiId: account.id,
         categoryApiId: category.id,
         amount: amount,

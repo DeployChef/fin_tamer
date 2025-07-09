@@ -212,6 +212,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
     ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(transactionChartServiceProvider);
+    ref.invalidate(accountServiceProvider);
 
     GoRouter.of(context).pop();
   }
@@ -258,6 +259,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
     ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
     ref.invalidate(transactionChartServiceProvider);
+    ref.invalidate(accountServiceProvider);
 
     GoRouter.of(context).pop();
   }
