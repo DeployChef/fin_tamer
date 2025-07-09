@@ -390,7 +390,6 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
-                    LocaleDecimalFormatter(separator),
                   ],
                   textAlign: TextAlign.right,
                   decoration: const InputDecoration(
