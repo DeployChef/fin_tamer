@@ -3,6 +3,7 @@ import 'package:fin_tamer/core/navigation/ui/navigation_svg_destination.dart';
 import 'package:fin_tamer/styles/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:fin_tamer/core/network/widgets/offline_banner.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({
@@ -31,10 +32,13 @@ class _MainWrapperState extends State<MainWrapper> {
     final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: widget.navigationShell,
+      body: Column(
+        children: [
+          Expanded(
+            child: widget.navigationShell,
+          ),
+          const OfflineBanner(),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         destinations: [
