@@ -9,6 +9,7 @@ import 'package:riverpod/riverpod.dart';
 import 'package:fin_tamer/core/local/objectbox_store.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:fin_tamer/features/category/data/local/entities/category_entity.dart';
+import 'package:fin_tamer/core/event_sourcing/sync_event.dart';
 
 part 'objectbox_providers.g.dart';
 
@@ -28,4 +29,10 @@ Future<Box<CategoryEntity>> categoryBox(Ref ref) async {
     // store.box<HistoryEntity>().removeAll();
   }
   return store.box<CategoryEntity>();
+}
+
+@Riverpod(keepAlive: true)
+Future<Box<SyncEvent>> syncEventBox(Ref ref) async {
+  final store = await ref.watch(objectBoxStoreProvider.future);
+  return store.box<SyncEvent>();
 }

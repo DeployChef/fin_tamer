@@ -194,7 +194,7 @@ final categoryRemoteDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CategoryRemoteDataSourceRef = ProviderRef<ICategoryRemoteDataSource>;
-String _$accountRepositoryHash() => r'a335f8e93257407b0ea0374d894b30c2ef5b5304';
+String _$accountRepositoryHash() => r'95190b96af2e37e2ba4ddb56d91e06b103a5ff5a';
 
 /// See also [accountRepository].
 @ProviderFor(accountRepository)

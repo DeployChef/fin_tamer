@@ -21,6 +21,7 @@ import 'package:fin_tamer/features/transaction/data/transaction_repository.dart'
 import 'package:fin_tamer/core/di/network_providers.dart';
 import 'package:fin_tamer/core/di/mock_providers.dart';
 import 'package:fin_tamer/core/config/app_config.dart';
+import 'package:fin_tamer/core/di/sync_providers.dart';
 
 part 'repository_providers.g.dart';
 
@@ -114,10 +115,12 @@ Future<AccountRepository> accountRepository(Ref ref) async {
   final local = await ref.watch(accountLocalDataSourceProvider.future);
   final statItem = await ref.watch(statItemLocalDataSourceProvider.future);
   final remote = ref.watch(accountRemoteDataSourceProvider);
+  final syncService = await ref.watch(syncServiceProvider.future);
   return AccountRepository(
     localDataSource: local,
     statItemLocalDataSource: statItem,
     remoteDataSource: remote,
+    syncService: syncService,
   );
 }
 
@@ -135,11 +138,13 @@ Future<TransactionRepository> transactionRepository(Ref ref) async {
   final accountRepo = await ref.watch(accountRepositoryProvider.future);
   final categoryRepo = await ref.watch(categoryRepositoryProvider.future);
   final historyRepo = await ref.watch(historyRepositoryProvider.future);
+  final syncService = await ref.watch(syncServiceProvider.future);
   return TransactionRepository(
     localDataSource: local,
     remoteDataSource: remote,
     accountRepository: accountRepo,
     categoryRepository: categoryRepo,
     historyRepository: historyRepo,
+    syncService: syncService,
   );
 }

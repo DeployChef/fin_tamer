@@ -9,16 +9,21 @@ import 'package:fin_tamer/features/account/data/local/stat_item_local_data_sourc
 import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/remote/dto/account_dto.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/stat_item_local_mapper.dart';
+import 'dart:convert';
+import 'package:fin_tamer/core/event_sourcing/sync_event.dart';
+import 'package:fin_tamer/core/event_sourcing/sync_service.dart';
 
 class AccountRepository implements IAccountRepository {
   final IAccountRemoteDataSource remoteDataSource;
   final AccountLocalDataSource localDataSource;
   final StatItemLocalDataSource statItemLocalDataSource;
+  final SyncService syncService;
 
   AccountRepository({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.statItemLocalDataSource,
+    required this.syncService,
   });
 
   @override
@@ -26,8 +31,10 @@ class AccountRepository implements IAccountRepository {
     final localEntities = await localDataSource.getAll();
     if (localEntities.isNotEmpty) {
       return Future.wait(localEntities.map((entity) async {
-        final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-        final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+        final incomeStats = await statItemLocalDataSource
+            .getByAccount(entity.apiId, isIncome: true);
+        final expenseStats = await statItemLocalDataSource
+            .getByAccount(entity.apiId, isIncome: false);
         return entity.toDomain(
           incomeStats: incomeStats,
           expenseStats: expenseStats,
@@ -48,14 +55,22 @@ class AccountRepository implements IAccountRepository {
       return accounts.firstOrNull?.toEntity().toDomain();
     }
 
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: false);
 
     if (incomeStats.isEmpty || expenseStats.isEmpty) {
       final dto = await remoteDataSource.getResponseById(entity.apiId);
       if (dto == null) return null;
-      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
-      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
+      incomeStats = dto.incomeStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: true))
+          .toList();
+      expenseStats = dto.expenseStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: false))
+          .toList();
       await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
 
@@ -70,8 +85,10 @@ class AccountRepository implements IAccountRepository {
     final dto = await remoteDataSource.create(data.toDto());
     final entity = dto.toEntity();
     await localDataSource.save(entity);
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    final expenseStats = await statItemLocalDataSource
+        .getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
@@ -91,15 +108,28 @@ class AccountRepository implements IAccountRepository {
 
     await localDataSource.save(entity);
 
-    final dto = await remoteDataSource.update(entity.apiId, data.toDto());
+    // Сериализуем сразу DTO
+    final dto = data.toDto();
+    final event = SyncEvent(
+      entityTypeIndex: EntityType.account.index,
+      eventTypeIndex: EventType.update.index,
+      entityId: data.id.toString(),
+      payloadJson: jsonEncode(dto.toJson()),
+      timestamp: DateTime.now().toUtc(),
+    );
+    syncService.addEvent(event);
 
-    if (dto != null) {
-      entity = dto.toEntity(localId: entity.id);
+    final updatedDto = await remoteDataSource.update(entity.apiId, dto);
+
+    if (updatedDto != null) {
+      entity = updatedDto.toEntity(localId: entity.id);
       await localDataSource.save(entity);
     }
 
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    final expenseStats = await statItemLocalDataSource
+        .getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
@@ -111,14 +141,22 @@ class AccountRepository implements IAccountRepository {
     final entity = await localDataSource.getByApiId(apiId);
     if (entity == null) return null;
 
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: false);
 
     if (incomeStats.isEmpty || expenseStats.isEmpty) {
       final dto = await remoteDataSource.getResponseById(entity.apiId);
       if (dto == null) return null;
-      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
-      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
+      incomeStats = dto.incomeStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: true))
+          .toList();
+      expenseStats = dto.expenseStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: false))
+          .toList();
       await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
 

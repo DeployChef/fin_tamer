@@ -237,9 +237,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "8:3261602400766834220",
+      "lastPropertyId": "6:8744715383352343588",
+      "name": "SyncEvent",
+      "properties": [
+        {
+          "id": "1:6406197369498130577",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:107547474130071092",
+          "name": "entityTypeIndex",
+          "type": 6
+        },
+        {
+          "id": "3:1434243693414712345",
+          "name": "eventTypeIndex",
+          "type": 6
+        },
+        {
+          "id": "4:1109140077375292495",
+          "name": "entityId",
+          "type": 9
+        },
+        {
+          "id": "5:6403648093323011210",
+          "name": "payloadJson",
+          "type": 9
+        },
+        {
+          "id": "6:8744715383352343588",
+          "name": "timestamp",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "7:7913135380541029049",
+  "lastEntityId": "8:3261602400766834220",
   "lastIndexId": "1:2005279266660496490",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

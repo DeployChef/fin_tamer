@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'core/event_sourcing/sync_event.dart';
 import 'features/account/data/local/entities/account_entity.dart';
 import 'features/account/data/local/entities/stat_item_entity.dart';
 import 'features/category/data/local/entities/category_entity.dart';
@@ -301,6 +302,52 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(8, 3261602400766834220),
+    name: 'SyncEvent',
+    lastPropertyId: const obx_int.IdUid(6, 8744715383352343588),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 6406197369498130577),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 107547474130071092),
+        name: 'entityTypeIndex',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 1434243693414712345),
+        name: 'eventTypeIndex',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1109140077375292495),
+        name: 'entityId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 6403648093323011210),
+        name: 'payloadJson',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 8744715383352343588),
+        name: 'timestamp',
+        type: 10,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -341,7 +388,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(7, 7913135380541029049),
+    lastEntityId: const obx_int.IdUid(8, 3261602400766834220),
     lastIndexId: const obx_int.IdUid(1, 2005279266660496490),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -745,6 +792,69 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    SyncEvent: obx_int.EntityDefinition<SyncEvent>(
+      model: _entities[5],
+      toOneRelations: (SyncEvent object) => [],
+      toManyRelations: (SyncEvent object) => {},
+      getId: (SyncEvent object) => object.id,
+      setId: (SyncEvent object, int id) {
+        object.id = id;
+      },
+      objectToFB: (SyncEvent object, fb.Builder fbb) {
+        final entityIdOffset = fbb.writeString(object.entityId);
+        final payloadJsonOffset = fbb.writeString(object.payloadJson);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.entityTypeIndex);
+        fbb.addInt64(2, object.eventTypeIndex);
+        fbb.addOffset(3, entityIdOffset);
+        fbb.addOffset(4, payloadJsonOffset);
+        fbb.addInt64(5, object.timestamp.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final entityTypeIndexParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final eventTypeIndexParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final entityIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final payloadJsonParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
+        );
+        final object = SyncEvent(
+          id: idParam,
+          entityTypeIndex: entityTypeIndexParam,
+          eventTypeIndex: eventTypeIndexParam,
+          entityId: entityIdParam,
+          payloadJson: payloadJsonParam,
+          timestamp: timestampParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -952,5 +1062,38 @@ class TransactionEntity_ {
   /// See [TransactionEntity.accountId].
   static final accountId = obx.QueryIntegerProperty<TransactionEntity>(
     _entities[4].properties[9],
+  );
+}
+
+/// [SyncEvent] entity fields to define ObjectBox queries.
+class SyncEvent_ {
+  /// See [SyncEvent.id].
+  static final id = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[0],
+  );
+
+  /// See [SyncEvent.entityTypeIndex].
+  static final entityTypeIndex = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[1],
+  );
+
+  /// See [SyncEvent.eventTypeIndex].
+  static final eventTypeIndex = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[2],
+  );
+
+  /// See [SyncEvent.entityId].
+  static final entityId = obx.QueryStringProperty<SyncEvent>(
+    _entities[5].properties[3],
+  );
+
+  /// See [SyncEvent.payloadJson].
+  static final payloadJson = obx.QueryStringProperty<SyncEvent>(
+    _entities[5].properties[4],
+  );
+
+  /// See [SyncEvent.timestamp].
+  static final timestamp = obx.QueryDateProperty<SyncEvent>(
+    _entities[5].properties[5],
   );
 }
