@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fin_tamer/core/di/sync_providers.dart';
 
 part 'connectivity_sync_provider.g.dart';
 
@@ -19,9 +21,12 @@ class ConnectivitySync extends _$ConnectivitySync {
       state = hasConnection ? NetworkStatus.online : NetworkStatus.offline;
     });
 
-    _subscription = _checker.onStatusChange.listen((status) {
+    _subscription = _checker.onStatusChange.listen((status) async {
       if (status == InternetConnectionStatus.connected) {
         state = NetworkStatus.online;
+        // Вызов синка при появлении интернета
+        final syncService = await ref.read(syncServiceProvider.future);
+        await syncService.sync();
       } else {
         state = NetworkStatus.offline;
       }
