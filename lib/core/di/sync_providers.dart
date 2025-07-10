@@ -26,7 +26,11 @@ SyncAccountHandler syncAccountHandler(Ref ref) {
 @Riverpod(keepAlive: true)
 SyncTransactionHandler syncTransactionHandler(Ref ref) {
   final remote = ref.watch(transactionRemoteDataSourceProvider);
-  return SyncTransactionHandler(remote);
+  final localAsync = ref.watch(transactionLocalDataSourceProvider);
+  final local = localAsync.maybeWhen(
+      data: (value) => value,
+      orElse: () => throw Exception('TransactionLocalDataSource not ready'));
+  return SyncTransactionHandler(remote, local);
 }
 
 @Riverpod(keepAlive: true)

@@ -3,21 +3,31 @@ import 'package:fin_tamer/core/event_sourcing/sync_event.dart';
 import 'package:fin_tamer/features/transaction/data/remote/i_transaction_remote_data_source.dart';
 import 'package:fin_tamer/features/transaction/data/remote/dto/transaction_request_dto.dart';
 import 'package:fin_tamer/core/utils/logger_service.dart';
+import 'package:fin_tamer/features/transaction/data/local/transaction_local_data_source.dart';
 
 class SyncTransactionHandler {
   final ITransactionRemoteDataSource remoteDataSource;
+  final TransactionLocalDataSource localDataSource;
 
-  SyncTransactionHandler(this.remoteDataSource);
+  SyncTransactionHandler(this.remoteDataSource, this.localDataSource);
 
   Future<bool> handle(SyncEvent event) async {
     try {
       switch (event.eventType) {
         case EventType.create:
-          final dto = TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
-          await remoteDataSource.create(dto);
+          final dto =
+              TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
+          final created = await remoteDataSource.create(dto);
+          final localId = int.parse(event.entityId);
+          final localEntity = await localDataSource.getById(localId);
+          if (localEntity != null) {
+            localEntity.apiId = created.id;
+            await localDataSource.save(localEntity);
+          }
           return true;
         case EventType.update:
-          final dto = TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
+          final dto =
+              TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
           await remoteDataSource.update(int.parse(event.entityId), dto);
           return true;
         case EventType.delete:
@@ -25,7 +35,10 @@ class SyncTransactionHandler {
           return true;
       }
     } catch (e, stack) {
-      LoggerService.error('[SyncTransactionHandler] Error handling event ${event.id}', e, stack);
+      LoggerService.error(
+          '[SyncTransactionHandler] Error handling event ${event.id}',
+          e,
+          stack);
       return false;
     }
   }

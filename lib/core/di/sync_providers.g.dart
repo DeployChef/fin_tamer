@@ -44,7 +44,7 @@ final syncAccountHandlerProvider = Provider<SyncAccountHandler>.internal(
 // ignore: unused_element
 typedef SyncAccountHandlerRef = ProviderRef<SyncAccountHandler>;
 String _$syncTransactionHandlerHash() =>
-    r'7b69152bf9bca178d76efbb61a843cba5043d035';
+    r'f1ae42450458b925e5ed0aeff75ed91c51952301';
 
 /// See also [syncTransactionHandler].
 @ProviderFor(syncTransactionHandler)
