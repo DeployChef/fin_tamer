@@ -38,18 +38,30 @@ class StructuredLogPrinter extends LogPrinter {
       tag = '[${tagMatch.group(1)}]';
       msg = tagMatch.group(2) ?? '';
     }
-    if (msg.length > _maxMsgLength) {
-      msg = msg.substring(0, _maxMsgLength) + '... (truncated)';
+    // Разделяем message и data, если есть \n  Data:
+    String mainMsg = msg;
+    String? dataBlock;
+    final dataIndex = msg.indexOf('\n  Data:');
+    if (dataIndex != -1) {
+      mainMsg = msg.substring(0, dataIndex);
+      dataBlock = msg.substring(dataIndex + 1); // +1 чтобы убрать \n
+      // Если dataBlock длинная, не обрезаем её
+    } else {
+      if (mainMsg.length > _maxMsgLength) {
+        mainMsg = mainMsg.substring(0, _maxMsgLength) + '... (truncated)';
+      }
     }
     final error =
         event.error != null ? '\n  Exception: ${_pretty(event.error)}' : '';
     final stack =
         event.stackTrace != null ? '\n  Stack: ${event.stackTrace}' : '';
     // Plain text, без цветов, с разделителем
-    return [
-      '---',
-      '[$time][$level]$tag $msg$error$stack',
-    ];
+    final lines = <String>['---'];
+    lines.add('[$time][$level]$tag $mainMsg$error$stack');
+    if (dataBlock != null) {
+      lines.add(dataBlock);
+    }
+    return lines;
   }
 }
 

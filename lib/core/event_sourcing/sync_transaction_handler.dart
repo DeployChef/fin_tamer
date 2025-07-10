@@ -21,77 +21,58 @@ class SyncTransactionHandler {
     try {
       switch (event.eventType) {
         case EventType.create:
-          final dto =
-              TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
-          LoggerService.info('Creating transaction',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-                'dto': dto.toJson(),
-              });
+          final dto = TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
+          LoggerService.info('Creating transaction', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+            'dto': dto.toJson(),
+          });
           final created = await remoteDataSource.create(dto);
           final localId = int.parse(event.entityId);
           final localEntity = await localDataSource.getById(localId);
           if (localEntity != null) {
             localEntity.apiId = created.id;
             await localDataSource.save(localEntity);
-            LoggerService.info('Local entity updated with apiId',
-                tag: 'SyncTransactionHandler',
-                data: {
-                  'localId': localId,
-                  'apiId': created.id,
-                });
+            LoggerService.info('Local entity updated with apiId', tag: 'SyncTransactionHandler', data: {
+              'localId': localId,
+              'apiId': created.id,
+            });
           }
-          LoggerService.info('Transaction created successfully',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-              });
+          LoggerService.info('Transaction created successfully', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+          });
           return true;
         case EventType.update:
-          final dto =
-              TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
-          LoggerService.info('Updating transaction',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-                'dto': dto.toJson(),
-              });
+          final dto = TransactionRequestDto.fromJson(jsonDecode(event.payloadJson));
+          LoggerService.info('Updating transaction', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+            'dto': dto.toJson(),
+          });
           await remoteDataSource.update(int.parse(event.entityId), dto);
-          LoggerService.info('Transaction updated successfully',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-              });
+          LoggerService.info('Transaction updated successfully', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+          });
           return true;
         case EventType.delete:
-          LoggerService.info('Deleting transaction',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-              });
+          LoggerService.info('Deleting transaction', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+          });
           await remoteDataSource.delete(int.parse(event.entityId));
           // После успешного sync удаляем из локальной БД
           final localId = int.parse(event.entityId);
           final localEntity = await localDataSource.getById(localId);
           if (localEntity != null && localEntity.isDeleted) {
             await localDataSource.delete(localId);
-            LoggerService.info('Transaction physically deleted from local DB',
-                tag: 'SyncTransactionHandler',
-                data: {
-                  'entityId': event.entityId,
-                });
+            LoggerService.info('Transaction physically deleted from local DB', tag: 'SyncTransactionHandler', data: {
+              'entityId': event.entityId,
+            });
           }
-          LoggerService.info('Transaction deleted successfully',
-              tag: 'SyncTransactionHandler',
-              data: {
-                'entityId': event.entityId,
-              });
+          LoggerService.info('Transaction deleted successfully', tag: 'SyncTransactionHandler', data: {
+            'entityId': event.entityId,
+          });
           return true;
       }
     } catch (e, stack) {
-      LoggerService.error(
-          'Error handling event', e, stack, 'SyncTransactionHandler', {
+      LoggerService.error('Error handling event', e, stack, 'SyncTransactionHandler', {
         'eventId': event.id,
         'entityId': event.entityId,
         'eventType': event.eventType.toString(),

@@ -11,8 +11,7 @@ class SyncService {
   final SyncTransactionHandler _transactionHandler;
   bool _isSyncing = false;
 
-  SyncService(
-      this._eventDataSource, this._accountHandler, this._transactionHandler);
+  SyncService(this._eventDataSource, this._accountHandler, this._transactionHandler);
 
   void addEvent(SyncEvent event) {
     _eventDataSource.addEvent(event);
@@ -36,6 +35,7 @@ class SyncService {
           LoggerService.info('No events to sync, exiting', tag: 'SyncService');
           break;
         }
+        LoggerService.info('Events need to sync, count ${events.length}', tag: 'SyncService');
         bool anySynced = false;
         for (final event in events) {
           LoggerService.debug('Handling event', tag: 'SyncService', data: {
@@ -53,29 +53,24 @@ class SyncService {
               break;
           }
           if (success) {
-            LoggerService.info('Event synced and deleted',
-                tag: 'SyncService',
-                data: {
-                  'eventId': event.id,
-                  'entityType': event.entityType.toString(),
-                  'eventType': event.eventType.toString(),
-                });
+            LoggerService.info('Event synced and deleted', tag: 'SyncService', data: {
+              'eventId': event.id,
+              'entityType': event.entityType.toString(),
+              'eventType': event.eventType.toString(),
+            });
             _eventDataSource.deleteEvent(event.id);
             anySynced = true;
           } else {
-            LoggerService.warning('Event failed to sync, stopping',
-                tag: 'SyncService',
-                data: {
-                  'eventId': event.id,
-                  'entityType': event.entityType.toString(),
-                  'eventType': event.eventType.toString(),
-                });
+            LoggerService.warning('Event failed to sync, stopping', tag: 'SyncService', data: {
+              'eventId': event.id,
+              'entityType': event.entityType.toString(),
+              'eventType': event.eventType.toString(),
+            });
             break;
           }
         }
         if (!anySynced) {
-          LoggerService.info('No events were synced in this pass, exiting',
-              tag: 'SyncService');
+          LoggerService.info('No events were synced in this pass, exiting', tag: 'SyncService');
           break;
         }
       }
