@@ -1,7 +1,6 @@
 import 'package:fin_tamer/core/di/repository_providers.dart';
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
-import 'package:fin_tamer/core/utils/locale_decimal_formatter.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
@@ -205,16 +204,17 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
   }
 
   void _deleteTransaction() async {
-    final transactionService = await ref.read(transactionRepositoryProvider.future);
-
-    await transactionService.delete(widget.transaction!.id);
-
-    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(transactionChartServiceProvider);
-    ref.invalidate(accountServiceProvider);
-
-    GoRouter.of(context).pop();
+    try {
+      final transactionService = await ref.read(transactionRepositoryProvider.future);
+      await transactionService.delete(widget.transaction!.id);
+      ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(transactionChartServiceProvider);
+      ref.invalidate(accountServiceProvider);
+      GoRouter.of(context).pop();
+    } catch (e) {
+      await _showErrorDialog(e.toString());
+    }
   }
 
   Future<void> _onSave() async {
@@ -225,43 +225,40 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       _selectedTime.hour,
       _selectedTime.minute,
     );
-
     if (!isValid()) {
       await _showValidationDialog();
       return;
     }
-
-    final transactionService = await ref.read(transactionRepositoryProvider.future);
-
-    if (_isCreateMode) {
-      final request = TransactionCreateData(
-        accountId: _selectedAccount!.id,
-        categoryId: _selectedCategory!.id,
-        amount: NumberFormat().parse(_amountController.text.trim()) as double,
-        transactionDate: combinedDate,
-        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
-      );
-
-      await transactionService.create(request);
-    } else {
-      final request = TransactionUpdateData(
-        id: widget.transaction!.id,
-        accountId: _selectedAccount!.id,
-        categoryId: _selectedCategory!.id,
-        amount: NumberFormat().parse(_amountController.text.trim()) as double,
-        transactionDate: combinedDate,
-        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
-      );
-
-      await transactionService.update(request);
+    try {
+      final transactionService = await ref.read(transactionRepositoryProvider.future);
+      if (_isCreateMode) {
+        final request = TransactionCreateData(
+          accountId: _selectedAccount!.id,
+          categoryId: _selectedCategory!.id,
+          amount: NumberFormat().parse(_amountController.text.trim()) as double,
+          transactionDate: combinedDate,
+          comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+        );
+        await transactionService.create(request);
+      } else {
+        final request = TransactionUpdateData(
+          id: widget.transaction!.id,
+          accountId: _selectedAccount!.id,
+          categoryId: _selectedCategory!.id,
+          amount: NumberFormat().parse(_amountController.text.trim()) as double,
+          transactionDate: combinedDate,
+          comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+        );
+        await transactionService.update(request);
+      }
+      ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(transactionChartServiceProvider);
+      ref.invalidate(accountServiceProvider);
+      GoRouter.of(context).pop();
+    } catch (e) {
+      await _showErrorDialog(e.toString());
     }
-
-    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(transactionChartServiceProvider);
-    ref.invalidate(accountServiceProvider);
-
-    GoRouter.of(context).pop();
   }
 
   Future<void> _showValidationDialog() async {
@@ -279,6 +276,28 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             loc.validationErrorContent,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(loc.okButton),
+              onPressed: () {
+                GoRouter.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showErrorDialog(String message) async {
+    final loc = AppLocalizations.of(context)!;
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(loc.error, style: Theme.of(context).textTheme.bodyLarge),
+          content: Text(message, style: Theme.of(context).textTheme.bodyLarge),
           actions: <Widget>[
             TextButton(
               child: Text(loc.okButton),

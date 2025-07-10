@@ -63,7 +63,8 @@ class TransactionRepository implements ITransactionRepository {
 
       final oldBalance = double.tryParse(account.balance) ?? 0.0;
       final amount = data.amount;
-      final newBalance = category.isIncome ? oldBalance + amount : oldBalance - amount;
+      final newBalance =
+          category.isIncome ? oldBalance + amount : oldBalance - amount;
       await accountRepository.updateLocalBalance(account.id, newBalance);
 
       var request = TransactionRequestDto(
@@ -84,7 +85,8 @@ class TransactionRepository implements ITransactionRepository {
       );
       syncService.addEvent(event);
 
-      return tempEntity.toDomain(account: account.toBrief(), category: category);
+      return tempEntity.toDomain(
+          account: account.toBrief(), category: category);
     } catch (e, stack) {
       LoggerService.error('Error in create', e, stack);
       rethrow;
@@ -95,21 +97,18 @@ class TransactionRepository implements ITransactionRepository {
   Future<Transaction?> update(TransactionUpdateData data) async {
     try {
       final localEntity = await localDataSource.getById(data.id);
-
       if (localEntity == null) {
         LoggerService.error('Transaction not found for update: id=${data.id}');
-        return null;
+        throw Exception('Transaction not found for update: id=${data.id}');
       }
-
       final account = await accountRepository.getById(data.accountId);
       final category = await categoryRepository.getById(data.categoryId);
       if (account == null || category == null) {
-        LoggerService.error('Account or Category not found for transaction update');
-        return null;
+        LoggerService.error(
+            'Account or Category not found for transaction update');
+        throw Exception('Account or Category not found for transaction update');
       }
-
       final oldAmount = double.tryParse(localEntity.amount) ?? 0.0;
-
       localEntity.accountApiId = account.apiId;
       localEntity.categoryApiId = category.apiId;
       localEntity.amount = data.amount.toString();
@@ -117,12 +116,13 @@ class TransactionRepository implements ITransactionRepository {
       localEntity.comment = data.comment;
       localEntity.updatedAt = DateTime.now().toUtc();
       await localDataSource.save(localEntity);
-
       final oldBalance = double.tryParse(account.balance) ?? 0.0;
-      final revertedBalance = category.isIncome ? oldBalance - oldAmount : oldBalance + oldAmount;
-      final newBalance = category.isIncome ? revertedBalance + data.amount : revertedBalance - data.amount;
+      final revertedBalance =
+          category.isIncome ? oldBalance - oldAmount : oldBalance + oldAmount;
+      final newBalance = category.isIncome
+          ? revertedBalance + data.amount
+          : revertedBalance - data.amount;
       await accountRepository.updateLocalBalance(account.id, newBalance);
-
       var request = TransactionRequestDto(
         accountId: localEntity.accountApiId,
         categoryId: localEntity.categoryApiId,
@@ -130,7 +130,6 @@ class TransactionRepository implements ITransactionRepository {
         transactionDate: localEntity.transactionDate,
         comment: localEntity.comment,
       );
-
       final event = SyncEvent(
         entityTypeIndex: EntityType.transaction.index,
         eventTypeIndex: EventType.update.index,
@@ -139,11 +138,11 @@ class TransactionRepository implements ITransactionRepository {
         timestamp: DateTime.now().toUtc(),
       );
       syncService.addEvent(event);
-
-      return localEntity.toDomain(account: account.toBrief(), category: category);
+      return localEntity.toDomain(
+          account: account.toBrief(), category: category);
     } catch (e, stack) {
       LoggerService.error('Error in update', e, stack);
-      return null;
+      rethrow;
     }
   }
 
@@ -153,12 +152,11 @@ class TransactionRepository implements ITransactionRepository {
       final localEntity = await localDataSource.getById(id);
       if (localEntity == null) {
         LoggerService.error('Transaction not found for delete: id=$id');
-        return;
+        throw Exception('Transaction not found for delete: id=$id');
       }
       final apiId = localEntity.apiId;
       localEntity.isDeleted = true;
       await localDataSource.save(localEntity);
-
       if (apiId > 0) {
         final event = SyncEvent(
           entityTypeIndex: EntityType.transaction.index,
@@ -169,16 +167,20 @@ class TransactionRepository implements ITransactionRepository {
         );
         syncService.addEvent(event);
       }
-      final account = await accountRepository.getByApiId(localEntity.accountApiId);
-      final category = await categoryRepository.getByApiId(localEntity.categoryApiId);
+      final account =
+          await accountRepository.getByApiId(localEntity.accountApiId);
+      final category =
+          await categoryRepository.getByApiId(localEntity.categoryApiId);
       if (account != null && category != null) {
         final oldBalance = double.tryParse(account.balance) ?? 0.0;
         final amount = double.tryParse(localEntity.amount) ?? 0.0;
-        final newBalance = category.isIncome ? oldBalance - amount : oldBalance + amount;
+        final newBalance =
+            category.isIncome ? oldBalance - amount : oldBalance + amount;
         await accountRepository.updateLocalBalance(account.id, newBalance);
       }
     } catch (e, stack) {
       LoggerService.error('Error in delete', e, stack);
+      rethrow;
     }
   }
 
@@ -190,10 +192,12 @@ class TransactionRepository implements ITransactionRepository {
       if (entity == null) return null;
 
       final account = await accountRepository.getByApiId(entity.accountApiId);
-      final category = await categoryRepository.getByApiId(entity.categoryApiId);
+      final category =
+          await categoryRepository.getByApiId(entity.categoryApiId);
 
       if (account == null || category == null) {
-        LoggerService.error('Account or Category not found for transaction getById: transactionId=$id');
+        LoggerService.error(
+            'Account or Category not found for transaction getById: transactionId=$id');
         return null;
       }
 
@@ -211,9 +215,11 @@ class TransactionRepository implements ITransactionRepository {
 
       if (entity != null) {
         final account = await accountRepository.getByApiId(entity.accountApiId);
-        final category = await categoryRepository.getByApiId(entity.categoryApiId);
+        final category =
+            await categoryRepository.getByApiId(entity.categoryApiId);
         if (account == null || category == null) {
-          LoggerService.error('Account or Category not found for transaction getByApiId: apiId=$apiId');
+          LoggerService.error(
+              'Account or Category not found for transaction getByApiId: apiId=$apiId');
           return null;
         }
         return entity.toDomain(account: account.toBrief(), category: category);
@@ -224,7 +230,8 @@ class TransactionRepository implements ITransactionRepository {
       final account = await accountRepository.getByApiId(dto.account.id);
       final category = await categoryRepository.getByApiId(dto.category.id);
       if (account == null || category == null) {
-        LoggerService.error('Account or Category not found for transaction getByApiId (from remote): apiId=$apiId');
+        LoggerService.error(
+            'Account or Category not found for transaction getByApiId (from remote): apiId=$apiId');
         return null;
       }
 
@@ -232,7 +239,8 @@ class TransactionRepository implements ITransactionRepository {
 
       await localDataSource.save(entityFromDto);
 
-      return entityFromDto.toDomain(account: account.toBrief(), category: category);
+      return entityFromDto.toDomain(
+          account: account.toBrief(), category: category);
     } catch (e, stack) {
       LoggerService.error('Error in getByApiId', e, stack);
       return null;
@@ -240,7 +248,8 @@ class TransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<List<Transaction>> getByPeriod(int accountId, DateTime startDate, DateTime endDate) async {
+  Future<List<Transaction>> getByPeriod(
+      int accountId, DateTime startDate, DateTime endDate) async {
     try {
       final account = await accountRepository.getById(accountId);
       if (account == null) {
@@ -259,19 +268,27 @@ class TransactionRepository implements ITransactionRepository {
     }
   }
 
-  Future<List<Transaction>> _getByPeriodFetchRemote(Account account, DateTime startDate, DateTime endDate) async {
-    final dtos = await remoteDataSource.getByPeriod(account.apiId, startDate, endDate);
+  Future<List<Transaction>> _getByPeriodFetchRemote(
+      Account account, DateTime startDate, DateTime endDate) async {
+    final dtos =
+        await remoteDataSource.getByPeriod(account.apiId, startDate, endDate);
     final existing = await localDataSource.getByAccount(account.apiId);
     // Не создаём новые, если есть локальные с таким apiId и isDeleted == true
-    final existingApiIdsDeleted = existing.where((e) => e.isDeleted).map((e) => e.apiId).toSet();
+    final existingApiIdsDeleted =
+        existing.where((e) => e.isDeleted).map((e) => e.apiId).toSet();
     final existingApiIds = existing.map((e) => e.apiId).toSet();
     final List<TransactionEntity> newEntities = [];
-    final newDtos = dtos.where((dto) => !existingApiIds.contains(dto.id) && !existingApiIdsDeleted.contains(dto.id)).toList();
+    final newDtos = dtos
+        .where((dto) =>
+            !existingApiIds.contains(dto.id) &&
+            !existingApiIdsDeleted.contains(dto.id))
+        .toList();
     for (final dto in newDtos) {
       final account = await accountRepository.getByApiId(dto.account.id);
       final category = await categoryRepository.getByApiId(dto.category.id);
       if (account == null || category == null) {
-        LoggerService.error('Account or Category not found for transaction: transactionApiId=${dto.id}');
+        LoggerService.error(
+            'Account or Category not found for transaction: transactionApiId=${dto.id}');
         continue;
       }
       final entity = dto.toEntity(account!.id);
@@ -279,31 +296,44 @@ class TransactionRepository implements ITransactionRepository {
     }
     await localDataSource.saveAll(newEntities);
     final allEntities = [...existing, ...newEntities]
-        .where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate))
+        .where((e) =>
+            !e.isDeleted &&
+            e.transactionDate.isAfter(startDate) &&
+            e.transactionDate.isBefore(endDate))
         .toList();
     final List<Transaction> transactions = [];
     for (final entity in allEntities) {
       final account = await accountRepository.getByApiId(entity.accountApiId);
-      final category = await categoryRepository.getByApiId(entity.categoryApiId);
+      final category =
+          await categoryRepository.getByApiId(entity.categoryApiId);
       if (account == null || category == null) {
-        LoggerService.error('Account or Category not found for transaction: transactionApiId=${entity.apiId}');
+        LoggerService.error(
+            'Account or Category not found for transaction: transactionApiId=${entity.apiId}');
         continue;
       }
-      transactions.add(entity.toDomain(account: account.toBrief(), category: category));
+      transactions
+          .add(entity.toDomain(account: account.toBrief(), category: category));
     }
     return transactions;
   }
 
-  Future<List<Transaction>> _getByPeriodOnlyLocal(Account account, DateTime startDate, DateTime endDate) async {
+  Future<List<Transaction>> _getByPeriodOnlyLocal(
+      Account account, DateTime startDate, DateTime endDate) async {
     final localEntities = await localDataSource.getByAccount(account.apiId);
-    final filtered =
-        localEntities.where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+    final filtered = localEntities
+        .where((e) =>
+            !e.isDeleted &&
+            e.transactionDate.isAfter(startDate) &&
+            e.transactionDate.isBefore(endDate))
+        .toList();
     if (filtered.isNotEmpty) {
       final futures = filtered.map((entity) async {
         final account = await accountRepository.getByApiId(entity.accountApiId);
-        final category = await categoryRepository.getByApiId(entity.categoryApiId);
+        final category =
+            await categoryRepository.getByApiId(entity.categoryApiId);
         if (account == null || category == null) {
-          LoggerService.error('Account or Category not found for transaction: transactionApiId= {entity.apiId}');
+          LoggerService.error(
+              'Account or Category not found for transaction: transactionApiId= {entity.apiId}');
           return null;
         }
         return entity.toDomain(account: account.toBrief(), category: category);

@@ -2,6 +2,7 @@ import 'package:fin_tamer/features/currency/domain/currency_service.dart';
 import 'package:fin_tamer/features/currency/domain/models/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 
 class CurrencyTile extends ConsumerWidget {
   const CurrencyTile({super.key, required this.currency});
@@ -11,8 +12,10 @@ class CurrencyTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currencyIcon = switch (currency) {
-      Currency.ruble => const Icon(Icons.currency_ruble, size: 24, color: Colors.black),
-      Currency.usDollar => const Icon(Icons.attach_money, size: 24, color: Colors.black),
+      Currency.ruble =>
+        const Icon(Icons.currency_ruble, size: 24, color: Colors.black),
+      Currency.usDollar =>
+        const Icon(Icons.attach_money, size: 24, color: Colors.black),
       Currency.euro => const Icon(Icons.euro, size: 24, color: Colors.black),
     };
 
@@ -26,9 +29,32 @@ class CurrencyTile extends ConsumerWidget {
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
       leading: currencyIcon,
       title: Text(currencyDescription),
-      onTap: () {
-        ref.read(currencyServiceProvider.notifier).setCurrency(currency);
-        Navigator.of(context).pop();
+      onTap: () async {
+        try {
+          await ref
+              .read(accountServiceProvider.notifier)
+              .updateCurrency(currency: currency);
+          Navigator.of(context).pop();
+        } catch (e) {
+          await showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Ошибка'),
+                content: Text(e.toString()),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
       },
     );
   }

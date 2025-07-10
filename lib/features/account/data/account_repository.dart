@@ -98,16 +98,14 @@ class AccountRepository implements IAccountRepository {
   @override
   Future<Account?> update(AccountUpdateData data) async {
     var entity = await localDataSource.getById(data.id);
-
-    if (entity == null) return null;
-
+    if (entity == null) {
+      throw Exception('Account not found for update: id=${data.id}');
+    }
     entity.name = data.name;
     entity.balance = data.balance;
     entity.currency = data.currency;
     entity.updatedAt = DateTime.now().toUtc();
-
     await localDataSource.save(entity);
-
     final dto = data.toDto();
     final event = SyncEvent(
       entityTypeIndex: EntityType.account.index,
@@ -117,7 +115,6 @@ class AccountRepository implements IAccountRepository {
       timestamp: DateTime.now().toUtc(),
     );
     syncService.addEvent(event);
-
     final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
         isIncome: true);
     final expenseStats = await statItemLocalDataSource
