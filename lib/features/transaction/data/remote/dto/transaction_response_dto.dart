@@ -21,7 +21,8 @@ abstract class TransactionResponseDto with _$TransactionResponseDto {
     required DateTime updatedAt,
   }) = _TransactionResponseDto;
 
-  factory TransactionResponseDto.fromJson(Map<String, dynamic> json) => _$TransactionResponseDtoFromJson(json);
+  factory TransactionResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TransactionResponseDtoFromJson(json);
 }
 
 extension TransactionResponseDtoToEntity on TransactionResponseDto {
@@ -36,5 +37,6 @@ extension TransactionResponseDtoToEntity on TransactionResponseDto {
         comment: comment,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        isDeleted: false,
       );
 }

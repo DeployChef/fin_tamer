@@ -235,7 +235,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 7913135380541029049),
     name: 'TransactionEntity',
-    lastPropertyId: const obx_int.IdUid(10, 8229074962202376406),
+    lastPropertyId: const obx_int.IdUid(11, 2441127887163230469),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -296,6 +296,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(10, 8229074962202376406),
         name: 'accountId',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 2441127887163230469),
+        name: 'isDeleted',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -714,7 +720,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final commentOffset = object.comment == null
             ? null
             : fbb.writeString(object.comment!);
-        fbb.startTable(11);
+        fbb.startTable(12);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.apiId);
         fbb.addInt64(2, object.accountApiId);
@@ -725,6 +731,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
         fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
         fbb.addInt64(9, object.accountId);
+        fbb.addBool(10, object.isDeleted);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -776,6 +783,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0),
         );
+        final isDeletedParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          24,
+          false,
+        );
         final object = TransactionEntity(
           id: idParam,
           apiId: apiIdParam,
@@ -787,6 +800,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           comment: commentParam,
           createdAt: createdAtParam,
           updatedAt: updatedAtParam,
+          isDeleted: isDeletedParam,
         );
 
         return object;
@@ -1062,6 +1076,11 @@ class TransactionEntity_ {
   /// See [TransactionEntity.accountId].
   static final accountId = obx.QueryIntegerProperty<TransactionEntity>(
     _entities[4].properties[9],
+  );
+
+  /// See [TransactionEntity.isDeleted].
+  static final isDeleted = obx.QueryBooleanProperty<TransactionEntity>(
+    _entities[4].properties[10],
   );
 }
 

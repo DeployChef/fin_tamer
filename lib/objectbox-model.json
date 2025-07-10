@@ -181,7 +181,7 @@
     },
     {
       "id": "7:7913135380541029049",
-      "lastPropertyId": "10:8229074962202376406",
+      "lastPropertyId": "11:2441127887163230469",
       "name": "TransactionEntity",
       "properties": [
         {
@@ -234,6 +234,11 @@
           "id": "10:8229074962202376406",
           "name": "accountId",
           "type": 6
+        },
+        {
+          "id": "11:2441127887163230469",
+          "name": "isDeleted",
+          "type": 1
         }
       ],
       "relations": []

@@ -71,6 +71,17 @@ class SyncTransactionHandler {
                 'entityId': event.entityId,
               });
           await remoteDataSource.delete(int.parse(event.entityId));
+          // После успешного sync удаляем из локальной БД
+          final localId = int.parse(event.entityId);
+          final localEntity = await localDataSource.getById(localId);
+          if (localEntity != null && localEntity.isDeleted) {
+            await localDataSource.delete(localId);
+            LoggerService.info('Transaction physically deleted from local DB',
+                tag: 'SyncTransactionHandler',
+                data: {
+                  'entityId': event.entityId,
+                });
+          }
           LoggerService.info('Transaction deleted successfully',
               tag: 'SyncTransactionHandler',
               data: {

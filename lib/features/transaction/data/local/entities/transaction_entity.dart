@@ -14,6 +14,7 @@ class TransactionEntity {
   String? comment;
   DateTime createdAt;
   DateTime updatedAt;
+  bool isDeleted;
 
   TransactionEntity({
     this.id = 0,
@@ -26,5 +27,6 @@ class TransactionEntity {
     this.comment,
     required this.createdAt,
     required this.updatedAt,
+    this.isDeleted = false,
   });
 }
