@@ -8,7 +8,8 @@ class SyncEventDataSource {
 
   int addEvent(SyncEvent event) => _box.put(event);
 
-  List<SyncEvent> getAllEvents() => _box.getAll()..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+  List<SyncEvent> getAllEvents() =>
+      _box.getAll()..sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
   void deleteEvent(int id) => _box.remove(id);
 

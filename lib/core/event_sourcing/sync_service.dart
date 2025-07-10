@@ -3,6 +3,7 @@ import 'sync_event_data_source.dart';
 import 'package:fin_tamer/core/event_sourcing/sync_account_handler.dart';
 import 'package:fin_tamer/core/event_sourcing/sync_transaction_handler.dart';
 import 'package:fin_tamer/core/utils/logger_service.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class SyncService {
   final SyncEventDataSource _eventDataSource;
@@ -10,7 +11,8 @@ class SyncService {
   final SyncTransactionHandler _transactionHandler;
   bool _isSyncing = false;
 
-  SyncService(this._eventDataSource, this._accountHandler, this._transactionHandler);
+  SyncService(
+      this._eventDataSource, this._accountHandler, this._transactionHandler);
 
   void addEvent(SyncEvent event) {
     _eventDataSource.addEvent(event);
@@ -18,19 +20,29 @@ class SyncService {
   }
 
   Future<void> sync() async {
+    final checker = InternetConnectionChecker.createInstance();
+    final hasInternet = await checker.hasConnection;
+    if (!hasInternet) {
+      LoggerService.info('No internet, skip sync', tag: 'SyncService');
+      return;
+    }
     if (_isSyncing) return;
     _isSyncing = true;
-    LoggerService.info('[SyncService] Start sync');
+    LoggerService.info('Start sync', tag: 'SyncService');
     try {
       while (true) {
         final events = _eventDataSource.getAllEvents();
         if (events.isEmpty) {
-          LoggerService.info('[SyncService] No events to sync, exiting');
+          LoggerService.info('No events to sync, exiting', tag: 'SyncService');
           break;
         }
         bool anySynced = false;
         for (final event in events) {
-          LoggerService.debug('[SyncService] Handling event ${event.id} (${event.entityType}, ${event.eventType})');
+          LoggerService.debug('Handling event', tag: 'SyncService', data: {
+            'eventId': event.id,
+            'entityType': event.entityType.toString(),
+            'eventType': event.eventType.toString(),
+          });
           bool success = false;
           switch (event.entityType) {
             case EntityType.account:
@@ -41,22 +53,35 @@ class SyncService {
               break;
           }
           if (success) {
-            LoggerService.info('[SyncService] Event ${event.id} synced and deleted');
+            LoggerService.info('Event synced and deleted',
+                tag: 'SyncService',
+                data: {
+                  'eventId': event.id,
+                  'entityType': event.entityType.toString(),
+                  'eventType': event.eventType.toString(),
+                });
             _eventDataSource.deleteEvent(event.id);
             anySynced = true;
           } else {
-            LoggerService.warning('[SyncService] Event ${event.id} failed to sync, stopping');
+            LoggerService.warning('Event failed to sync, stopping',
+                tag: 'SyncService',
+                data: {
+                  'eventId': event.id,
+                  'entityType': event.entityType.toString(),
+                  'eventType': event.eventType.toString(),
+                });
             break;
           }
         }
         if (!anySynced) {
-          LoggerService.info('[SyncService] No events were synced in this pass, exiting');
+          LoggerService.info('No events were synced in this pass, exiting',
+              tag: 'SyncService');
           break;
         }
       }
     } finally {
       _isSyncing = false;
-      LoggerService.info('[SyncService] Sync finished');
+      LoggerService.info('Sync finished', tag: 'SyncService');
     }
   }
 }

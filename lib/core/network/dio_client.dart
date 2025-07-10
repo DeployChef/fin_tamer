@@ -36,8 +36,7 @@ class DioClient {
           LoggerService.networkRequest(
             options.method,
             options.path,
-            headers: options.headers,
-            body: options.data,
+            tag: 'DioClient',
           );
           handler.next(options);
         },
@@ -45,7 +44,7 @@ class DioClient {
           LoggerService.networkResponse(
             response.statusCode ?? 0,
             response.requestOptions.path,
-            data: response.data,
+            tag: 'DioClient',
           );
           handler.next(response);
         },
@@ -55,6 +54,7 @@ class DioClient {
             error.requestOptions.path,
             message: error.message,
             error: error,
+            tag: 'DioClient',
           );
           handler.next(error);
         },

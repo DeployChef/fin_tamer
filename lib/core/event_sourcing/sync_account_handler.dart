@@ -10,15 +10,43 @@ class SyncAccountHandler {
   SyncAccountHandler(this.remoteDataSource);
 
   Future<bool> handle(SyncEvent event) async {
+    LoggerService.debug('Handling event', tag: 'SyncAccountHandler', data: {
+      'eventId': event.id,
+      'entityId': event.entityId,
+      'eventType': event.eventType.toString(),
+      'payload': event.payloadJson,
+    });
     try {
       if (event.eventType == EventType.update) {
-        final dto = AccountUpdateRequestDto.fromJson(jsonDecode(event.payloadJson));
+        final dto =
+            AccountUpdateRequestDto.fromJson(jsonDecode(event.payloadJson));
+        LoggerService.info('Updating account',
+            tag: 'SyncAccountHandler',
+            data: {
+              'entityId': event.entityId,
+              'dto': dto.toJson(),
+            });
         await remoteDataSource.update(int.parse(event.entityId), dto);
+        LoggerService.info('Account updated successfully',
+            tag: 'SyncAccountHandler',
+            data: {
+              'entityId': event.entityId,
+            });
         return true;
       }
+      LoggerService.warning('Unknown eventType, skipping',
+          tag: 'SyncAccountHandler',
+          data: {
+            'eventType': event.eventType.toString(),
+          });
       return false;
     } catch (e, stack) {
-      LoggerService.error('[SyncAccountHandler] Error handling event ${event.id}', e, stack);
+      LoggerService.error(
+          'Error handling event', e, stack, 'SyncAccountHandler', {
+        'eventId': event.id,
+        'entityId': event.entityId,
+        'eventType': event.eventType.toString(),
+      });
       return false;
     }
   }
