@@ -205,19 +205,21 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
 
   void _deleteTransaction() async {
     try {
+      final navigator = Navigator.of(context);
       final transactionService = await ref.read(transactionRepositoryProvider.future);
       await transactionService.delete(widget.transaction!.id);
       ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
       ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
       ref.invalidate(transactionChartServiceProvider);
       ref.invalidate(accountServiceProvider);
-      GoRouter.of(context).pop();
+      navigator.pop();
     } catch (e) {
       await _showErrorDialog(e.toString());
     }
   }
 
   Future<void> _onSave() async {
+    final navigator = Navigator.of(context);
     final combinedDate = DateTime(
       _selectedDate.year,
       _selectedDate.month,
@@ -255,7 +257,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
       ref.invalidate(transactionChartServiceProvider);
       ref.invalidate(accountServiceProvider);
-      GoRouter.of(context).pop();
+      navigator.pop();
     } catch (e) {
       await _showErrorDialog(e.toString());
     }
@@ -315,8 +317,6 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
-    final locale = Localizations.localeOf(context).toString();
-    final separator = NumberFormat.decimalPattern(locale).symbols.DECIMAL_SEP;
 
     return Scaffold(
       appBar: PreferredSize(

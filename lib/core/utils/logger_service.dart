@@ -25,12 +25,8 @@ class StructuredLogPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    final time = DateTime.now()
-        .toIso8601String()
-        .replaceFirst('T', ' ')
-        .substring(0, 19);
-    final level =
-        _levelPrefixes[event.level] ?? event.level.toString().toUpperCase();
+    final time = DateTime.now().toIso8601String().replaceFirst('T', ' ').substring(0, 19);
+    final level = _levelPrefixes[event.level] ?? event.level.toString().toUpperCase();
     String tag = '';
     String msg = event.message;
     final tagMatch = RegExp(r'^\[(.*?)\]\s?(.*)').firstMatch(msg);
@@ -48,13 +44,11 @@ class StructuredLogPrinter extends LogPrinter {
       // Если dataBlock длинная, не обрезаем её
     } else {
       if (mainMsg.length > _maxMsgLength) {
-        mainMsg = mainMsg.substring(0, _maxMsgLength) + '... (truncated)';
+        mainMsg = '${mainMsg.substring(0, _maxMsgLength)}... (truncated)';
       }
     }
-    final error =
-        event.error != null ? '\n  Exception: ${_pretty(event.error)}' : '';
-    final stack =
-        event.stackTrace != null ? '\n  Stack: ${event.stackTrace}' : '';
+    final error = event.error != null ? '\n  Exception: ${_pretty(event.error)}' : '';
+    final stack = event.stackTrace != null ? '\n  Stack: ${event.stackTrace}' : '';
     // Plain text, без цветов, с разделителем
     final lines = <String>['---'];
     lines.add('[$time][$level]$tag $mainMsg$error$stack');
@@ -67,9 +61,7 @@ class StructuredLogPrinter extends LogPrinter {
 
 class LoggerService {
   static final Logger _logger = Logger(
-    filter: AppConfig.enableNetworkLogging
-        ? DevelopmentFilter()
-        : ProductionFilter(),
+    filter: AppConfig.enableNetworkLogging ? DevelopmentFilter() : ProductionFilter(),
     printer: StructuredLogPrinter(),
   );
 
@@ -87,10 +79,8 @@ class LoggerService {
     _logger.w(_compose(message, tag: tag, data: data));
   }
 
-  static void error(String message,
-      [dynamic error, StackTrace? stackTrace, String? tag, Object? data]) {
-    _logger.e(_compose(message, tag: tag, data: data),
-        error: error, stackTrace: stackTrace);
+  static void error(String message, [dynamic error, StackTrace? stackTrace, String? tag, Object? data]) {
+    _logger.e(_compose(message, tag: tag, data: data), error: error, stackTrace: stackTrace);
   }
 
   static String _compose(String message, {String? tag, Object? data}) {
@@ -121,30 +111,20 @@ class LoggerService {
   static void networkResponse(int statusCode, String path, {String? tag}) {
     if (AppConfig.enableNetworkLogging) {
       final ok = statusCode >= 200 && statusCode < 300;
-      _logger.i(_compose('RESPONSE: $statusCode $path [${ok ? 'OK' : 'FAIL'}]',
-          tag: tag));
+      _logger.i(_compose('RESPONSE: $statusCode $path [${ok ? 'OK' : 'FAIL'}]', tag: tag));
     }
   }
 
-  static void networkError(int? statusCode, String path,
-      {String? message, dynamic error, String? tag}) {
+  static void networkError(int? statusCode, String path, {String? message, dynamic error, String? tag}) {
     if (AppConfig.enableNetworkLogging) {
-      _logger.e(
-          _compose(
-              'ERROR: $statusCode $path${message != null ? ' ($message)' : ''}',
-              tag: tag),
-          error: error,
-          stackTrace: StackTrace.current);
+      _logger.e(_compose('ERROR: $statusCode $path${message != null ? ' ($message)' : ''}', tag: tag),
+          error: error, stackTrace: StackTrace.current);
     }
   }
 
-  static void networkRetry(
-      String path, int retryCount, int delaySeconds, int? statusCode,
-      {String? tag}) {
+  static void networkRetry(String path, int retryCount, int delaySeconds, int? statusCode, {String? tag}) {
     if (AppConfig.enableNetworkLogging) {
-      _logger.w(_compose(
-          'RETRY: $path (attempt $retryCount, delay ${delaySeconds}s, original status: $statusCode)',
-          tag: tag));
+      _logger.w(_compose('RETRY: $path (attempt $retryCount, delay ${delaySeconds}s, original status: $statusCode)', tag: tag));
     }
   }
 }

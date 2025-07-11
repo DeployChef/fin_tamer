@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fin_tamer/core/di/sync_providers.dart';
 
 part 'connectivity_sync_provider.g.dart';

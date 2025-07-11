@@ -13,7 +13,7 @@ class UpdateAccountDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
-    Future<void> _showErrorDialog(String message) async {
+    Future<void> showErrorDialog(String message) async {
       await showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -58,12 +58,11 @@ class UpdateAccountDialog extends ConsumerWidget {
             final newName = nameEditingController.text.trim();
             if (newName.isNotEmpty) {
               try {
-                await ref
-                    .read(accountServiceProvider.notifier)
-                    .updateAccount(name: newName);
-                Navigator.of(context).pop();
+                final navigator = Navigator.of(context);
+                await ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
+                navigator.pop();
               } catch (e) {
-                await _showErrorDialog(e.toString());
+                await showErrorDialog(e.toString());
               }
             }
           },
