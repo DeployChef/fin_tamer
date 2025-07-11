@@ -5,6 +5,7 @@ import 'package:fin_tamer/features/transaction/domain/services/history/history_f
 import 'package:fin_tamer/features/transaction/ui/widgets/sort_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fin_tamer/styles/app_colors.dart';
 
 class HistoryFilter extends ConsumerWidget {
   const HistoryFilter.income({super.key}) : isIncome = true;
@@ -32,7 +33,7 @@ class HistoryFilter extends ConsumerWidget {
       children: [
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterStartDate,
             style: theme.textTheme.bodyLarge,
@@ -57,7 +58,7 @@ class HistoryFilter extends ConsumerWidget {
         const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterEndDate,
             style: theme.textTheme.bodyLarge,
@@ -82,7 +83,7 @@ class HistoryFilter extends ConsumerWidget {
         const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterSort,
             style: theme.textTheme.bodyLarge,

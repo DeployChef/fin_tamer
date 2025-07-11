@@ -52,7 +52,7 @@ class _AccountBalanceState extends ConsumerState<AccountBalance> {
       onShake: () => ref.read(hideBalanceProvider.notifier).toggle(),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-        tileColor: const Color(0xffD4FAE6),
+        tileColor: theme.colorScheme.secondaryContainer,
         leading: const CircleAvatar(
           radius: 15,
           backgroundColor: Colors.white,

@@ -18,7 +18,8 @@ class SortItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = historyFilterServiceProvider(isIncome: isIncome);
-    final providerFilterOption = ref.watch(historyFilterServiceProvider(isIncome: isIncome));
+    final providerFilterOption =
+        ref.watch(historyFilterServiceProvider(isIncome: isIncome));
 
     final loc = AppLocalizations.of(context)!;
 
@@ -44,7 +45,10 @@ class SortItem extends ConsumerWidget {
               sortDescription,
               style: const TextStyle(fontSize: 16),
             ),
-            providerFilterOption.sortType == sortType ? const Icon(Icons.check_circle, color: AppColors.primaryLight) : const Icon(Icons.circle_outlined),
+            providerFilterOption.sortType == sortType
+                ? Icon(Icons.check_circle,
+                    color: Theme.of(context).colorScheme.primary)
+                : const Icon(Icons.circle_outlined),
           ],
         ),
       ),

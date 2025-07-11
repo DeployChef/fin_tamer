@@ -11,7 +11,7 @@ class AccountCurrency extends StatelessWidget {
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-      tileColor: const Color(0xffD4FAE6),
+      tileColor: theme.colorScheme.secondaryContainer,
       title: Text(
         "Валюта",
         style: theme.textTheme.bodyLarge,

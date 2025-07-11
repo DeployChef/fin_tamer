@@ -13,7 +13,7 @@ class ThemeSwitcher extends ConsumerWidget {
     final asyncTheme = ref.watch(themeServiceProvider);
     final notifier = ref.read(themeServiceProvider.notifier);
     return ListTile(
-      title: Text(l10n.darkTheme, style: theme.textTheme.bodyMedium),
+      title: Text(l10n.darkTheme, style: theme.textTheme.bodyLarge),
       trailing: asyncTheme.when(
         data: (isDark) => Switch(
           value: isDark,

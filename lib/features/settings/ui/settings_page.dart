@@ -18,52 +18,59 @@ class SettingsPage extends StatelessWidget {
           const ThemeSwitcher(),
           const Divider(),
           ListTile(
-            title: Text(l10n.primaryColor, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.primaryColor, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.sounds, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.sounds, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.haptics, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.haptics, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.passcode, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.passcode, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.sync, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.sync, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.language, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.language, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
           const Divider(),
           ListTile(
-            title: Text(l10n.about, style: theme.textTheme.bodyMedium),
+            title: Text(l10n.about, style: theme.textTheme.bodyLarge),
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           ),
         ],
       ),

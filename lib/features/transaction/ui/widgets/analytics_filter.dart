@@ -24,7 +24,8 @@ class AnalyticsFilter extends ConsumerWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
             loc.filterStartDatePeriod,
             style: theme.textTheme.bodyLarge,
@@ -35,12 +36,13 @@ class AnalyticsFilter extends ConsumerWidget {
               vertical: 6,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primaryLight,
+              color: theme.colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               startDate.toddMMyyyy(),
-              style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+              style: theme.textTheme.bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
           ),
           onTap: () async {
@@ -58,7 +60,8 @@ class AnalyticsFilter extends ConsumerWidget {
         ),
         const Divider(),
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
             loc.filterEndDatePeriod,
             style: theme.textTheme.bodyLarge,
@@ -69,12 +72,13 @@ class AnalyticsFilter extends ConsumerWidget {
               vertical: 6,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primaryLight,
+              color: theme.colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               endDate.toddMMyyyy(),
-              style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+              style: theme.textTheme.bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
           ),
           onTap: () async {
