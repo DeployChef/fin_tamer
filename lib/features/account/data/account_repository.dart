@@ -1,6 +1,6 @@
 import 'package:fin_tamer/features/account/domain/interfaces/i_account_repository.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
-import 'package:fin_tamer/features/account/data/remote/account_remote_data_source.dart';
+import 'package:fin_tamer/features/account/data/remote/i_account_remote_data_source.dart';
 import 'package:fin_tamer/features/account/data/remote/mappers/account_mapper.dart';
 import 'package:fin_tamer/features/account/domain/models/account_create_data.dart';
 import 'package:fin_tamer/features/account/domain/models/account_update_data.dart';
@@ -9,16 +9,21 @@ import 'package:fin_tamer/features/account/data/local/stat_item_local_data_sourc
 import 'package:fin_tamer/features/account/data/local/mappers/account_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/remote/dto/account_dto.dart';
 import 'package:fin_tamer/features/account/data/local/mappers/stat_item_local_mapper.dart';
+import 'dart:convert';
+import 'package:fin_tamer/core/event_sourcing/sync_event.dart';
+import 'package:fin_tamer/core/event_sourcing/sync_service.dart';
 
 class AccountRepository implements IAccountRepository {
-  final MockRemoteAccountDataSource remoteDataSource;
+  final IAccountRemoteDataSource remoteDataSource;
   final AccountLocalDataSource localDataSource;
   final StatItemLocalDataSource statItemLocalDataSource;
+  final SyncService syncService;
 
   AccountRepository({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.statItemLocalDataSource,
+    required this.syncService,
   });
 
   @override
@@ -26,8 +31,10 @@ class AccountRepository implements IAccountRepository {
     final localEntities = await localDataSource.getAll();
     if (localEntities.isNotEmpty) {
       return Future.wait(localEntities.map((entity) async {
-        final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-        final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+        final incomeStats = await statItemLocalDataSource
+            .getByAccount(entity.apiId, isIncome: true);
+        final expenseStats = await statItemLocalDataSource
+            .getByAccount(entity.apiId, isIncome: false);
         return entity.toDomain(
           incomeStats: incomeStats,
           expenseStats: expenseStats,
@@ -43,16 +50,27 @@ class AccountRepository implements IAccountRepository {
   @override
   Future<Account?> getById(int id) async {
     final entity = await localDataSource.getById(id);
-    if (entity == null) return null;
+    if (entity == null) {
+      final accounts = await getAll();
+      return accounts.firstOrNull?.toEntity().toDomain();
+    }
 
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: false);
 
     if (incomeStats.isEmpty || expenseStats.isEmpty) {
       final dto = await remoteDataSource.getResponseById(entity.apiId);
       if (dto == null) return null;
-      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
-      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
+      incomeStats = dto.incomeStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: true))
+          .toList();
+      expenseStats = dto.expenseStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: false))
+          .toList();
       await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
 
@@ -67,8 +85,10 @@ class AccountRepository implements IAccountRepository {
     final dto = await remoteDataSource.create(data.toDto());
     final entity = dto.toEntity();
     await localDataSource.save(entity);
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    final expenseStats = await statItemLocalDataSource
+        .getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
@@ -78,39 +98,70 @@ class AccountRepository implements IAccountRepository {
   @override
   Future<Account?> update(AccountUpdateData data) async {
     var entity = await localDataSource.getById(data.id);
-
-    if (entity == null) return null;
-
+    if (entity == null) {
+      throw Exception('Account not found for update: id=${data.id}');
+    }
     entity.name = data.name;
     entity.balance = data.balance;
     entity.currency = data.currency;
     entity.updatedAt = DateTime.now().toUtc();
-
     await localDataSource.save(entity);
-
-    final dto = await remoteDataSource.update(entity.apiId, data.toDto());
-
-    if (dto != null) {
-      entity = dto.toEntity(localId: entity.id);
-      await localDataSource.save(entity);
-    }
-
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
-    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
+    final dto = data.toDto();
+    final event = SyncEvent(
+      entityTypeIndex: EntityType.account.index,
+      eventTypeIndex: EventType.update.index,
+      entityId: data.id.toString(),
+      payloadJson: jsonEncode(dto.toJson()),
+      timestamp: DateTime.now().toUtc(),
+    );
+    syncService.addEvent(event);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    final expenseStats = await statItemLocalDataSource
+        .getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
     );
   }
 
-  Future<void> updateAccountName(int id, String newName) async {
-    var entity = await localDataSource.getById(id);
-    if (entity == null) return;
+  @override
+  Future<Account?> getByApiId(int apiId) async {
+    final entity = await localDataSource.getByApiId(apiId);
+    if (entity == null) return null;
 
-    entity.name = newName;
-    entity.updatedAt = DateTime.now().toUtc();
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
+        isIncome: false);
 
-    await localDataSource.save(entity);
-    await remoteDataSource.updateAccountName(entity.apiId, newName);
+    if (incomeStats.isEmpty || expenseStats.isEmpty) {
+      final dto = await remoteDataSource.getResponseById(entity.apiId);
+      if (dto == null) return null;
+      incomeStats = dto.incomeStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: true))
+          .toList();
+      expenseStats = dto.expenseStats
+          .map((statItem) =>
+              statItem.toEntity(accountApiId: dto.id, isIncome: false))
+          .toList();
+      await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
+    }
+
+    return entity.toDomain(
+      incomeStats: incomeStats,
+      expenseStats: expenseStats,
+    );
+  }
+
+  @override
+  Future<void> updateLocalBalance(int accountId, double newBalance) async {
+    final entity = await localDataSource.getById(accountId);
+    if (entity != null) {
+      entity.balance = newBalance.toStringAsFixed(2);
+      entity.updatedAt = DateTime.now().toUtc();
+      await localDataSource.save(entity);
+    }
   }
 }

@@ -1,7 +1,7 @@
 enum Currency {
   ruble(symbol: '₽', code: 'RUB'),
-  usDollar(symbol: '\$', code: 'DOLLAR'),
-  euro(symbol: '€', code: 'EURO');
+  usDollar(symbol: '\$', code: 'USD'),
+  euro(symbol: '€', code: 'EUR');
 
   final String symbol;
   final String code;
@@ -9,8 +9,8 @@ enum Currency {
 
   static Currency fromCode(String code) => switch (code) {
         'RUB' => ruble,
-        'DOLLAR' => usDollar,
-        'EURO' => euro,
+        'USD' => usDollar,
+        'EUR' => euro,
         _ => ruble,
       };
 }

@@ -15,7 +15,8 @@ class TransactionLocalDataSource {
   }
 
   Future<List<TransactionEntity>> getByAccount(int accountApiId) async {
-    final query = box.query(TransactionEntity_.accountApiId.equals(accountApiId)).build();
+    final query =
+        box.query(TransactionEntity_.accountApiId.equals(accountApiId)).build();
     final result = query.find();
     query.close();
     return result;
@@ -25,8 +26,8 @@ class TransactionLocalDataSource {
     box.putMany(items);
   }
 
-  Future<void> save(TransactionEntity item) async {
-    box.put(item);
+  Future<int> save(TransactionEntity item) async {
+    return box.put(item);
   }
 
   Future<void> delete(int id) async {

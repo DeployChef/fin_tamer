@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'core/event_sourcing/sync_event.dart';
 import 'features/account/data/local/entities/account_entity.dart';
 import 'features/account/data/local/entities/stat_item_entity.dart';
 import 'features/category/data/local/entities/category_entity.dart';
@@ -176,7 +177,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(6, 7419752769170049923),
     name: 'StatItemEntity',
-    lastPropertyId: const obx_int.IdUid(7, 3501366388118049952),
+    lastPropertyId: const obx_int.IdUid(11, 8455360228724349651),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -198,21 +199,33 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5316522730820120505),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 5862021724767335644),
-        name: 'value',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
         id: const obx_int.IdUid(7, 3501366388118049952),
         name: 'isIncome',
         type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 6732556694054994663),
+        name: 'categoryId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 2011934168724031218),
+        name: 'categoryName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 7727764499745813961),
+        name: 'emoji',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 8455360228724349651),
+        name: 'amount',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -222,7 +235,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 7913135380541029049),
     name: 'TransactionEntity',
-    lastPropertyId: const obx_int.IdUid(9, 2795732724551334393),
+    lastPropertyId: const obx_int.IdUid(11, 2441127887163230469),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -279,6 +292,64 @@ final _entities = <obx_int.ModelEntity>[
         type: 10,
         flags: 0,
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 8229074962202376406),
+        name: 'accountId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 2441127887163230469),
+        name: 'isDeleted',
+        type: 1,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(8, 3261602400766834220),
+    name: 'SyncEvent',
+    lastPropertyId: const obx_int.IdUid(6, 8744715383352343588),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 6406197369498130577),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 107547474130071092),
+        name: 'entityTypeIndex',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 1434243693414712345),
+        name: 'eventTypeIndex',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1109140077375292495),
+        name: 'entityId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 6403648093323011210),
+        name: 'payloadJson',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 8744715383352343588),
+        name: 'timestamp',
+        type: 10,
+        flags: 0,
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -323,7 +394,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(7, 7913135380541029049),
+    lastEntityId: const obx_int.IdUid(8, 3261602400766834220),
     lastIndexId: const obx_int.IdUid(1, 2005279266660496490),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -346,6 +417,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
       5957917243085841111,
       5372237746619062107,
       8685277185981112531,
+      5316522730820120505,
+      5862021724767335644,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -563,15 +636,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (StatItemEntity object, fb.Builder fbb) {
-        final nameOffset = fbb.writeString(object.name);
-        final valueOffset = fbb.writeString(object.value);
-        fbb.startTable(8);
+        final categoryNameOffset = fbb.writeString(object.categoryName);
+        final emojiOffset = fbb.writeString(object.emoji);
+        final amountOffset = fbb.writeString(object.amount);
+        fbb.startTable(12);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.apiId);
         fbb.addInt64(2, object.accountApiId);
-        fbb.addOffset(4, nameOffset);
-        fbb.addOffset(5, valueOffset);
         fbb.addBool(6, object.isIncome);
+        fbb.addInt64(7, object.categoryId);
+        fbb.addOffset(8, categoryNameOffset);
+        fbb.addOffset(9, emojiOffset);
+        fbb.addOffset(10, amountOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -602,19 +678,30 @@ obx_int.ModelDefinition getObjectBoxModel() {
           16,
           false,
         );
-        final nameParam = const fb.StringReader(
+        final categoryIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        final categoryNameParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final valueParam = const fb.StringReader(
+        ).vTableGet(buffer, rootOffset, 20, '');
+        final emojiParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
+        ).vTableGet(buffer, rootOffset, 22, '');
+        final amountParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 24, '');
         final object = StatItemEntity(
           id: idParam,
           apiId: apiIdParam,
           accountApiId: accountApiIdParam,
           isIncome: isIncomeParam,
-          name: nameParam,
-          value: valueParam,
+          categoryId: categoryIdParam,
+          categoryName: categoryNameParam,
+          emoji: emojiParam,
+          amount: amountParam,
         );
 
         return object;
@@ -633,7 +720,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final commentOffset = object.comment == null
             ? null
             : fbb.writeString(object.comment!);
-        fbb.startTable(10);
+        fbb.startTable(12);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.apiId);
         fbb.addInt64(2, object.accountApiId);
@@ -643,6 +730,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(6, commentOffset);
         fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
         fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+        fbb.addInt64(9, object.accountId);
+        fbb.addBool(10, object.isDeleted);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -659,6 +748,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           buffer,
           rootOffset,
           6,
+          0,
+        );
+        final accountIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          22,
           0,
         );
         final accountApiIdParam = const fb.Int64Reader().vTableGet(
@@ -688,9 +783,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0),
         );
+        final isDeletedParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          24,
+          false,
+        );
         final object = TransactionEntity(
           id: idParam,
           apiId: apiIdParam,
+          accountId: accountIdParam,
           accountApiId: accountApiIdParam,
           categoryApiId: categoryApiIdParam,
           amount: amountParam,
@@ -698,6 +800,70 @@ obx_int.ModelDefinition getObjectBoxModel() {
           comment: commentParam,
           createdAt: createdAtParam,
           updatedAt: updatedAtParam,
+          isDeleted: isDeletedParam,
+        );
+
+        return object;
+      },
+    ),
+    SyncEvent: obx_int.EntityDefinition<SyncEvent>(
+      model: _entities[5],
+      toOneRelations: (SyncEvent object) => [],
+      toManyRelations: (SyncEvent object) => {},
+      getId: (SyncEvent object) => object.id,
+      setId: (SyncEvent object, int id) {
+        object.id = id;
+      },
+      objectToFB: (SyncEvent object, fb.Builder fbb) {
+        final entityIdOffset = fbb.writeString(object.entityId);
+        final payloadJsonOffset = fbb.writeString(object.payloadJson);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.entityTypeIndex);
+        fbb.addInt64(2, object.eventTypeIndex);
+        fbb.addOffset(3, entityIdOffset);
+        fbb.addOffset(4, payloadJsonOffset);
+        fbb.addInt64(5, object.timestamp.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final entityTypeIndexParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final eventTypeIndexParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final entityIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final payloadJsonParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
+        );
+        final object = SyncEvent(
+          id: idParam,
+          entityTypeIndex: entityTypeIndexParam,
+          eventTypeIndex: eventTypeIndexParam,
+          entityId: entityIdParam,
+          payloadJson: payloadJsonParam,
+          timestamp: timestampParam,
         );
 
         return object;
@@ -834,19 +1000,29 @@ class StatItemEntity_ {
     _entities[3].properties[2],
   );
 
-  /// See [StatItemEntity.name].
-  static final name = obx.QueryStringProperty<StatItemEntity>(
+  /// See [StatItemEntity.isIncome].
+  static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
     _entities[3].properties[3],
   );
 
-  /// See [StatItemEntity.value].
-  static final value = obx.QueryStringProperty<StatItemEntity>(
+  /// See [StatItemEntity.categoryId].
+  static final categoryId = obx.QueryIntegerProperty<StatItemEntity>(
     _entities[3].properties[4],
   );
 
-  /// See [StatItemEntity.isIncome].
-  static final isIncome = obx.QueryBooleanProperty<StatItemEntity>(
+  /// See [StatItemEntity.categoryName].
+  static final categoryName = obx.QueryStringProperty<StatItemEntity>(
     _entities[3].properties[5],
+  );
+
+  /// See [StatItemEntity.emoji].
+  static final emoji = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[6],
+  );
+
+  /// See [StatItemEntity.amount].
+  static final amount = obx.QueryStringProperty<StatItemEntity>(
+    _entities[3].properties[7],
   );
 }
 
@@ -895,5 +1071,48 @@ class TransactionEntity_ {
   /// See [TransactionEntity.updatedAt].
   static final updatedAt = obx.QueryDateProperty<TransactionEntity>(
     _entities[4].properties[8],
+  );
+
+  /// See [TransactionEntity.accountId].
+  static final accountId = obx.QueryIntegerProperty<TransactionEntity>(
+    _entities[4].properties[9],
+  );
+
+  /// See [TransactionEntity.isDeleted].
+  static final isDeleted = obx.QueryBooleanProperty<TransactionEntity>(
+    _entities[4].properties[10],
+  );
+}
+
+/// [SyncEvent] entity fields to define ObjectBox queries.
+class SyncEvent_ {
+  /// See [SyncEvent.id].
+  static final id = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[0],
+  );
+
+  /// See [SyncEvent.entityTypeIndex].
+  static final entityTypeIndex = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[1],
+  );
+
+  /// See [SyncEvent.eventTypeIndex].
+  static final eventTypeIndex = obx.QueryIntegerProperty<SyncEvent>(
+    _entities[5].properties[2],
+  );
+
+  /// See [SyncEvent.entityId].
+  static final entityId = obx.QueryStringProperty<SyncEvent>(
+    _entities[5].properties[3],
+  );
+
+  /// See [SyncEvent.payloadJson].
+  static final payloadJson = obx.QueryStringProperty<SyncEvent>(
+    _entities[5].properties[4],
+  );
+
+  /// See [SyncEvent.timestamp].
+  static final timestamp = obx.QueryDateProperty<SyncEvent>(
+    _entities[5].properties[5],
   );
 }

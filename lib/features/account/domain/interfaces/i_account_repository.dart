@@ -7,7 +7,11 @@ abstract interface class IAccountRepository {
 
   Future<Account?> getById(int id);
 
+  Future<Account?> getByApiId(int apiId);
+
   Future<Account> create(AccountCreateData data);
 
   Future<Account?> update(AccountUpdateData data);
+
+  Future<void> updateLocalBalance(int accountId, double newBalance);
 }

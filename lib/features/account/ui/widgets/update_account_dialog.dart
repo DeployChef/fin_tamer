@@ -13,6 +13,27 @@ class UpdateAccountDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
+    Future<void> _showErrorDialog(String message) async {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Ошибка'),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return AlertDialog(
       title: Text(
         account.name,
@@ -33,12 +54,17 @@ class UpdateAccountDialog extends ConsumerWidget {
           child: const Text('Отмена'),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             final newName = nameEditingController.text.trim();
-
             if (newName.isNotEmpty) {
-              ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
-              Navigator.of(context).pop();
+              try {
+                await ref
+                    .read(accountServiceProvider.notifier)
+                    .updateAccount(name: newName);
+                Navigator.of(context).pop();
+              } catch (e) {
+                await _showErrorDialog(e.toString());
+              }
             }
           },
           child: const Text('Сохранить'),

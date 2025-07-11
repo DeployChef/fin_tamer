@@ -44,7 +44,7 @@ class TransactionItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            MoneyWidget(amount: double.parse(item.amount)),
+            MoneyWidget(amount: item.amount),
             showTime
                 ? Text(
                     item.transactionDate.toHHmm(),

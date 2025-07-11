@@ -15,9 +15,10 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$StatItemDto {
-  int get id;
-  String get name;
-  String get value;
+  int get categoryId;
+  String get categoryName;
+  String get emoji;
+  String get amount;
 
   /// Create a copy of StatItemDto
   /// with the given fields replaced by the non-null parameter values.
@@ -34,18 +35,22 @@ mixin _$StatItemDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is StatItemDto &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.emoji, emoji) || other.emoji == emoji) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, value);
+  int get hashCode =>
+      Object.hash(runtimeType, categoryId, categoryName, emoji, amount);
 
   @override
   String toString() {
-    return 'StatItemDto(id: $id, name: $name, value: $value)';
+    return 'StatItemDto(categoryId: $categoryId, categoryName: $categoryName, emoji: $emoji, amount: $amount)';
   }
 }
 
@@ -55,7 +60,7 @@ abstract mixin class $StatItemDtoCopyWith<$Res> {
           StatItemDto value, $Res Function(StatItemDto) _then) =
       _$StatItemDtoCopyWithImpl;
   @useResult
-  $Res call({int id, String name, String value});
+  $Res call({int categoryId, String categoryName, String emoji, String amount});
 }
 
 /// @nodoc
@@ -70,22 +75,27 @@ class _$StatItemDtoCopyWithImpl<$Res> implements $StatItemDtoCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? value = null,
+    Object? categoryId = null,
+    Object? categoryName = null,
+    Object? emoji = null,
+    Object? amount = null,
   }) {
     return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
+      categoryId: null == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
+      categoryName: null == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _self.value
-          : value // ignore: cast_nullable_to_non_nullable
+      emoji: null == emoji
+          ? _self.emoji
+          : emoji // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _self.amount
+          : amount // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -95,17 +105,22 @@ class _$StatItemDtoCopyWithImpl<$Res> implements $StatItemDtoCopyWith<$Res> {
 @JsonSerializable()
 class _StatItemDto extends StatItemDto {
   const _StatItemDto(
-      {required this.id, required this.name, required this.value})
+      {required this.categoryId,
+      required this.categoryName,
+      required this.emoji,
+      required this.amount})
       : super._();
   factory _StatItemDto.fromJson(Map<String, dynamic> json) =>
       _$StatItemDtoFromJson(json);
 
   @override
-  final int id;
+  final int categoryId;
   @override
-  final String name;
+  final String categoryName;
   @override
-  final String value;
+  final String emoji;
+  @override
+  final String amount;
 
   /// Create a copy of StatItemDto
   /// with the given fields replaced by the non-null parameter values.
@@ -127,18 +142,22 @@ class _StatItemDto extends StatItemDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _StatItemDto &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.emoji, emoji) || other.emoji == emoji) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, value);
+  int get hashCode =>
+      Object.hash(runtimeType, categoryId, categoryName, emoji, amount);
 
   @override
   String toString() {
-    return 'StatItemDto(id: $id, name: $name, value: $value)';
+    return 'StatItemDto(categoryId: $categoryId, categoryName: $categoryName, emoji: $emoji, amount: $amount)';
   }
 }
 
@@ -150,7 +169,7 @@ abstract mixin class _$StatItemDtoCopyWith<$Res>
       __$StatItemDtoCopyWithImpl;
   @override
   @useResult
-  $Res call({int id, String name, String value});
+  $Res call({int categoryId, String categoryName, String emoji, String amount});
 }
 
 /// @nodoc
@@ -165,22 +184,27 @@ class __$StatItemDtoCopyWithImpl<$Res> implements _$StatItemDtoCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? value = null,
+    Object? categoryId = null,
+    Object? categoryName = null,
+    Object? emoji = null,
+    Object? amount = null,
   }) {
     return _then(_StatItemDto(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
+      categoryId: null == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
+      categoryName: null == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _self.value
-          : value // ignore: cast_nullable_to_non_nullable
+      emoji: null == emoji
+          ? _self.emoji
+          : emoji // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _self.amount
+          : amount // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

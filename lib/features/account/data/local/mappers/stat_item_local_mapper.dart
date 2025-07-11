@@ -4,28 +4,33 @@ import 'package:fin_tamer/features/account/data/remote/dto/stat_item_dto.dart';
 
 extension StatItemEntityMapper on StatItemEntity {
   StatItem toDomain() => StatItem(
-        id: apiId,
-        name: name,
-        value: value,
+        categoryId: categoryId,
+        categoryName: categoryName,
+        emoji: emoji,
+        amount: double.tryParse(amount) ?? 0.0,
       );
 }
 
 extension StatItemDomainMapper on StatItem {
   StatItemEntity toIncomeEntity({required int accountApiId}) => StatItemEntity(
         id: 0,
-        apiId: id,
+        apiId: categoryId,
         accountApiId: accountApiId,
         isIncome: true,
-        name: name,
-        value: value,
+        categoryId: categoryId,
+        categoryName: categoryName,
+        emoji: emoji,
+        amount: amount.toString(),
       );
   StatItemEntity toExpenseEntity({required int accountApiId}) => StatItemEntity(
         id: 0,
-        apiId: id,
+        apiId: categoryId,
         accountApiId: accountApiId,
         isIncome: false,
-        name: name,
-        value: value,
+        categoryId: categoryId,
+        categoryName: categoryName,
+        emoji: emoji,
+        amount: amount.toString(),
       );
 }
 
@@ -36,10 +41,12 @@ List<StatItemEntity> mapExpenseStatsToEntities(List<StatItem> stats, int account
 extension StatItemDtoToEntity on StatItemDto {
   StatItemEntity toEntity({required int accountApiId, required bool isIncome}) => StatItemEntity(
         id: 0,
-        apiId: id,
+        apiId: categoryId,
         accountApiId: accountApiId,
         isIncome: isIncome,
-        name: name,
-        value: value,
+        categoryId: categoryId,
+        categoryName: categoryName,
+        emoji: emoji,
+        amount: amount,
       );
 }

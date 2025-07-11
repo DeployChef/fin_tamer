@@ -119,9 +119,11 @@ class _AnimatedPieChartWidgetState extends State<AnimatedPieChartWidget> with Si
               crossAxisAlignment: CrossAxisAlignment.start,
               children: data.map((e) {
                 if (titleCount > widget.maxTitles) {
+                  titleCount++;
                   return const SizedBox.shrink();
                 }
                 if (titleCount == widget.maxTitles) {
+                  titleCount++;
                   return Text("...", style: widget.titleStyle);
                 }
                 titleCount++;

@@ -28,6 +28,9 @@ mixin _$AccountUpdateData {
       _$AccountUpdateDataCopyWithImpl<AccountUpdateData>(
           this as AccountUpdateData, _$identity);
 
+  /// Serializes this AccountUpdateData to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -40,6 +43,7 @@ mixin _$AccountUpdateData {
                 other.currency == currency));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, balance, currency);
 
@@ -98,13 +102,15 @@ class _$AccountUpdateDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _AccountUpdateData implements AccountUpdateData {
   const _AccountUpdateData(
       {required this.id,
       required this.name,
       required this.balance,
       required this.currency});
+  factory _AccountUpdateData.fromJson(Map<String, dynamic> json) =>
+      _$AccountUpdateDataFromJson(json);
 
   @override
   final int id;
@@ -124,6 +130,13 @@ class _AccountUpdateData implements AccountUpdateData {
       __$AccountUpdateDataCopyWithImpl<_AccountUpdateData>(this, _$identity);
 
   @override
+  Map<String, dynamic> toJson() {
+    return _$AccountUpdateDataToJson(
+      this,
+    );
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -135,6 +148,7 @@ class _AccountUpdateData implements AccountUpdateData {
                 other.currency == currency));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, balance, currency);
 

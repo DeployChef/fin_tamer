@@ -12,7 +12,7 @@ _TransactionUpdateData _$TransactionUpdateDataFromJson(
       id: (json['id'] as num).toInt(),
       accountId: (json['accountId'] as num).toInt(),
       categoryId: (json['categoryId'] as num).toInt(),
-      amount: json['amount'] as String,
+      amount: (json['amount'] as num).toDouble(),
       transactionDate: DateTime.parse(json['transactionDate'] as String),
       comment: json['comment'] as String?,
     );

@@ -21,19 +21,22 @@ abstract class TransactionResponseDto with _$TransactionResponseDto {
     required DateTime updatedAt,
   }) = _TransactionResponseDto;
 
-  factory TransactionResponseDto.fromJson(Map<String, dynamic> json) => _$TransactionResponseDtoFromJson(json);
+  factory TransactionResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TransactionResponseDtoFromJson(json);
 }
 
 extension TransactionResponseDtoToEntity on TransactionResponseDto {
-  TransactionEntity toEntity() => TransactionEntity(
-        id: 0, // всегда новый, ObjectBox сам назначит
-        apiId: id, // id из DTO — это apiId
-        accountApiId: account.id, // id из AccountBriefDto
-        categoryApiId: category.id, // id из CategoryDto
+  TransactionEntity toEntity(int localAccountId) => TransactionEntity(
+        id: 0,
+        apiId: id,
+        accountId: localAccountId,
+        accountApiId: account.id,
+        categoryApiId: category.id,
         amount: amount,
         transactionDate: transactionDate,
         comment: comment,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        isDeleted: false,
       );
 }

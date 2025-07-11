@@ -1,13 +1,13 @@
 import 'package:fin_tamer/core/di/repository_providers.dart';
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
-import 'package:fin_tamer/core/utils/locale_decimal_formatter.dart';
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/account/domain/models/account_brief.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/category/domain/models/category.dart';
 import 'package:fin_tamer/features/category/domain/services/categories_service.dart';
 import 'package:fin_tamer/features/category/ui/widgets/category_item.dart';
+import 'package:fin_tamer/features/history/domain/services/transaction_chart_service.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_create_data.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction_update_data.dart';
@@ -59,7 +59,7 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       _selectedCategory = widget.transaction!.category;
       _selectedDate = widget.transaction!.transactionDate;
       _selectedTime = TimeOfDay.fromDateTime(widget.transaction!.transactionDate);
-      _amountController.text = widget.transaction!.amount;
+      _amountController.text = widget.transaction!.amount.toString();
       _commentController.text = widget.transaction!.comment ?? "";
     } else {
       _isCreateMode = true;
@@ -204,14 +204,17 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
   }
 
   void _deleteTransaction() async {
-    final transactionService = await ref.read(transactionRepositoryProvider.future);
-
-    transactionService.delete(widget.transaction!.id);
-
-    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
-
-    GoRouter.of(context).pop();
+    try {
+      final transactionService = await ref.read(transactionRepositoryProvider.future);
+      await transactionService.delete(widget.transaction!.id);
+      ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(transactionChartServiceProvider);
+      ref.invalidate(accountServiceProvider);
+      GoRouter.of(context).pop();
+    } catch (e) {
+      await _showErrorDialog(e.toString());
+    }
   }
 
   Future<void> _onSave() async {
@@ -222,41 +225,40 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
       _selectedTime.hour,
       _selectedTime.minute,
     );
-
     if (!isValid()) {
       await _showValidationDialog();
       return;
     }
-
-    final transactionService = await ref.read(transactionRepositoryProvider.future);
-
-    if (_isCreateMode) {
-      final request = TransactionCreateData(
-        accountId: _selectedAccount!.id,
-        categoryId: _selectedCategory!.id,
-        amount: _amountController.text.trim(),
-        transactionDate: combinedDate,
-        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
-      );
-
-      await transactionService.create(request);
-    } else {
-      final request = TransactionUpdateData(
-        id: widget.transaction!.id,
-        accountId: _selectedAccount!.id,
-        categoryId: _selectedCategory!.id,
-        amount: _amountController.text.trim(),
-        transactionDate: combinedDate,
-        comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
-      );
-
-      await transactionService.update(request);
+    try {
+      final transactionService = await ref.read(transactionRepositoryProvider.future);
+      if (_isCreateMode) {
+        final request = TransactionCreateData(
+          accountId: _selectedAccount!.id,
+          categoryId: _selectedCategory!.id,
+          amount: NumberFormat().parse(_amountController.text.trim()) as double,
+          transactionDate: combinedDate,
+          comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+        );
+        await transactionService.create(request);
+      } else {
+        final request = TransactionUpdateData(
+          id: widget.transaction!.id,
+          accountId: _selectedAccount!.id,
+          categoryId: _selectedCategory!.id,
+          amount: NumberFormat().parse(_amountController.text.trim()) as double,
+          transactionDate: combinedDate,
+          comment: _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
+        );
+        await transactionService.update(request);
+      }
+      ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
+      ref.invalidate(transactionChartServiceProvider);
+      ref.invalidate(accountServiceProvider);
+      GoRouter.of(context).pop();
+    } catch (e) {
+      await _showErrorDialog(e.toString());
     }
-
-    ref.invalidate(todayTransactionServiceProvider(isIncome: widget.isIncome));
-    ref.invalidate(historyFilteredTransactionServiceProvider(isIncome: widget.isIncome));
-
-    GoRouter.of(context).pop();
   }
 
   Future<void> _showValidationDialog() async {
@@ -274,6 +276,28 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
             loc.validationErrorContent,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(loc.okButton),
+              onPressed: () {
+                GoRouter.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showErrorDialog(String message) async {
+    final loc = AppLocalizations.of(context)!;
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(loc.error, style: Theme.of(context).textTheme.bodyLarge),
+          content: Text(message, style: Theme.of(context).textTheme.bodyLarge),
           actions: <Widget>[
             TextButton(
               child: Text(loc.okButton),
@@ -385,7 +409,6 @@ class _TransactionDetailsState extends ConsumerState<TransactionDetails> {
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[\d.,]')),
-                    LocaleDecimalFormatter(separator),
                   ],
                   textAlign: TextAlign.right,
                   decoration: const InputDecoration(

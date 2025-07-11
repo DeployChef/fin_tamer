@@ -1,5 +1,7 @@
 import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/core/di/repository_providers.dart';
+import 'package:fin_tamer/features/account/domain/models/account_update_data.dart';
+import 'package:fin_tamer/features/currency/domain/models/currency.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account_service.g.dart';
@@ -22,8 +24,32 @@ class AccountService extends _$AccountService {
     final account = state.value;
     if (account != null) {
       final repo = await ref.read(accountRepositoryProvider.future);
-      await repo.updateAccountName(account.id, name);
+
+      final updateRequest = AccountUpdateData(
+        id: account.id,
+        name: name,
+        balance: account.balance,
+        currency: account.currency,
+      );
+      await repo.update(updateRequest);
       state = AsyncData(account.copyWith(name: name));
+    }
+  }
+
+  Future<void> updateCurrency({required Currency currency}) async {
+    final account = state.value;
+    if (account != null) {
+      final repo = await ref.read(accountRepositoryProvider.future);
+
+      final updateRequest = AccountUpdateData(
+        id: account.id,
+        name: account.name,
+        balance: account.balance,
+        currency: currency.code,
+      );
+
+      await repo.update(updateRequest);
+      state = AsyncData(account.copyWith(currency: currency.code));
     }
   }
 }

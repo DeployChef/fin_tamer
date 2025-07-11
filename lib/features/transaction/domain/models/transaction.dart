@@ -13,12 +13,13 @@ abstract class Transaction with _$Transaction {
     required int id,
     required AccountBrief account,
     required Category category,
-    required String amount,
+    required double amount,
     required DateTime transactionDate,
     String? comment,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _Transaction;
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
+  factory Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
 }

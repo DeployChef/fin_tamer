@@ -1,12 +1,12 @@
 import 'package:fin_tamer/features/history/domain/interfaces/i_history_repository.dart';
 import 'package:fin_tamer/features/history/domain/models/account_history_feed.dart';
-import 'package:fin_tamer/features/history/data/remote/history_remote_data_source.dart';
+import 'package:fin_tamer/features/history/data/remote/interfaces/i_history_remote_data_source.dart';
 import 'package:fin_tamer/features/history/data/local/history_local_data_source.dart';
 import 'package:fin_tamer/features/history/data/local/mappers/history_local_mapper.dart';
 import 'package:fin_tamer/features/account/data/local/account_local_data_source.dart';
 
 class HistoryRepository implements IHistoryRepository {
-  final HistoryRemoteDataSource remoteDataSource;
+  final IHistoryRemoteDataSource remoteDataSource;
   final HistoryLocalDataSource localDataSource;
   final AccountLocalDataSource accountLocalDataSource;
 

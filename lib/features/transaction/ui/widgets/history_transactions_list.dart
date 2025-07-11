@@ -24,7 +24,7 @@ class HistoryTransactionsList extends ConsumerWidget {
         AmountWidget(
             title: loc.amountHistoryTitle,
             amount: transactionService.when(
-              data: (transactions) => transactions.isNotEmpty ? transactions.map((c) => double.parse(c.amount)).reduce((a, b) => a + b) : 0.0,
+              data: (transactions) => transactions.isNotEmpty ? transactions.map((c) => c.amount).reduce((a, b) => a + b) : 0.0,
               error: (_, __) => 0,
               loading: () => 0,
             )),

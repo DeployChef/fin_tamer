@@ -9,6 +9,7 @@ abstract class Category with _$Category {
 
   const factory Category({
     required int id,
+    required int apiId,
     required String name,
     required String emoji,
     required bool isIncome,
