@@ -30,5 +30,13 @@
     "validationErrorTitle": "Validation error",
     "validationErrorContent": "Please fill all required fields.",
     "okButton": "OK",
-    "error": "Error"
+    "error": "Error",
+    "darkTheme": "Dark theme",
+    "primaryColor": "Primary color",
+    "sounds": "Sounds",
+    "haptics": "Haptics",
+    "passcode": "Passcode",
+    "sync": "Sync",
+    "language": "Language",
+    "about": "About"
 }

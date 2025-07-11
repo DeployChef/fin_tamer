@@ -103,4 +103,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error';
+
+  @override
+  String get darkTheme => 'Dark theme';
+
+  @override
+  String get primaryColor => 'Primary color';
+
+  @override
+  String get sounds => 'Sounds';
+
+  @override
+  String get haptics => 'Haptics';
+
+  @override
+  String get passcode => 'Passcode';
+
+  @override
+  String get sync => 'Sync';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get about => 'About';
 }
