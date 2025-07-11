@@ -1,5 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:fin_tamer/features/settings/ui/widgets/theme_switcher.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,14 +15,7 @@ class SettingsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ListTile(
-            title: Text(l10n.darkTheme, style: theme.textTheme.bodyMedium),
-            trailing: Switch(
-              value: false, // TODO: bind to theme state
-              onChanged: (_) {}, // TODO: implement logic
-            ),
-            contentPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          ),
+          const ThemeSwitcher(),
           Divider(),
           ListTile(
             title: Text(l10n.primaryColor, style: theme.textTheme.bodyMedium),

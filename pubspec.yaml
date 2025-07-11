@@ -33,6 +33,7 @@ dependencies:
   spoiler_widget: ^1.0.12
   worker_manager: ^7.2.6
   internet_connection_checker: ^3.0.1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   build_runner: ^2.5.2

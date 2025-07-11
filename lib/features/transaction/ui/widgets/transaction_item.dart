@@ -5,7 +5,11 @@ import 'package:fin_tamer/features/transaction/ui/widgets/dialogs/transaction_de
 import 'package:flutter/material.dart';
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({super.key, required this.item, this.showTime = false, this.enableDetails = true});
+  const TransactionItem(
+      {super.key,
+      required this.item,
+      this.showTime = false,
+      this.enableDetails = true});
 
   final Transaction item;
   final bool showTime;
@@ -62,7 +66,8 @@ class TransactionItem extends StatelessWidget {
       ]),
       onTap: enableDetails
           ? () async {
-              await TransactionDetails.showDetailsModal(context, isIncome: item.category.isIncome, transaction: item);
+              await TransactionDetails.showDetailsModal(context,
+                  isIncome: item.category.isIncome, transaction: item);
             }
           : null,
     );

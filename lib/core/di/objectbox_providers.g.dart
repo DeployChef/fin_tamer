@@ -23,7 +23,7 @@ final objectBoxStoreProvider = FutureProvider<Store>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ObjectBoxStoreRef = FutureProviderRef<Store>;
-String _$categoryBoxHash() => r'd890e9d43aa770e1f87c778027a426fd6c10d056';
+String _$categoryBoxHash() => r'fa3defc00498e143ed275202b174624192082205';
 
 /// See also [categoryBox].
 @ProviderFor(categoryBox)
