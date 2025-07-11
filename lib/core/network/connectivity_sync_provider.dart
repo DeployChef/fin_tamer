@@ -36,6 +36,6 @@ class ConnectivitySync extends _$ConnectivitySync {
       _subscription.cancel();
     });
 
-    return NetworkStatus.offline;
+    return NetworkStatus.online;
   }
 }

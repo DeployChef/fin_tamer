@@ -56,7 +56,9 @@ class SyncTransactionHandler {
           LoggerService.info('Deleting transaction', tag: 'SyncTransactionHandler', data: {
             'entityId': event.entityId,
           });
-          await remoteDataSource.delete(int.parse(event.entityId));
+
+          final apiId = int.parse(event.payloadJson);
+          await remoteDataSource.delete(apiId);
           // После успешного sync удаляем из локальной БД
           final localId = int.parse(event.entityId);
           final localEntity = await localDataSource.getById(localId);
