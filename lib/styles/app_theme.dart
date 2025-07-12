@@ -1,6 +1,6 @@
-import 'package:fin_tamer/styles/app_colors.dart';
-import 'package:fin_tamer/styles/app_fonts.dart';
 import 'package:flutter/material.dart';
+import 'app_colors.dart';
+import 'app_fonts.dart';
 
 class AppTheme {
   static ThemeData light() {
@@ -36,11 +36,10 @@ class AppTheme {
         indicatorColor: AppColors.navigationLight,
         labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppFonts.labelMedium
-                .copyWith(color: AppColors.foregroundLight);
+            return AppFonts.labelMedium.copyWith(color: Colors.black);
           }
           return AppFonts.labelMedium
-              .copyWith(color: AppColors.secondaryTextLight);
+              .copyWith(color: Colors.black.withOpacity(0.6));
         }),
         backgroundColor: AppColors.bottomBarLight,
       ),
@@ -142,11 +141,10 @@ class AppTheme {
         indicatorColor: AppColors.navigationDark,
         labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppFonts.labelMedium
-                .copyWith(color: AppColors.foregroundDark);
+            return AppFonts.labelMedium.copyWith(color: Colors.white);
           }
           return AppFonts.labelMedium
-              .copyWith(color: AppColors.secondaryTextDark);
+              .copyWith(color: Colors.white.withOpacity(0.7));
         }),
         backgroundColor: AppColors.bottomBarDark,
       ),

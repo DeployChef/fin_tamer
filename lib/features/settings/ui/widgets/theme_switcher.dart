@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/settings/domain/services/theme_service.dart';
+import 'package:fin_tamer/features/settings/domain/services/app_theme_service.dart';
 
 class ThemeSwitcher extends ConsumerWidget {
   const ThemeSwitcher({super.key});
@@ -17,7 +18,10 @@ class ThemeSwitcher extends ConsumerWidget {
       trailing: asyncTheme.when(
         data: (isDark) => Switch(
           value: isDark,
-          onChanged: (_) => notifier.toggle(),
+          onChanged: (_) async {
+            await notifier.toggle();
+            await ref.read(appThemeServiceProvider.notifier).updateTheme();
+          },
         ),
         loading: () => const SizedBox(
           width: 48,
