@@ -26,7 +26,7 @@ class CategoriesPage extends ConsumerWidget {
                     .setFilter(value),
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: theme.colorScheme.surfaceVariant,
+                  fillColor: theme.colorScheme.surfaceContainerHighest,
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
                   hintText: "Найти статью",

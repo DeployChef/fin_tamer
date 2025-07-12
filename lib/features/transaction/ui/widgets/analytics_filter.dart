@@ -1,7 +1,6 @@
 import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_filter_service.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,8 +23,7 @@ class AnalyticsFilter extends ConsumerWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
             loc.filterStartDatePeriod,
             style: theme.textTheme.bodyLarge,
@@ -41,8 +39,7 @@ class AnalyticsFilter extends ConsumerWidget {
             ),
             child: Text(
               startDate.toddMMyyyy(),
-              style: theme.textTheme.bodyLarge!
-                  .copyWith(fontWeight: FontWeight.w500),
+              style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
             ),
           ),
           onTap: () async {
@@ -60,8 +57,7 @@ class AnalyticsFilter extends ConsumerWidget {
         ),
         const Divider(),
         ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           title: Text(
             loc.filterEndDatePeriod,
             style: theme.textTheme.bodyLarge,
@@ -77,8 +73,7 @@ class AnalyticsFilter extends ConsumerWidget {
             ),
             child: Text(
               endDate.toddMMyyyy(),
-              style: theme.textTheme.bodyLarge!
-                  .copyWith(fontWeight: FontWeight.w500),
+              style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
             ),
           ),
           onTap: () async {

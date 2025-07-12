@@ -1,7 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,8 +17,7 @@ class SortItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = historyFilterServiceProvider(isIncome: isIncome);
-    final providerFilterOption =
-        ref.watch(historyFilterServiceProvider(isIncome: isIncome));
+    final providerFilterOption = ref.watch(historyFilterServiceProvider(isIncome: isIncome));
 
     final loc = AppLocalizations.of(context)!;
 
@@ -46,8 +44,7 @@ class SortItem extends ConsumerWidget {
               style: const TextStyle(fontSize: 16),
             ),
             providerFilterOption.sortType == sortType
-                ? Icon(Icons.check_circle,
-                    color: Theme.of(context).colorScheme.primary)
+                ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
                 : const Icon(Icons.circle_outlined),
           ],
         ),

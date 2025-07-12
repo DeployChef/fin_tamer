@@ -16,6 +16,13 @@ class OutcomeAnalyticsPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(loc.analytics),
+          foregroundColor: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
+          iconTheme: IconThemeData(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black),
         ),
         body: const Column(
           children: [

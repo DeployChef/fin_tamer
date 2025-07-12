@@ -92,7 +92,7 @@ class AppThemeService extends _$AppThemeService {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.selected)) {
-              return tintColor.withOpacity(0.2);
+              return tintColor.withValues(alpha: 0.2);
             }
             return baseTheme.segmentedButtonTheme.style?.backgroundColor
                     ?.resolve({}) ??
@@ -104,7 +104,7 @@ class AppThemeService extends _$AppThemeService {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           overlayColor:
-              WidgetStateProperty.all<Color>(tintColor.withOpacity(0.15)),
+              WidgetStateProperty.all<Color>(tintColor.withValues(alpha: 0.15)),
           elevation: WidgetStateProperty.all<double>(0),
           side: WidgetStateProperty.all<BorderSide>(
               BorderSide(color: tintColor, width: 2)),
@@ -164,7 +164,7 @@ class AppThemeService extends _$AppThemeService {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.selected)) {
-              return tintColor.withOpacity(0.2);
+              return tintColor.withValues(alpha: 0.2);
             }
             return baseTheme.segmentedButtonTheme.style?.backgroundColor
                     ?.resolve({}) ??
@@ -176,7 +176,7 @@ class AppThemeService extends _$AppThemeService {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           overlayColor:
-              WidgetStateProperty.all<Color>(tintColor.withOpacity(0.15)),
+              WidgetStateProperty.all<Color>(tintColor.withValues(alpha: 0.15)),
           elevation: WidgetStateProperty.all<double>(0),
           side: WidgetStateProperty.all<BorderSide>(
               BorderSide(color: tintColor, width: 2)),

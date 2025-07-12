@@ -17,7 +17,11 @@ class AppTheme {
         error: AppColors.alarmLight,
         onError: Colors.white,
         secondaryContainer: AppColors.accentLight,
-        surfaceVariant: AppColors.surfaceVariantLight,
+        surfaceContainerHighest: AppColors.surfaceVariantLight,
+        // surfaceContainerHigh: ...,
+        // surfaceContainer: ...,
+        // surfaceContainerLow: ...,
+        // surfaceContainerLowest: ...,
       ),
       scaffoldBackgroundColor: AppColors.backgroundLight,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -39,7 +43,7 @@ class AppTheme {
             return AppFonts.labelMedium.copyWith(color: Colors.black);
           }
           return AppFonts.labelMedium
-              .copyWith(color: Colors.black.withOpacity(0.6));
+              .copyWith(color: Colors.black.withValues(alpha: 0.6));
         }),
         backgroundColor: AppColors.bottomBarLight,
       ),
@@ -72,7 +76,7 @@ class AppTheme {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.selected)) {
-              return AppColors.primaryLight.withOpacity(0.2);
+              return AppColors.primaryLight.withValues(alpha: 0.2);
             }
             return AppColors.navigationLight;
           }),
@@ -82,7 +86,7 @@ class AppTheme {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
-              AppColors.primaryLight.withOpacity(0.15)),
+              AppColors.primaryLight.withValues(alpha: 0.15)),
           elevation: WidgetStateProperty.all<double>(0),
           side: WidgetStateProperty.all<BorderSide>(
             const BorderSide(color: AppColors.primaryLight, width: 2),
@@ -122,7 +126,11 @@ class AppTheme {
         error: AppColors.alarmDark,
         onError: Colors.white,
         secondaryContainer: AppColors.primaryDark,
-        surfaceVariant: AppColors.surfaceVariantDark,
+        surfaceContainerHighest: AppColors.surfaceVariantDark,
+        // surfaceContainerHigh: ...,
+        // surfaceContainer: ...,
+        // surfaceContainerLow: ...,
+        // surfaceContainerLowest: ...,
       ),
       scaffoldBackgroundColor: AppColors.backgroundDark,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -144,7 +152,7 @@ class AppTheme {
             return AppFonts.labelMedium.copyWith(color: Colors.white);
           }
           return AppFonts.labelMedium
-              .copyWith(color: Colors.white.withOpacity(0.7));
+              .copyWith(color: Colors.white.withValues(alpha: 0.7));
         }),
         backgroundColor: AppColors.bottomBarDark,
       ),
@@ -177,7 +185,7 @@ class AppTheme {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.selected)) {
-              return AppColors.primaryDark.withOpacity(0.2);
+              return AppColors.primaryDark.withValues(alpha: 0.2);
             }
             return AppColors.navigationDark;
           }),
@@ -187,7 +195,7 @@ class AppTheme {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
-              AppColors.primaryDark.withOpacity(0.15)),
+              AppColors.primaryDark.withValues(alpha: 0.15)),
           elevation: WidgetStateProperty.all<double>(0),
           side: WidgetStateProperty.all<BorderSide>(
             const BorderSide(color: AppColors.primaryDark, width: 2),

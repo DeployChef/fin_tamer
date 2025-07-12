@@ -1,6 +1,5 @@
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 
 class AmountWidget extends StatelessWidget {
   const AmountWidget({

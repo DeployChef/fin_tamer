@@ -1,7 +1,6 @@
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:fin_tamer/features/transaction/domain/services/analytics/analytics_service.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/dialogs/category_transaction_bottom_sheet.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticItem extends StatelessWidget {
@@ -47,11 +46,10 @@ class AnalyticItem extends StatelessWidget {
             MoneyWidget(amount: item.amount),
           ],
         ),
-        Icon(Icons.chevron_right, color: theme.dividerColor.withOpacity(0.3)),
+        Icon(Icons.chevron_right, color: theme.dividerColor.withValues(alpha: 0.3)),
       ]),
       onTap: () async {
-        await CurrencyPickerBottomSheet.showCurrencyTransactionBottomSheet(
-            context, item.transactions);
+        await CurrencyPickerBottomSheet.showCurrencyTransactionBottomSheet(context, item.transactions);
       },
     );
   }

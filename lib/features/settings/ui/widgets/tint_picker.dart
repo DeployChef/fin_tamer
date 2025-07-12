@@ -27,7 +27,7 @@ class TintPicker extends ConsumerWidget {
                 color: tintColor,
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: theme.colorScheme.outline.withOpacity(0.3),
+                  color: theme.colorScheme.outline.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -50,8 +50,7 @@ class TintPicker extends ConsumerWidget {
     );
   }
 
-  void _showColorPicker(
-      BuildContext context, WidgetRef ref, Color currentColor) {
+  void _showColorPicker(BuildContext context, WidgetRef ref, Color currentColor) {
     Color pickerColor = currentColor;
 
     showDialog(
@@ -78,11 +77,10 @@ class TintPicker extends ConsumerWidget {
             TextButton(
               child: const Text('Выбрать'),
               onPressed: () async {
-                await ref
-                    .read(tintServiceProvider.notifier)
-                    .setTint(pickerColor);
+                final navigator = Navigator.of(context);
+                await ref.read(tintServiceProvider.notifier).setTint(pickerColor);
                 await ref.read(appThemeServiceProvider.notifier).updateTheme();
-                Navigator.of(context).pop();
+                navigator.pop();
               },
             ),
           ],

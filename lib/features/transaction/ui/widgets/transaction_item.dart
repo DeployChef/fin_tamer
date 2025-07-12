@@ -2,7 +2,6 @@ import 'package:fin_tamer/core/extensions/date_time_extension.dart';
 import 'package:fin_tamer/features/transaction/domain/models/transaction.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
 import 'package:fin_tamer/features/transaction/ui/widgets/dialogs/transaction_details.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class TransactionItem extends StatelessWidget {
@@ -57,7 +56,7 @@ class TransactionItem extends StatelessWidget {
         enableDetails
             ? Icon(
                 Icons.chevron_right,
-                color: theme.dividerColor.withOpacity(0.3),
+                color: theme.dividerColor.withValues(alpha: 0.3),
               )
             : const SizedBox.shrink(),
       ]),
