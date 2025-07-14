@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_theme_service.dart';
+part of 'haptic_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appThemeServiceHash() => r'f72a71c29896713327f4716fac07d23065099eb2';
+String _$hapticServiceHash() => r'02c6fcabe42e90c14f272637b4ee3ae2a78aa146';
 
-/// See also [AppThemeService].
-@ProviderFor(AppThemeService)
-final appThemeServiceProvider =
-    AutoDisposeAsyncNotifierProvider<AppThemeService, ThemeData>.internal(
-  AppThemeService.new,
-  name: r'appThemeServiceProvider',
+/// See also [HapticService].
+@ProviderFor(HapticService)
+final hapticServiceProvider =
+    AutoDisposeAsyncNotifierProvider<HapticService, bool>.internal(
+  HapticService.new,
+  name: r'hapticServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appThemeServiceHash,
+      : _$hapticServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppThemeService = AutoDisposeAsyncNotifier<ThemeData>;
+typedef _$HapticService = AutoDisposeAsyncNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
