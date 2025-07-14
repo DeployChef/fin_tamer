@@ -6,6 +6,17 @@ import 'package:fin_tamer/features/settings/domain/services/theme_service.dart';
 
 part 'app_theme_service.g.dart';
 
+class AppThemeState {
+  final ThemeData lightTheme;
+  final ThemeData darkTheme;
+  final bool isDark;
+  AppThemeState({
+    required this.lightTheme,
+    required this.darkTheme,
+    required this.isDark,
+  });
+}
+
 Color lighten(Color color, [double amount = .2]) {
   final hsl = HSLColor.fromColor(color);
   final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
@@ -21,26 +32,24 @@ Color darken(Color color, [double amount = .2]) {
 @riverpod
 class AppThemeService extends _$AppThemeService {
   @override
-  Future<ThemeData> build() async {
+  Future<AppThemeState> build() async {
     final isDark = await ref.watch(themeServiceProvider.future);
     final tintColor = await ref.watch(tintServiceProvider.future);
-
-    if (isDark) {
-      return _createDarkTheme(tintColor);
-    } else {
-      return _createLightTheme(tintColor);
-    }
+    return AppThemeState(
+      lightTheme: _createLightTheme(tintColor),
+      darkTheme: _createDarkTheme(tintColor),
+      isDark: isDark,
+    );
   }
 
   Future<void> updateTheme() async {
     final isDark = await ref.read(themeServiceProvider.future);
     final tintColor = await ref.read(tintServiceProvider.future);
-
-    if (isDark) {
-      state = AsyncValue.data(_createDarkTheme(tintColor));
-    } else {
-      state = AsyncValue.data(_createLightTheme(tintColor));
-    }
+    state = AsyncValue.data(AppThemeState(
+      lightTheme: _createLightTheme(tintColor),
+      darkTheme: _createDarkTheme(tintColor),
+      isDark: isDark,
+    ));
   }
 
   ThemeData _createLightTheme(Color tintColor) {
