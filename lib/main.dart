@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:worker_manager/worker_manager.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+  await dotenv.load();
   await workerManager.init();
+
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const ProviderScope(
     child: MainApp(),

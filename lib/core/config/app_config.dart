@@ -1,7 +1,9 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class AppConfig {
   // Сетевые настройки
-  static const String baseUrl = 'https://shmr-finance.ru/api/v1';
-  static const String authToken = 'userName'; // Замените на ваш токен
+  static String get baseUrl => dotenv.env['BASE_URL'] ?? '';
+  static String get authToken => dotenv.env['AUTH_TOKEN'] ?? '';
 
   // Переключатели для тестирования
   static const bool useMockAccounts = false;
