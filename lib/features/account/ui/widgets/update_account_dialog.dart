@@ -2,6 +2,7 @@ import 'package:fin_tamer/features/account/domain/models/account.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 
 class UpdateAccountDialog extends ConsumerWidget {
   UpdateAccountDialog({super.key, required this.account});
@@ -12,6 +13,7 @@ class UpdateAccountDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
 
     Future<void> showErrorDialog(String message) async {
       await showDialog<void>(
@@ -19,11 +21,11 @@ class UpdateAccountDialog extends ConsumerWidget {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Ошибка'),
+            title: Text(loc.errorTitle),
             content: Text(message),
             actions: <Widget>[
               TextButton(
-                child: const Text('OK'),
+                child: Text(loc.okButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -42,7 +44,7 @@ class UpdateAccountDialog extends ConsumerWidget {
       content: TextField(
         controller: nameEditingController,
         decoration: InputDecoration(
-          labelText: 'Введите новое название счета',
+          labelText: loc.updateAccountLabel,
           labelStyle: theme.textTheme.labelMedium,
         ),
       ),
@@ -51,7 +53,7 @@ class UpdateAccountDialog extends ConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Отмена'),
+          child: Text(loc.cancel),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -59,14 +61,16 @@ class UpdateAccountDialog extends ConsumerWidget {
             if (newName.isNotEmpty) {
               try {
                 final navigator = Navigator.of(context);
-                await ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
+                await ref
+                    .read(accountServiceProvider.notifier)
+                    .updateAccount(name: newName);
                 navigator.pop();
               } catch (e) {
                 await showErrorDialog(e.toString());
               }
             }
           },
-          child: const Text('Сохранить'),
+          child: Text(loc.save),
         ),
       ],
     );

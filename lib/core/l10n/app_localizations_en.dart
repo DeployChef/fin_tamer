@@ -127,4 +127,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get about => 'About';
+
+  @override
+  String get findArticle => 'Find transaction';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get byDay => 'By day';
+
+  @override
+  String get byMonth => 'By month';
+
+  @override
+  String get updateAccountTitle => 'Update account';
+
+  @override
+  String get updateAccountLabel => 'Enter new account name';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get errorTitle => 'Error';
 }

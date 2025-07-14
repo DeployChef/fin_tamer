@@ -1,4 +1,5 @@
 import 'package:chart_widget/chart_widget.dart';
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/history/domain/services/transaction_chart_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
   @override
   Widget build(BuildContext context) {
     final accountAsync = ref.watch(accountServiceProvider);
+    final loc = AppLocalizations.of(context)!;
     return accountAsync.when(
       loading: () => const SizedBox.shrink(),
       error: (e, st) => const SizedBox.shrink(),
@@ -46,14 +48,14 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: SegmentedButton<TransactionChartMode>(
-                segments: const [
+                segments: [
                   ButtonSegment(
                     value: TransactionChartMode.byDay,
-                    label: SizedBox(width: 150, child: Center(child: Text('По дням'))),
+                    label: SizedBox(width: 150, child: Center(child: Text(loc.byDay))),
                   ),
                   ButtonSegment(
                     value: TransactionChartMode.byMonth,
-                    label: SizedBox(width: 150, child: Center(child: Text('По месяцам'))),
+                    label: SizedBox(width: 150, child: Center(child: Text(loc.byMonth))),
                   ),
                 ],
                 selected: {_mode},

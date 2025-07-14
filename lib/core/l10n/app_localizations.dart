@@ -337,6 +337,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get about;
+
+  /// No description provided for @findArticle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find transaction'**
+  String get findArticle;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @byDay.
+  ///
+  /// In en, this message translates to:
+  /// **'By day'**
+  String get byDay;
+
+  /// No description provided for @byMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'By month'**
+  String get byMonth;
+
+  /// No description provided for @updateAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update account'**
+  String get updateAccountTitle;
+
+  /// No description provided for @updateAccountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new account name'**
+  String get updateAccountLabel;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorTitle;
 }
 
 class _AppLocalizationsDelegate

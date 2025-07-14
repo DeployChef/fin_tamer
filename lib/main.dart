@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:worker_manager/worker_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fin_tamer/core/utils/widgets/blur_guard.dart';
+import 'package:fin_tamer/features/settings/domain/services/language_service.dart';
 
 void main() async {
   await dotenv.load();
@@ -25,14 +26,19 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeAsync = ref.watch(appThemeServiceProvider);
+    final localeAsync = ref.watch(languageServiceProvider);
     return themeAsync.when(
-      data: (themeState) => _buildMaterialApp(themeState),
-      loading: () => _buildMaterialApp(null),
-      error: (error, stack) => _buildMaterialApp(null),
+      data: (themeState) => localeAsync.when(
+        data: (locale) => _buildMaterialApp(themeState, locale),
+        loading: () => _buildMaterialApp(themeState, null),
+        error: (error, stack) => _buildMaterialApp(themeState, null),
+      ),
+      loading: () => _buildMaterialApp(null, null),
+      error: (error, stack) => _buildMaterialApp(null, null),
     );
   }
 
-  Widget _buildMaterialApp(AppThemeState? themeState) {
+  Widget _buildMaterialApp(AppThemeState? themeState, Locale? locale) {
     final theme = themeState?.lightTheme ?? ThemeData.light();
     final darkTheme = themeState?.darkTheme ?? ThemeData.dark();
     final isDark = themeState?.isDark ?? false;
@@ -40,6 +46,7 @@ class MainApp extends ConsumerWidget {
       theme: theme,
       darkTheme: darkTheme,
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      locale: locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

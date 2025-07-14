@@ -128,4 +128,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get about => 'О программе';
+
+  @override
+  String get findArticle => 'Найти статью';
+
+  @override
+  String get currency => 'Валюта';
+
+  @override
+  String get balance => 'Баланс';
+
+  @override
+  String get byDay => 'По дням';
+
+  @override
+  String get byMonth => 'По месяцам';
+
+  @override
+  String get updateAccountTitle => 'Редактировать счёт';
+
+  @override
+  String get updateAccountLabel => 'Введите новое название счета';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get errorTitle => 'Ошибка';
 }

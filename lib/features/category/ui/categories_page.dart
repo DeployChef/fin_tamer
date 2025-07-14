@@ -29,7 +29,7 @@ class CategoriesPage extends ConsumerWidget {
                   fillColor: theme.colorScheme.surfaceContainerHighest,
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
-                  hintText: "Найти статью",
+                  hintText: loc.findArticle,
                   suffixIcon: Icon(
                     Icons.search,
                     color: theme.colorScheme.onSurface,

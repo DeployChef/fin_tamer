@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/account/domain/services/hide_balance.dart';
 import 'package:fin_tamer/features/currency/ui/money_widget.dart';
@@ -47,6 +48,7 @@ class _AccountBalanceState extends ConsumerState<AccountBalance> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
 
     return ShakeGesture(
       onShake: () => ref.read(hideBalanceProvider.notifier).toggle(),
@@ -62,7 +64,7 @@ class _AccountBalanceState extends ConsumerState<AccountBalance> {
           ),
         ),
         title: Text(
-          "Баланс",
+          loc.balance,
           style: theme.textTheme.bodyLarge,
         ),
         trailing: Row(spacing: 16, mainAxisSize: MainAxisSize.min, children: [

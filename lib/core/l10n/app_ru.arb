@@ -38,5 +38,15 @@
     "passcode": "Код-пароль",
     "sync": "Синхронизация",
     "language": "Язык",
-    "about": "О программе"
+    "about": "О программе",
+    "findArticle": "Найти статью",
+    "currency": "Валюта",
+    "balance": "Баланс",
+    "byDay": "По дням",
+    "byMonth": "По месяцам",
+    "updateAccountTitle": "Редактировать счёт",
+    "updateAccountLabel": "Введите новое название счета",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "errorTitle": "Ошибка"
 }

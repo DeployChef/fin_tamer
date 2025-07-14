@@ -38,5 +38,15 @@
     "passcode": "Passcode",
     "sync": "Sync",
     "language": "Language",
-    "about": "About"
+    "about": "About",
+    "findArticle": "Find transaction",
+    "currency": "Currency",
+    "balance": "Balance",
+    "byDay": "By day",
+    "byMonth": "By month",
+    "updateAccountTitle": "Update account",
+    "updateAccountLabel": "Enter new account name",
+    "cancel": "Cancel",
+    "save": "Save",
+    "errorTitle": "Error"
 }
