@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:worker_manager/worker_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fin_tamer/core/utils/widgets/blur_guard.dart';
 
 void main() async {
   await dotenv.load();
@@ -50,6 +51,7 @@ class MainApp extends ConsumerWidget {
         Locale('ru'), // Russian
       ],
       routerConfig: AppRouter.router,
+      builder: (context, child) => BlurGuard(child: child ?? const SizedBox()),
     );
   }
 }
