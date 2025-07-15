@@ -8,6 +8,10 @@ import 'package:worker_manager/worker_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fin_tamer/core/utils/widgets/blur_guard.dart';
 import 'package:fin_tamer/features/settings/domain/services/language_service.dart';
+import 'package:fin_tamer/features/auth/services/pin_code_service.dart';
+import 'package:fin_tamer/features/auth/services/biometric_service.dart';
+import 'package:fin_tamer/features/auth/ui/pin_code_screen.dart';
+import 'package:fin_tamer/core/utils/widgets/app_with_lock.dart';
 
 void main() async {
   await dotenv.load();
@@ -15,9 +19,11 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const ProviderScope(
-    child: MainApp(),
-  ));
+  runApp(
+    ProviderScope(
+      child: MainApp(),
+    ),
+  );
 }
 
 class MainApp extends ConsumerWidget {
@@ -58,7 +64,9 @@ class MainApp extends ConsumerWidget {
         Locale('ru'), // Russian
       ],
       routerConfig: AppRouter.router,
-      builder: (context, child) => BlurGuard(child: child ?? const SizedBox()),
+      builder: (context, child) => AppWithLock(
+        child: BlurGuard(child: child ?? const SizedBox()),
+      ),
     );
   }
 }

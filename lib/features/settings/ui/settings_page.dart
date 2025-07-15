@@ -6,6 +6,7 @@ import 'package:fin_tamer/features/settings/ui/widgets/haptics_switcher.dart';
 import 'package:fin_tamer/features/settings/ui/widgets/language_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fin_tamer/features/settings/domain/services/language_service.dart';
+import 'package:fin_tamer/features/settings/ui/widgets/passcode_settings.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -33,12 +34,7 @@ class SettingsPage extends StatelessWidget {
           const Divider(),
           const HapticsSwitcher(),
           const Divider(),
-          ListTile(
-            title: Text(l10n.passcode, style: theme.textTheme.bodyLarge),
-            onTap: () {},
-            trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-            contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          ),
+          const PasscodeSettings(),
           const Divider(),
           ListTile(
             title: Text(l10n.sync, style: theme.textTheme.bodyLarge),
@@ -54,42 +50,6 @@ class SettingsPage extends StatelessWidget {
             onTap: () {},
             trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
             contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showLanguageBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => const _LanguageBottomSheet(),
-    );
-  }
-}
-
-class _LanguageBottomSheet extends ConsumerWidget {
-  const _LanguageBottomSheet();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: const Text('English'),
-            onTap: () async {
-              await ref.read(languageServiceProvider.notifier).setLocale(const Locale('en'));
-              Navigator.of(context).pop();
-            },
-          ),
-          ListTile(
-            title: const Text('Русский'),
-            onTap: () async {
-              await ref.read(languageServiceProvider.notifier).setLocale(const Locale('ru'));
-              Navigator.of(context).pop();
-            },
           ),
         ],
       ),
