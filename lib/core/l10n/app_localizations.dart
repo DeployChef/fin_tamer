@@ -397,6 +397,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get errorTitle;
+
+  /// No description provided for @setPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set PIN'**
+  String get setPin;
+
+  /// No description provided for @changePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get changePin;
+
+  /// No description provided for @deletePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete PIN'**
+  String get deletePin;
+
+  /// No description provided for @biometricUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with FaceID/TouchID'**
+  String get biometricUnlock;
+
+  /// No description provided for @biometricNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics not supported on this device'**
+  String get biometricNotAvailable;
+
+  /// No description provided for @pinSet.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN is set'**
+  String get pinSet;
+
+  /// No description provided for @pinNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN is not set'**
+  String get pinNotSet;
 }
 
 class _AppLocalizationsDelegate

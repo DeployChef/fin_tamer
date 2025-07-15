@@ -21,7 +21,6 @@ class PinCodeScreen extends StatefulWidget {
 
 class _PinCodeScreenState extends State<PinCodeScreen> {
   final List<String> _input = [];
-  String? _firstPin;
   String? _error;
   final PinCodeService _service = PinCodeService();
 
@@ -46,17 +45,17 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
   }
 
   Future<void> _onPinEntered(String pin) async {
+    final navigator = Navigator.of(context);
     switch (widget.mode) {
       case PinCodeMode.set:
         setState(() {
-          _firstPin = pin;
           _input.clear();
         });
         await Future.delayed(const Duration(milliseconds: 200));
         setState(() {
           _error = null;
         });
-        Navigator.of(context).pushReplacement(
+        navigator.pushReplacement(
           MaterialPageRoute(
             builder: (_) => PinCodeScreen(
               mode: PinCodeMode.confirm,
@@ -82,7 +81,6 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         final ok = await _service.checkPin(pin);
         if (ok) {
           widget.onSuccess?.call();
-          //if (mounted) Navigator.of(context, rootNavigator: true).pop();
         } else {
           setState(() {
             _error = 'Неверный PIN';
@@ -95,7 +93,6 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(_getTitle()),

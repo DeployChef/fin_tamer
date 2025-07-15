@@ -157,4 +157,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTitle => 'Error';
+
+  @override
+  String get setPin => 'Set PIN';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get deletePin => 'Delete PIN';
+
+  @override
+  String get biometricUnlock => 'Unlock with FaceID/TouchID';
+
+  @override
+  String get biometricNotAvailable => 'Biometrics not supported on this device';
+
+  @override
+  String get pinSet => 'PIN is set';
+
+  @override
+  String get pinNotSet => 'PIN is not set';
 }

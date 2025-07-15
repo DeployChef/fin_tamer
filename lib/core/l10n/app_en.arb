@@ -48,5 +48,12 @@
     "updateAccountLabel": "Enter new account name",
     "cancel": "Cancel",
     "save": "Save",
-    "errorTitle": "Error"
+    "errorTitle": "Error",
+    "setPin": "Set PIN",
+    "changePin": "Change PIN",
+    "deletePin": "Delete PIN",
+    "biometricUnlock": "Unlock with FaceID/TouchID",
+    "biometricNotAvailable": "Biometrics not supported on this device",
+    "pinSet": "PIN is set",
+    "pinNotSet": "PIN is not set"
 }

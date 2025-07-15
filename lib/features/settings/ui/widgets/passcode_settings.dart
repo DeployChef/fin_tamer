@@ -69,12 +69,15 @@ class _PasscodeSettingsSheetState extends State<PasscodeSettingsSheet> {
   }
 
   Future<void> _toggleBiometric(bool value) async {
+    final loc = AppLocalizations.of(context)!;
+    final messeger = ScaffoldMessenger.of(context);
     if (value) {
       final available = await _biometricService.isBiometricAvailable();
       if (!available) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Биометрия не поддерживается на этом устройстве')),
+        messeger.showSnackBar(
+          SnackBar(content: Text(loc.biometricNotAvailable)),
         );
+
         return;
       }
     }
@@ -122,21 +125,22 @@ class _PasscodeSettingsSheetState extends State<PasscodeSettingsSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text(_hasPin ? 'Изменить PIN' : 'Установить PIN', style: theme.textTheme.bodyLarge),
+              title: Text(_hasPin ? l10n.changePin : l10n.setPin, style: theme.textTheme.bodyLarge),
               trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
               onTap: _hasPin ? _changePin : _setPin,
               contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+              subtitle: Text(_hasPin ? l10n.pinSet : l10n.pinNotSet),
             ),
             if (_hasPin)
               ListTile(
-                title: const Text('Удалить PIN'),
+                title: Text(l10n.deletePin),
                 leading: const Icon(Icons.delete, color: Colors.red),
                 onTap: _deletePin,
                 contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
               ),
             if (_hasPin && _biometricAvailable)
               SwitchListTile(
-                title: const Text('Разблокировка по FaceID/TouchID'),
+                title: Text(l10n.biometricUnlock),
                 value: _biometricEnabled,
                 onChanged: _toggleBiometric,
                 contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),

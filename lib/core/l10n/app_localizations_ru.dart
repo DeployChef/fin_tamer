@@ -158,4 +158,26 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errorTitle => 'Ошибка';
+
+  @override
+  String get setPin => 'Установить PIN';
+
+  @override
+  String get changePin => 'Изменить PIN';
+
+  @override
+  String get deletePin => 'Удалить PIN';
+
+  @override
+  String get biometricUnlock => 'Разблокировка по FaceID/TouchID';
+
+  @override
+  String get biometricNotAvailable =>
+      'Биометрия не поддерживается на этом устройстве';
+
+  @override
+  String get pinSet => 'PIN установлен';
+
+  @override
+  String get pinNotSet => 'PIN не установлен';
 }

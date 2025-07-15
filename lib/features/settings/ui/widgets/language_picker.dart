@@ -4,7 +4,7 @@ import 'package:fin_tamer/features/settings/domain/services/language_service.dar
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 
 class LanguagePicker extends ConsumerWidget {
-  const LanguagePicker({Key? key}) : super(key: key);
+  const LanguagePicker({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,11 +13,9 @@ class LanguagePicker extends ConsumerWidget {
     return localeAsync.when(
       data: (locale) {
         return ListTile(
-          title: Text(l10n?.language ?? 'Language',
-              style: Theme.of(context).textTheme.bodyLarge),
+          title: Text(l10n?.language ?? 'Language', style: Theme.of(context).textTheme.bodyLarge),
           trailing: const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
           onTap: () => _showLanguageBottomSheet(context, ref, locale),
         );
       },
@@ -35,12 +33,10 @@ class LanguagePicker extends ConsumerWidget {
     );
   }
 
-  void _showLanguageBottomSheet(
-      BuildContext context, WidgetRef ref, Locale currentLocale) {
+  void _showLanguageBottomSheet(BuildContext context, WidgetRef ref, Locale currentLocale) {
     showModalBottomSheet(
       context: context,
-      builder: (context) =>
-          _LanguageBottomSheet(ref: ref, currentLocale: currentLocale),
+      builder: (context) => _LanguageBottomSheet(ref: ref, currentLocale: currentLocale),
     );
   }
 }
@@ -63,13 +59,11 @@ class _LanguageBottomSheet extends StatelessWidget {
           final isSelected = currentLocale.languageCode == lang['code'];
           return ListTile(
             title: Text(lang['name']!),
-            trailing:
-                isSelected ? const Icon(Icons.check, color: Colors.blue) : null,
+            trailing: isSelected ? const Icon(Icons.check, color: Colors.blue) : null,
             onTap: () async {
-              await ref
-                  .read(languageServiceProvider.notifier)
-                  .setLocale(Locale(lang['code']!));
-              Navigator.of(context).pop();
+              final nav = Navigator.of(context);
+              await ref.read(languageServiceProvider.notifier).setLocale(Locale(lang['code']!));
+              nav.pop();
             },
           );
         }).toList(),

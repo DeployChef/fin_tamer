@@ -4,8 +4,6 @@ import 'package:fin_tamer/features/settings/ui/widgets/theme_switcher.dart';
 import 'package:fin_tamer/features/settings/ui/widgets/tint_picker.dart';
 import 'package:fin_tamer/features/settings/ui/widgets/haptics_switcher.dart';
 import 'package:fin_tamer/features/settings/ui/widgets/language_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fin_tamer/features/settings/domain/services/language_service.dart';
 import 'package:fin_tamer/features/settings/ui/widgets/passcode_settings.dart';
 
 class SettingsPage extends StatelessWidget {

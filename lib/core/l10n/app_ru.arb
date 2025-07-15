@@ -48,5 +48,12 @@
     "updateAccountLabel": "Введите новое название счета",
     "cancel": "Отмена",
     "save": "Сохранить",
-    "errorTitle": "Ошибка"
+    "errorTitle": "Ошибка",
+    "setPin": "Установить PIN",
+    "changePin": "Изменить PIN",
+    "deletePin": "Удалить PIN",
+    "biometricUnlock": "Разблокировка по FaceID/TouchID",
+    "biometricNotAvailable": "Биометрия не поддерживается на этом устройстве",
+    "pinSet": "PIN установлен",
+    "pinNotSet": "PIN не установлен"
 }
