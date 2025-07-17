@@ -3,9 +3,6 @@ import 'package:fin_tamer/features/auth/services/pin_code_service.dart';
 import 'package:fin_tamer/features/auth/services/biometric_service.dart';
 import 'package:fin_tamer/features/auth/ui/pin_code_screen.dart';
 
-// Экспорт для удобства импорта
-export 'app_with_lock.dart' show AppWithLock;
-
 class AppWithLock extends StatefulWidget {
   final Widget child;
   const AppWithLock({super.key, required this.child});
@@ -15,8 +12,11 @@ class AppWithLock extends StatefulWidget {
 }
 
 class _AppWithLockState extends State<AppWithLock> with WidgetsBindingObserver {
-  bool _locked = false;
+  bool _locked = true;
   bool _checking = true;
+  bool _authInProgress = false;
+  bool _biometricDialogOpen = false;
+  bool _biometricWasAttempted = false;
 
   @override
   void initState() {
@@ -33,12 +33,22 @@ class _AppWithLockState extends State<AppWithLock> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
+      setState(() {
+        _locked = true;
+        _biometricWasAttempted = false;
+      });
+    }
     if (state == AppLifecycleState.resumed) {
-      _checkLock();
+      if (!_authInProgress && !_biometricDialogOpen && _locked) {
+        _checkLock();
+      }
     }
   }
 
   Future<void> _checkLock() async {
+    if (_authInProgress || _biometricDialogOpen) return;
+    _authInProgress = true;
     setState(() {
       _checking = true;
     });
@@ -47,13 +57,24 @@ class _AppWithLockState extends State<AppWithLock> with WidgetsBindingObserver {
     final hasPin = await pinService.hasPin();
     final bioEnabled = await bioService.isBiometricEnabled();
     if (hasPin) {
-      if (bioEnabled) {
+      if (bioEnabled && !_biometricWasAttempted) {
+        _biometricDialogOpen = true;
         final bioOk = await bioService.authenticate();
+        _biometricDialogOpen = false;
+        _biometricWasAttempted = true;
         if (bioOk) {
           setState(() {
             _locked = false;
             _checking = false;
           });
+          _authInProgress = false;
+          return;
+        } else {
+          setState(() {
+            _locked = true;
+            _checking = false;
+          });
+          _authInProgress = false;
           return;
         }
       }
@@ -67,6 +88,7 @@ class _AppWithLockState extends State<AppWithLock> with WidgetsBindingObserver {
         _checking = false;
       });
     }
+    _authInProgress = false;
   }
 
   void _onPinSuccess() {

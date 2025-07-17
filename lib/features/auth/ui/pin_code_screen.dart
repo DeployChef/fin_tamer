@@ -45,7 +45,6 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
   }
 
   Future<void> _onPinEntered(String pin) async {
-    final navigator = Navigator.of(context);
     switch (widget.mode) {
       case PinCodeMode.set:
         setState(() {
@@ -55,15 +54,21 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         setState(() {
           _error = null;
         });
-        navigator.pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => PinCodeScreen(
-              mode: PinCodeMode.confirm,
-              oldPin: pin,
-              onSuccess: widget.onSuccess,
-            ),
-          ),
-        );
+        if (mounted) {
+          final navigator = Navigator.of(context);
+          if (mounted) {
+            navigator.pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => PinCodeScreen(
+                  mode: PinCodeMode.confirm,
+                  oldPin: pin,
+                  onSuccess: widget.onSuccess,
+                ),
+              ),
+            );
+          }
+        }
+
         break;
       case PinCodeMode.confirm:
         if (pin == widget.oldPin) {

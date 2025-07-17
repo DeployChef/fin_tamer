@@ -1,5 +1,6 @@
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fin_tamer/core/utils/logger_service.dart';
 
 class BiometricService {
   static const _biometricKey = 'biometric_enabled';
@@ -20,7 +21,8 @@ class BiometricService {
         localizedReason: 'Пожалуйста, подтвердите личность',
         options: const AuthenticationOptions(biometricOnly: true, stickyAuth: true),
       );
-    } catch (_) {
+    } catch (e, stack) {
+      LoggerService.error('Biometric authentication error', e, stack, 'BiometricService');
       return false;
     }
   }
