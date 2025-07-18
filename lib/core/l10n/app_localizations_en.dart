@@ -103,4 +103,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error';
+
+  @override
+  String get darkTheme => 'Dark theme';
+
+  @override
+  String get primaryColor => 'Primary color';
+
+  @override
+  String get sounds => 'Sounds';
+
+  @override
+  String get haptics => 'Haptics';
+
+  @override
+  String get passcode => 'Passcode';
+
+  @override
+  String get sync => 'Sync';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get findArticle => 'Find transaction';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get byDay => 'By day';
+
+  @override
+  String get byMonth => 'By month';
+
+  @override
+  String get updateAccountTitle => 'Update account';
+
+  @override
+  String get updateAccountLabel => 'Enter new account name';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get errorTitle => 'Error';
+
+  @override
+  String get setPin => 'Set PIN';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get deletePin => 'Delete PIN';
+
+  @override
+  String get biometricUnlock => 'Unlock with FaceID/TouchID';
+
+  @override
+  String get biometricNotAvailable => 'Biometrics not supported on this device';
+
+  @override
+  String get pinSet => 'PIN is set';
+
+  @override
+  String get pinNotSet => 'PIN is not set';
 }

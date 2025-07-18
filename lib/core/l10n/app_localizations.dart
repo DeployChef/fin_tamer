@@ -289,6 +289,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
+
+  /// No description provided for @darkTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark theme'**
+  String get darkTheme;
+
+  /// No description provided for @primaryColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary color'**
+  String get primaryColor;
+
+  /// No description provided for @sounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Sounds'**
+  String get sounds;
+
+  /// No description provided for @haptics.
+  ///
+  /// In en, this message translates to:
+  /// **'Haptics'**
+  String get haptics;
+
+  /// No description provided for @passcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Passcode'**
+  String get passcode;
+
+  /// No description provided for @sync.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync'**
+  String get sync;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @findArticle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find transaction'**
+  String get findArticle;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @byDay.
+  ///
+  /// In en, this message translates to:
+  /// **'By day'**
+  String get byDay;
+
+  /// No description provided for @byMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'By month'**
+  String get byMonth;
+
+  /// No description provided for @updateAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update account'**
+  String get updateAccountTitle;
+
+  /// No description provided for @updateAccountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new account name'**
+  String get updateAccountLabel;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorTitle;
+
+  /// No description provided for @setPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set PIN'**
+  String get setPin;
+
+  /// No description provided for @changePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get changePin;
+
+  /// No description provided for @deletePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete PIN'**
+  String get deletePin;
+
+  /// No description provided for @biometricUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with FaceID/TouchID'**
+  String get biometricUnlock;
+
+  /// No description provided for @biometricNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics not supported on this device'**
+  String get biometricNotAvailable;
+
+  /// No description provided for @pinSet.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN is set'**
+  String get pinSet;
+
+  /// No description provided for @pinNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN is not set'**
+  String get pinNotSet;
 }
 
 class _AppLocalizationsDelegate

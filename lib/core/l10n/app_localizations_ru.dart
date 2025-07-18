@@ -104,4 +104,80 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get error => 'Ошибка';
+
+  @override
+  String get darkTheme => 'Темная тема';
+
+  @override
+  String get primaryColor => 'Основной цвет';
+
+  @override
+  String get sounds => 'Звуки';
+
+  @override
+  String get haptics => 'Хаптики';
+
+  @override
+  String get passcode => 'Код-пароль';
+
+  @override
+  String get sync => 'Синхронизация';
+
+  @override
+  String get language => 'Язык';
+
+  @override
+  String get about => 'О программе';
+
+  @override
+  String get findArticle => 'Найти статью';
+
+  @override
+  String get currency => 'Валюта';
+
+  @override
+  String get balance => 'Баланс';
+
+  @override
+  String get byDay => 'По дням';
+
+  @override
+  String get byMonth => 'По месяцам';
+
+  @override
+  String get updateAccountTitle => 'Редактировать счёт';
+
+  @override
+  String get updateAccountLabel => 'Введите новое название счета';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get errorTitle => 'Ошибка';
+
+  @override
+  String get setPin => 'Установить PIN';
+
+  @override
+  String get changePin => 'Изменить PIN';
+
+  @override
+  String get deletePin => 'Удалить PIN';
+
+  @override
+  String get biometricUnlock => 'Разблокировка по FaceID/TouchID';
+
+  @override
+  String get biometricNotAvailable =>
+      'Биометрия не поддерживается на этом устройстве';
+
+  @override
+  String get pinSet => 'PIN установлен';
+
+  @override
+  String get pinNotSet => 'PIN не установлен';
 }

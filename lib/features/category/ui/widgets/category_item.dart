@@ -15,7 +15,7 @@ class CategoryItem extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
       leading: CircleAvatar(
         radius: 15,
-        backgroundColor: const Color(0xFFD4FAE6),
+        backgroundColor: theme.colorScheme.secondaryContainer,
         child: Text(
           item.emoji,
           style: const TextStyle(fontSize: 18),

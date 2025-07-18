@@ -266,11 +266,13 @@ class TransactionRepository implements ITransactionRepository {
         LoggerService.error('Account or Category not found for transaction: transactionApiId=${dto.id}');
         continue;
       }
-      final entity = dto.toEntity(account!.id);
+      final entity = dto.toEntity(account.id);
       newEntities.add(entity);
     }
     await localDataSource.saveAll(newEntities);
-    final allEntities = [...existing, ...newEntities].where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+    final allEntities = [...existing, ...newEntities]
+        .where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate))
+        .toList();
     final List<Transaction> transactions = [];
     for (final entity in allEntities) {
       final account = await accountRepository.getByApiId(entity.accountApiId);
@@ -286,7 +288,8 @@ class TransactionRepository implements ITransactionRepository {
 
   Future<List<Transaction>> _getByPeriodOnlyLocal(Account account, DateTime startDate, DateTime endDate) async {
     final localEntities = await localDataSource.getByAccount(account.apiId);
-    final filtered = localEntities.where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
+    final filtered =
+        localEntities.where((e) => !e.isDeleted && e.transactionDate.isAfter(startDate) && e.transactionDate.isBefore(endDate)).toList();
     if (filtered.isNotEmpty) {
       final futures = filtered.map((entity) async {
         final account = await accountRepository.getByApiId(entity.accountApiId);

@@ -20,7 +20,7 @@ class AnalyticItem extends StatelessWidget {
       ),
       leading: CircleAvatar(
         radius: 15,
-        backgroundColor: const Color(0xFFD4FAE6),
+        backgroundColor: theme.colorScheme.secondaryContainer,
         child: Text(
           item.category.emoji,
           style: const TextStyle(fontSize: 18),
@@ -46,7 +46,7 @@ class AnalyticItem extends StatelessWidget {
             MoneyWidget(amount: item.amount),
           ],
         ),
-        const Icon(Icons.chevron_right, color: Color(0x4d3c3c43)),
+        Icon(Icons.chevron_right, color: theme.dividerColor.withValues(alpha: 0.3)),
       ]),
       onTap: () async {
         await CurrencyPickerBottomSheet.showCurrencyTransactionBottomSheet(context, item.transactions);

@@ -23,7 +23,7 @@ class TransactionItem extends StatelessWidget {
       ),
       leading: CircleAvatar(
         radius: 15,
-        backgroundColor: const Color(0xFFD4FAE6),
+        backgroundColor: theme.colorScheme.secondaryContainer,
         child: Text(
           item.category.emoji,
           style: const TextStyle(fontSize: 18),
@@ -54,9 +54,9 @@ class TransactionItem extends StatelessWidget {
           ],
         ),
         enableDetails
-            ? const Icon(
+            ? Icon(
                 Icons.chevron_right,
-                color: Color(0x4d3c3c43),
+                color: theme.dividerColor.withValues(alpha: 0.3),
               )
             : const SizedBox.shrink(),
       ]),

@@ -1,4 +1,5 @@
 import 'package:chart_widget/chart_widget.dart';
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/account/domain/services/account_service.dart';
 import 'package:fin_tamer/features/history/domain/services/transaction_chart_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
   @override
   Widget build(BuildContext context) {
     final accountAsync = ref.watch(accountServiceProvider);
+    final loc = AppLocalizations.of(context)!;
     return accountAsync.when(
       loading: () => const SizedBox.shrink(),
       error: (e, st) => const SizedBox.shrink(),
@@ -40,33 +42,26 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
           _lastTransactions = transactions;
         }
 
-        if (transactions == null) return const SizedBox.shrink();
-        final chartData = _mode == TransactionChartMode.byDay
-            ? _chartCurrentMonthData(transactions)
-            : _chartByMonthsData(transactions);
+        final chartData = _mode == TransactionChartMode.byDay ? _chartCurrentMonthData(transactions) : _chartByMonthsData(transactions);
         return Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: SegmentedButton<TransactionChartMode>(
-                segments: const [
+                segments: [
                   ButtonSegment(
                     value: TransactionChartMode.byDay,
-                    label: SizedBox(
-                        width: 150, child: Center(child: Text('По дням'))),
+                    label: SizedBox(width: 150, child: Center(child: Text(loc.byDay))),
                   ),
                   ButtonSegment(
                     value: TransactionChartMode.byMonth,
-                    label: SizedBox(
-                        width: 150, child: Center(child: Text('По месяцам'))),
+                    label: SizedBox(width: 150, child: Center(child: Text(loc.byMonth))),
                   ),
                 ],
                 selected: {_mode},
                 onSelectionChanged: (modes) {
                   if (modes.isNotEmpty) {
-                    ref
-                        .read(transactionChartServiceProvider.notifier)
-                        .setMode(modes.first);
+                    ref.read(transactionChartServiceProvider.notifier).setMode(modes.first);
                     setState(() => _mode = modes.first);
                   }
                 },
@@ -88,11 +83,9 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
     final Map<int, double> daySums = {};
     for (final t in transactions) {
-      if (t.transactionDate.month == now.month &&
-          t.transactionDate.year == now.year) {
+      if (t.transactionDate.month == now.month && t.transactionDate.year == now.year) {
         final signedAmount = t.category.isIncome ? t.amount : -t.amount;
-        daySums[t.transactionDate.day] =
-            (daySums[t.transactionDate.day] ?? 0) + signedAmount;
+        daySums[t.transactionDate.day] = (daySums[t.transactionDate.day] ?? 0) + signedAmount;
       }
     }
     final bars = <BalanceBarData>[];
@@ -108,9 +101,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     final labelX = [1, (daysInMonth / 2).round(), daysInMonth];
     final config = BalanceChartConfig(
       minY: 0,
-      maxY: bars.isNotEmpty
-          ? bars.map((b) => b.value.abs()).reduce(max) * 1.2
-          : 10,
+      maxY: bars.isNotEmpty ? bars.map((b) => b.value.abs()).reduce(max) * 1.2 : 10,
       barsCount: daysInMonth,
       labelX: labelX,
       xLabelFormatter: (x) {
@@ -127,8 +118,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     for (final t in transactions) {
       if (t.transactionDate.year == now.year) {
         final signedAmount = t.category.isIncome ? t.amount : -t.amount;
-        monthSums[t.transactionDate.month] =
-            (monthSums[t.transactionDate.month] ?? 0) + signedAmount;
+        monthSums[t.transactionDate.month] = (monthSums[t.transactionDate.month] ?? 0) + signedAmount;
       }
     }
     final bars = <BalanceBarData>[];
@@ -143,9 +133,7 @@ class _HistoryChartState extends ConsumerState<HistoryChart> {
     }
     final config = BalanceChartConfig(
       minY: 0,
-      maxY: bars.isNotEmpty
-          ? bars.map((b) => b.value.abs()).reduce(max) * 1.2
-          : 10,
+      maxY: bars.isNotEmpty ? bars.map((b) => b.value.abs()).reduce(max) * 1.2 : 10,
       barsCount: now.month,
       labelX: List.generate(now.month, (i) => i + 1),
       xLabelFormatter: (x) {

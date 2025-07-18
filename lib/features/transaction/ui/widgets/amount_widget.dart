@@ -13,9 +13,10 @@ class AmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-      tileColor: const Color(0xffD4FAE6),
+      tileColor: theme.colorScheme.secondaryContainer,
       title: Text(title),
       trailing: MoneyWidget(amount: amount),
     );

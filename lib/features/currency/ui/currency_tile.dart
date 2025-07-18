@@ -1,4 +1,3 @@
-import 'package:fin_tamer/features/currency/domain/currency_service.dart';
 import 'package:fin_tamer/features/currency/domain/models/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,10 +11,8 @@ class CurrencyTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currencyIcon = switch (currency) {
-      Currency.ruble =>
-        const Icon(Icons.currency_ruble, size: 24, color: Colors.black),
-      Currency.usDollar =>
-        const Icon(Icons.attach_money, size: 24, color: Colors.black),
+      Currency.ruble => const Icon(Icons.currency_ruble, size: 24, color: Colors.black),
+      Currency.usDollar => const Icon(Icons.attach_money, size: 24, color: Colors.black),
       Currency.euro => const Icon(Icons.euro, size: 24, color: Colors.black),
     };
 
@@ -30,12 +27,12 @@ class CurrencyTile extends ConsumerWidget {
       leading: currencyIcon,
       title: Text(currencyDescription),
       onTap: () async {
+        final navigator = Navigator.of(context);
         try {
-          await ref
-              .read(accountServiceProvider.notifier)
-              .updateCurrency(currency: currency);
-          Navigator.of(context).pop();
+          await ref.read(accountServiceProvider.notifier).updateCurrency(currency: currency);
+          navigator.pop();
         } catch (e) {
+          if (!context.mounted) return;
           await showDialog<void>(
             context: context,
             barrierDismissible: false,
@@ -47,7 +44,7 @@ class CurrencyTile extends ConsumerWidget {
                   TextButton(
                     child: const Text('OK'),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      navigator.pop();
                     },
                   ),
                 ],

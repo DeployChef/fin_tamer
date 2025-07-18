@@ -1,3 +1,4 @@
+import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/currency/ui/currency_picker_bottom_sheet.dart';
 import 'package:fin_tamer/features/currency/ui/currency_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ class AccountCurrency extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-      tileColor: const Color(0xffD4FAE6),
+      tileColor: theme.colorScheme.secondaryContainer,
       title: Text(
-        "Валюта",
+        loc.currency,
         style: theme.textTheme.bodyLarge,
       ),
       trailing: const Row(

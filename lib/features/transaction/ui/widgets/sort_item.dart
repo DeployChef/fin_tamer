@@ -1,7 +1,6 @@
 import 'package:fin_tamer/core/l10n/app_localizations.dart';
 import 'package:fin_tamer/features/transaction/domain/models/sort_type.dart';
 import 'package:fin_tamer/features/transaction/domain/services/history/history_filter_service.dart';
-import 'package:fin_tamer/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,7 +43,9 @@ class SortItem extends ConsumerWidget {
               sortDescription,
               style: const TextStyle(fontSize: 16),
             ),
-            providerFilterOption.sortType == sortType ? const Icon(Icons.check_circle, color: AppColors.primaryLight) : const Icon(Icons.circle_outlined),
+            providerFilterOption.sortType == sortType
+                ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
+                : const Icon(Icons.circle_outlined),
           ],
         ),
       ),

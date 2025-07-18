@@ -32,7 +32,7 @@ class HistoryFilter extends ConsumerWidget {
       children: [
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterStartDate,
             style: theme.textTheme.bodyLarge,
@@ -57,7 +57,7 @@ class HistoryFilter extends ConsumerWidget {
         const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterEndDate,
             style: theme.textTheme.bodyLarge,
@@ -82,7 +82,7 @@ class HistoryFilter extends ConsumerWidget {
         const Divider(),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 14),
-          tileColor: const Color(0xffD4FAE6),
+          tileColor: theme.colorScheme.secondaryContainer,
           title: Text(
             loc.filterSort,
             style: theme.textTheme.bodyLarge,

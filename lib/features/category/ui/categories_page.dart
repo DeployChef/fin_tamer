@@ -17,19 +17,27 @@ class CategoriesPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          TextField(
-            onChanged: (value) => ref.read(filteredCategoriesProvider.notifier).setFilter(value),
-            decoration: const InputDecoration(
-              filled: true,
-              fillColor: Color(0xffECE6F0),
-              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 14),
-              hintText: "Найти статью",
-              suffixIcon: Icon(
-                Icons.search,
-                color: Color(0xff1D1B20),
-              ),
-              border: OutlineInputBorder(borderSide: BorderSide.none),
-            ),
+          Builder(
+            builder: (context) {
+              final theme = Theme.of(context);
+              return TextField(
+                onChanged: (value) => ref
+                    .read(filteredCategoriesProvider.notifier)
+                    .setFilter(value),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: theme.colorScheme.surfaceContainerHighest,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
+                  hintText: loc.findArticle,
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  border: const OutlineInputBorder(borderSide: BorderSide.none),
+                ),
+              );
+            },
           ),
           const Divider(),
           Expanded(
@@ -50,8 +58,10 @@ class CategoriesPage extends ConsumerWidget {
                             },
                           );
                   },
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (error, stackTrace) => const Center(child: Text("Error")),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stackTrace) =>
+                      const Center(child: Text("Error")),
                 ),
           ),
         ],

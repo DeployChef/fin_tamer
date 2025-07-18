@@ -8,7 +8,6 @@
             "name": "fin_tamer",
             "request": "launch",
             "type": "dart",
-            "stopAtEntry": false,
         },
         {
             "name": "fin_tamer (profile mode)",
