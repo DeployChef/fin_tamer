@@ -99,12 +99,12 @@ final historyRepositoryProvider = FutureProvider<HistoryRepository>.internal(
 // ignore: unused_element
 typedef HistoryRepositoryRef = FutureProviderRef<HistoryRepository>;
 String _$accountLocalDataSourceHash() =>
-    r'22f6e59fbae7c8c0b919bd6a5df98786d7b68e53';
+    r'4be040b5c5decdc4a8117d619357504c3c457b80';
 
 /// See also [accountLocalDataSource].
 @ProviderFor(accountLocalDataSource)
 final accountLocalDataSourceProvider =
-    FutureProvider<AccountLocalDataSource>.internal(
+    FutureProvider<IAccountLocalDataSource>.internal(
   accountLocalDataSource,
   name: r'accountLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -116,14 +116,14 @@ final accountLocalDataSourceProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AccountLocalDataSourceRef = FutureProviderRef<AccountLocalDataSource>;
+typedef AccountLocalDataSourceRef = FutureProviderRef<IAccountLocalDataSource>;
 String _$statItemLocalDataSourceHash() =>
-    r'2e115e1cb8eafc5ff675b0efea11547ebdbc0556';
+    r'640b812042df5860164fad2f43a185e72af9c5f5';
 
 /// See also [statItemLocalDataSource].
 @ProviderFor(statItemLocalDataSource)
 final statItemLocalDataSourceProvider =
-    FutureProvider<StatItemLocalDataSource>.internal(
+    FutureProvider<IStatItemLocalDataSource>.internal(
   statItemLocalDataSource,
   name: r'statItemLocalDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -135,7 +135,8 @@ final statItemLocalDataSourceProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef StatItemLocalDataSourceRef = FutureProviderRef<StatItemLocalDataSource>;
+typedef StatItemLocalDataSourceRef
+    = FutureProviderRef<IStatItemLocalDataSource>;
 String _$accountRemoteDataSourceHash() =>
     r'83c51d600de9e4a125289ab94bf6b7fc911d4a23';
 

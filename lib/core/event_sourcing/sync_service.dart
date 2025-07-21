@@ -5,7 +5,12 @@ import 'package:fin_tamer/core/event_sourcing/sync_transaction_handler.dart';
 import 'package:fin_tamer/core/utils/logger_service.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-class SyncService {
+abstract class ISyncService {
+  void addEvent(SyncEvent event);
+  Future<void> sync();
+}
+
+class SyncService implements ISyncService {
   final SyncEventDataSource _eventDataSource;
   final SyncAccountHandler _accountHandler;
   final SyncTransactionHandler _transactionHandler;

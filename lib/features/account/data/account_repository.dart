@@ -15,9 +15,9 @@ import 'package:fin_tamer/core/event_sourcing/sync_service.dart';
 
 class AccountRepository implements IAccountRepository {
   final IAccountRemoteDataSource remoteDataSource;
-  final AccountLocalDataSource localDataSource;
-  final StatItemLocalDataSource statItemLocalDataSource;
-  final SyncService syncService;
+  final IAccountLocalDataSource localDataSource;
+  final IStatItemLocalDataSource statItemLocalDataSource;
+  final ISyncService syncService;
 
   AccountRepository({
     required this.remoteDataSource,
@@ -31,10 +31,8 @@ class AccountRepository implements IAccountRepository {
     final localEntities = await localDataSource.getAll();
     if (localEntities.isNotEmpty) {
       return Future.wait(localEntities.map((entity) async {
-        final incomeStats = await statItemLocalDataSource
-            .getByAccount(entity.apiId, isIncome: true);
-        final expenseStats = await statItemLocalDataSource
-            .getByAccount(entity.apiId, isIncome: false);
+        final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+        final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
         return entity.toDomain(
           incomeStats: incomeStats,
           expenseStats: expenseStats,
@@ -55,22 +53,14 @@ class AccountRepository implements IAccountRepository {
       return accounts.firstOrNull?.toEntity().toDomain();
     }
 
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: false);
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
 
     if (incomeStats.isEmpty || expenseStats.isEmpty) {
       final dto = await remoteDataSource.getResponseById(entity.apiId);
       if (dto == null) return null;
-      incomeStats = dto.incomeStats
-          .map((statItem) =>
-              statItem.toEntity(accountApiId: dto.id, isIncome: true))
-          .toList();
-      expenseStats = dto.expenseStats
-          .map((statItem) =>
-              statItem.toEntity(accountApiId: dto.id, isIncome: false))
-          .toList();
+      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
+      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
       await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
 
@@ -85,10 +75,8 @@ class AccountRepository implements IAccountRepository {
     final dto = await remoteDataSource.create(data.toDto());
     final entity = dto.toEntity();
     await localDataSource.save(entity);
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: true);
-    final expenseStats = await statItemLocalDataSource
-        .getByAccount(entity.apiId, isIncome: false);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
@@ -115,10 +103,8 @@ class AccountRepository implements IAccountRepository {
       timestamp: DateTime.now().toUtc(),
     );
     syncService.addEvent(event);
-    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: true);
-    final expenseStats = await statItemLocalDataSource
-        .getByAccount(entity.apiId, isIncome: false);
+    final incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+    final expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
     return entity.toDomain(
       incomeStats: incomeStats,
       expenseStats: expenseStats,
@@ -130,22 +116,14 @@ class AccountRepository implements IAccountRepository {
     final entity = await localDataSource.getByApiId(apiId);
     if (entity == null) return null;
 
-    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: true);
-    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId,
-        isIncome: false);
+    var incomeStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: true);
+    var expenseStats = await statItemLocalDataSource.getByAccount(entity.apiId, isIncome: false);
 
     if (incomeStats.isEmpty || expenseStats.isEmpty) {
       final dto = await remoteDataSource.getResponseById(entity.apiId);
       if (dto == null) return null;
-      incomeStats = dto.incomeStats
-          .map((statItem) =>
-              statItem.toEntity(accountApiId: dto.id, isIncome: true))
-          .toList();
-      expenseStats = dto.expenseStats
-          .map((statItem) =>
-              statItem.toEntity(accountApiId: dto.id, isIncome: false))
-          .toList();
+      incomeStats = dto.incomeStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: true)).toList();
+      expenseStats = dto.expenseStats.map((statItem) => statItem.toEntity(accountApiId: dto.id, isIncome: false)).toList();
       await statItemLocalDataSource.saveAll([...incomeStats, ...expenseStats]);
     }
 

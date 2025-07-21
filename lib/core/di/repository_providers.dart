@@ -70,14 +70,14 @@ Future<HistoryRepository> historyRepository(Ref ref) async {
 }
 
 @Riverpod(keepAlive: true)
-Future<AccountLocalDataSource> accountLocalDataSource(Ref ref) async {
+Future<IAccountLocalDataSource> accountLocalDataSource(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
   final box = store.box<AccountEntity>();
   return AccountLocalDataSource(box);
 }
 
 @Riverpod(keepAlive: true)
-Future<StatItemLocalDataSource> statItemLocalDataSource(Ref ref) async {
+Future<IStatItemLocalDataSource> statItemLocalDataSource(Ref ref) async {
   final store = await ref.watch(objectBoxStoreProvider.future);
   final box = store.box<StatItemEntity>();
   return StatItemLocalDataSource(box);

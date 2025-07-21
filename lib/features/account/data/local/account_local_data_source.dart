@@ -1,7 +1,16 @@
 import 'entities/account_entity.dart';
 import 'package:fin_tamer/objectbox.g.dart';
 
-class AccountLocalDataSource {
+abstract class IAccountLocalDataSource {
+  Future<List<AccountEntity>> getAll();
+  Future<AccountEntity?> getById(int id);
+  Future<void> saveAll(List<AccountEntity> items);
+  Future<void> save(AccountEntity item);
+  Future<void> delete(int id);
+  Future<AccountEntity?> getByApiId(int apiId);
+}
+
+class AccountLocalDataSource implements IAccountLocalDataSource {
   final Box<AccountEntity> box;
 
   AccountLocalDataSource(this.box);
