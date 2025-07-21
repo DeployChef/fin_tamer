@@ -22,6 +22,7 @@ import 'package:fin_tamer/core/di/network_providers.dart';
 import 'package:fin_tamer/core/di/mock_providers.dart';
 import 'package:fin_tamer/core/config/app_config.dart';
 import 'package:fin_tamer/core/di/sync_providers.dart';
+import 'package:fin_tamer/core/event_sourcing/sync_service.dart';
 
 part 'repository_providers.g.dart';
 
@@ -65,7 +66,7 @@ Future<HistoryRepository> historyRepository(Ref ref) async {
   return HistoryRepository(
     localDataSource: local,
     remoteDataSource: remote,
-    accountLocalDataSource: localAccount,
+    accountLocalDataSource: localAccount as AccountLocalDataSource,
   );
 }
 
@@ -145,6 +146,6 @@ Future<TransactionRepository> transactionRepository(Ref ref) async {
     accountRepository: accountRepo,
     categoryRepository: categoryRepo,
     historyRepository: historyRepo,
-    syncService: syncService,
+    syncService: syncService as SyncService,
   );
 }
