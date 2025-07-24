@@ -1,4 +1,5 @@
 PODS:
+  - CocoaAsyncSocket (7.6.5)
   - connectivity_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -14,6 +15,10 @@ PODS:
     - Flutter
     - ObjectBox (= 4.3.0)
   - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - patrol (0.0.1):
+    - CocoaAsyncSocket (~> 7.6)
     - Flutter
     - FlutterMacOS
   - sensors_plus (0.0.1):
@@ -32,12 +37,14 @@ DEPENDENCIES:
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
   - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - patrol (from `.symlinks/plugins/patrol/darwin`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - shake_gesture_ios (from `.symlinks/plugins/shake_gesture_ios/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
+    - CocoaAsyncSocket
     - ObjectBox
 
 EXTERNAL SOURCES:
@@ -55,6 +62,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  patrol:
+    :path: ".symlinks/plugins/patrol/darwin"
   sensors_plus:
     :path: ".symlinks/plugins/sensors_plus/ios"
   shake_gesture_ios:
@@ -63,6 +72,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: df59bb2e1421aa0282cb2e95618af4dcb0c56c29
@@ -71,10 +81,11 @@ SPEC CHECKSUMS:
   ObjectBox: 7760fa9072adcffe102a6adf4646ca84ba70ab6b
   objectbox_flutter_libs: 8fa96fe3ffeb448a48e8cacbbe3ec4be7a6564d8
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  patrol: cf2cd48c7f3e5171610111994f7b466cd76d1f57
   sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
   shake_gesture_ios: 64f1f579f314c58445761992a123111b3d7b3492
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 3772550c1b8c0a9b50111ac752457065068a54f2
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

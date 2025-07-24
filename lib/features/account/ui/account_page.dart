@@ -17,6 +17,7 @@ class AccountPage extends ConsumerWidget {
         title: Text(AppLocalizations.of(context)!.accountTitle),
         actions: [
           IconButton(
+            key: const Key('edit_account_button'),
             onPressed: ref.watch(accountServiceProvider).when(
                   data: (data) => data != null
                       ? () async {

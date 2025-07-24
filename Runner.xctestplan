@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "192A149C-9EBB-4791-A3DA-02E8487ED12C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Runner.xcodeproj",
+      "identifier" : "97C146ED1CF9000F007C117D",
+      "name" : "Runner"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Runner.xcodeproj",
+        "identifier" : "CED604C42E326E7300621422",
+        "name" : "RunnerUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

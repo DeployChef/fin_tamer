@@ -45,6 +45,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  golden_toolkit: ^0.15.0
+  mocktail: ^1.0.0
   freezed: ^3.0.6
   json_serializable: ^6.9.5
   objectbox_generator: ^4.3.0
@@ -52,6 +54,7 @@ dev_dependencies:
   riverpod_lint: ^2.6.5
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.10
+  patrol: any
 
 flutter:
   generate: true
@@ -75,3 +78,10 @@ flutter_native_splash:
   ios: true
   android_gravity: fill
   ios_content_mode: scaleToFill
+
+patrol:
+  app_name: My App
+  android:
+    package_name: com.example.myapp
+  ios:
+    bundle_id: com.example.MyApp

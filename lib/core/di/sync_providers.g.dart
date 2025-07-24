@@ -62,11 +62,11 @@ final syncTransactionHandlerProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SyncTransactionHandlerRef = ProviderRef<SyncTransactionHandler>;
-String _$syncServiceHash() => r'79231cedfcec94cd2cb82be50f2820b7417aa953';
+String _$syncServiceHash() => r'532530ae197cb15aaf3b99b4e086c1d194b931ed';
 
 /// See also [syncService].
 @ProviderFor(syncService)
-final syncServiceProvider = FutureProvider<SyncService>.internal(
+final syncServiceProvider = FutureProvider<ISyncService>.internal(
   syncService,
   name: r'syncServiceProvider',
   debugGetCreateSourceHash:
@@ -77,6 +77,6 @@ final syncServiceProvider = FutureProvider<SyncService>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef SyncServiceRef = FutureProviderRef<SyncService>;
+typedef SyncServiceRef = FutureProviderRef<ISyncService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

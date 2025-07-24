@@ -1,13 +1,22 @@
 import 'package:fin_tamer/objectbox.g.dart';
 import 'entities/stat_item_entity.dart';
 
-class StatItemLocalDataSource {
+abstract class IStatItemLocalDataSource {
+  Future<List<StatItemEntity>> getByAccount(int accountApiId, {bool? isIncome});
+  Future<void> saveAll(List<StatItemEntity> items);
+  Future<void> save(StatItemEntity item);
+  Future<void> delete(int id);
+}
+
+class StatItemLocalDataSource implements IStatItemLocalDataSource {
   final Box<StatItemEntity> box;
 
   StatItemLocalDataSource(this.box);
 
   Future<List<StatItemEntity>> getByAccount(int accountApiId, {bool? isIncome}) async {
-    final condition = isIncome == null ? StatItemEntity_.accountApiId.equals(accountApiId) : StatItemEntity_.accountApiId.equals(accountApiId) & StatItemEntity_.isIncome.equals(isIncome);
+    final condition = isIncome == null
+        ? StatItemEntity_.accountApiId.equals(accountApiId)
+        : StatItemEntity_.accountApiId.equals(accountApiId) & StatItemEntity_.isIncome.equals(isIncome);
     final query = box.query(condition).build();
     final result = query.find();
     query.close();

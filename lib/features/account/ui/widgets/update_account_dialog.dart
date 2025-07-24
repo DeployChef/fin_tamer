@@ -42,6 +42,7 @@ class UpdateAccountDialog extends ConsumerWidget {
         style: theme.textTheme.bodyLarge,
       ),
       content: TextField(
+        key: const Key('account_name_field'),
         controller: nameEditingController,
         decoration: InputDecoration(
           labelText: loc.updateAccountLabel,
@@ -56,14 +57,13 @@ class UpdateAccountDialog extends ConsumerWidget {
           child: Text(loc.cancel),
         ),
         ElevatedButton(
+          key: const Key('save_button'),
           onPressed: () async {
             final newName = nameEditingController.text.trim();
             if (newName.isNotEmpty) {
               try {
                 final navigator = Navigator.of(context);
-                await ref
-                    .read(accountServiceProvider.notifier)
-                    .updateAccount(name: newName);
+                await ref.read(accountServiceProvider.notifier).updateAccount(name: newName);
                 navigator.pop();
               } catch (e) {
                 await showErrorDialog(e.toString());
