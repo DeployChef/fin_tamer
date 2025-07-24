@@ -54,6 +54,7 @@ dev_dependencies:
   riverpod_lint: ^2.6.5
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.10
+  patrol: any
 
 flutter:
   generate: true
@@ -77,3 +78,10 @@ flutter_native_splash:
   ios: true
   android_gravity: fill
   ios_content_mode: scaleToFill
+
+patrol:
+  app_name: My App
+  android:
+    package_name: com.example.myapp
+  ios:
+    bundle_id: com.example.MyApp
